@@ -19,11 +19,17 @@ namespace HoloChronicles.Server.Services.XMLParsers
                     XmlDocument doc = new XmlDocument();
                     doc.Load(filePath);
 
-                    XmlElement speciesElement = doc.DocumentElement;
+                    XmlElement? rootElement = doc.DocumentElement;
+                    if (rootElement == null || rootElement.Name != "Species")
+                    {
+                        Console.WriteLine($"Skipping file: {filePath}. Root element is not <Species> or is missing.");
+                        continue;
+                    }
 
-                    var species = ParseSpecies(speciesElement);
+                    var species = ParseSpecies(rootElement);
                     speciesList.Add(species);
                 }
+
             }
             catch (Exception ex)
             {
@@ -36,21 +42,28 @@ namespace HoloChronicles.Server.Services.XMLParsers
         private static Species ParseSpecies(XmlElement speciesElement)
         {
             string key = speciesElement.SelectSingleNode("Key")?.InnerText ?? "";
-            string name = speciesElement.SelectSingleNode("/Name")?.InnerText ?? "";
+            string name = speciesElement.SelectSingleNode("Name")?.InnerText ?? "";
             string description = DescriptionParser.ParseDescription(speciesElement);
             var sources = SourceParser.ParseSources(speciesElement);
             string custom = speciesElement.SelectSingleNode("Custom")?.InnerText ?? "";
+            StartingChars? startingChars = ParseStartingChars(speciesElement);
+            StartingAttrs? startingAttrs = ParseStartingAttrs(speciesElement);
+            List<SkillModifier>? skillModifiers = ParseSkillModifiers(speciesElement);
 
-            StartingChars startingChars = parseStartingChars(speciesElement);
-
-            return new Species(key,name,description,sources,custom,startingChars);
+            return new Species(key, name, description, sources, custom, startingChars, startingAttrs,
+                               skillModifiers);
         }
 
-        private static StartingChars parseStartingChars(XmlElement speciesElement)
+        private static StartingChars? ParseStartingChars(XmlElement speciesElement)
         {
-            XmlNode startingCharsNode = speciesElement.SelectSingleNode("StartingChars");
+            XmlNode? startingCharsNode = speciesElement.SelectSingleNode("StartingChars");
 
-            StartingChars startingChars = new StartingChars
+            if (startingCharsNode == null)
+            {
+                return null;
+            }
+
+            return new StartingChars
             {
                 Brawn = Converters.GetIntFromNode(startingCharsNode, "Brawn"),
                 Agility = Converters.GetIntFromNode(startingCharsNode, "Agility"),
@@ -59,8 +72,65 @@ namespace HoloChronicles.Server.Services.XMLParsers
                 Willpower = Converters.GetIntFromNode(startingCharsNode, "Willpower"),
                 Presence = Converters.GetIntFromNode(startingCharsNode, "Presence")
             };
+        }
 
-            return startingChars;
+
+        private static StartingAttrs? ParseStartingAttrs(XmlElement speciesElement)
+        {
+            XmlNode? startingAttrsNode = speciesElement.SelectSingleNode("StartingAttrs");
+
+            if (startingAttrsNode == null)
+            {
+                return null;
+            }
+
+            return new StartingAttrs
+            {
+                WoundThreshold = Converters.GetIntFromNode(startingAttrsNode, "WoundThreshold"),
+                StrainThreshold = Converters.GetIntFromNode(startingAttrsNode, "StrainThreshold"),
+                Experience = Converters.GetIntFromNode(startingAttrsNode, "Experience"),
+                DefenseRanged = Converters.GetIntFromNode(startingAttrsNode, "DefenseRanged"),
+                DefenseMelee = Converters.GetIntFromNode(startingAttrsNode, "DefenseMelee"),
+                SoakValue = Converters.GetIntFromNode(startingAttrsNode, "SoakValue"),
+                ForceRating = Converters.GetIntFromNode(startingAttrsNode, "ForceRating"),
+                EncumbranceBonus = Converters.GetIntFromNode(startingAttrsNode, "EncumbranceBonus")
+            };
+        }
+
+
+        private static List<SkillModifier>? ParseSkillModifiers(XmlElement speciesElement)
+        {
+            List<SkillModifier> skillModifiers = new List<SkillModifier>();
+
+            XmlNodeList? skillModifiersNodeList = speciesElement.GetElementsByTagName("SkillModifiers");
+            if (skillModifiersNodeList.Count > 0)
+            {
+                XmlElement? skillModifiersNode = skillModifiersNodeList[0] as XmlElement;
+
+                if (skillModifiersNode != null)
+                {
+                    XmlNodeList skillModifierNodeList = skillModifiersNode.GetElementsByTagName("SkillModifier");
+
+                    foreach (XmlNode skillModifierNode in skillModifierNodeList)
+                    {
+                        SkillModifier skillModifier = new SkillModifier();
+
+                        if (skillModifierNode is XmlElement sourceElement)
+                        {
+                            skillModifier.Key = sourceElement.SelectSingleNode("Key")?.InnerText ?? "";
+                            skillModifier.RankStart = Converters.GetIntFromNode(sourceElement, "RankStart");
+                            skillModifier.RankLimit = Converters.GetIntFromNode(sourceElement, "RankLimit");
+                            skillModifier.RankAdd = Converters.GetIntFromNode(sourceElement, "RankAdd");
+                            skillModifier.IsCareer = Converters.GetBoolFromNode(sourceElement, "IsCareer");
+                            skillModifier.SkillType = sourceElement.SelectSingleNode("SkillType")?.InnerText ?? "";
+                        }
+
+                        skillModifiers.Add(skillModifier);
+                    }
+                }
+            }
+
+            return skillModifiers;
         }
     }
 }

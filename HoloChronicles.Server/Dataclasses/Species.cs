@@ -54,11 +54,11 @@ namespace HoloChronicles.Server.Dataclasses
         public int? RankStart { get; set; }
         public int? RankLimit { get; set; }
         public int? RankAdd { get; set; }
-        public string? IsCareer { get; set; }
+        public bool? IsCareer { get; set; }
         public string? SkillType { get; set; }
 
         public SkillModifier(string? key = null, int? rankStart = null, int? rankLimit = null, int? rankAdd = null, 
-                             string? isCareer = null, string? skillType = null)
+                             bool? isCareer = null, string? skillType = null)
         {
             Key = key;
             RankStart = rankStart;
@@ -66,16 +66,6 @@ namespace HoloChronicles.Server.Dataclasses
             RankAdd = rankAdd;
             IsCareer = isCareer;
             SkillType = skillType;
-        }
-    }
-
-    public class SkillModifiers
-    {
-        public List<SkillModifier>? SkillModifier { get; set; } = new();
-
-        public SkillModifiers(List<SkillModifier>? skillModifier = null)
-        {
-            SkillModifier = skillModifier ?? new List<SkillModifier>();
         }
     }
 
@@ -106,13 +96,13 @@ namespace HoloChronicles.Server.Dataclasses
         public string? Key { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public SkillModifiers? SkillModifiers { get; set; }
+        public List<SkillModifier>? SkillModifiers { get; set; }
         public DieModifiers? DieModifiers { get; set; }
         public StartingSkillTraining? StartingSkillTraining { get; set; }
         public StartingAttributes? StartingAttributes { get; set; }
         public TalentModifiers? TalentModifiers { get; set; }
 
-        public Option(string? key = null, string? name = null, string? description = null, SkillModifiers? skillModifiers = null,
+        public Option(string? key = null, string? name = null, string? description = null, List<SkillModifier>? skillModifiers = null,
                       DieModifiers? dieModifiers = null, StartingSkillTraining? startingSkillTraining = null, 
                       StartingAttributes? startingAttributes = null, TalentModifiers? talentModifiers = null)
         {
@@ -279,14 +269,14 @@ namespace HoloChronicles.Server.Dataclasses
         public string? Description { get; set; }
         public StartingChars? StartingChars { get; set; }
         public StartingAttrs? StartingAttrs { get; set; }
-        public SkillModifiers? SkillModifiers { get; set; }
+        public List<SkillModifier>? SkillModifiers { get; set; }
         public OptionChoices? OptionChoices { get; set; }
         public string? CyberneticsAdjust { get; set; }
         public WeaponModifiers? WeaponModifiers { get; set; }
         public TalentModifiers? TalentModifiers { get; set; }
 
         public SubSpecies(string? key = null, string? name = null, string? description = null, StartingChars? startingChars = null, 
-                          StartingAttrs? startingAttrs = null, SkillModifiers? skillModifiers = null, OptionChoices? optionChoices = null, 
+                          StartingAttrs? startingAttrs = null, List<SkillModifier>? skillModifiers = null, OptionChoices? optionChoices = null, 
                           string? cyberneticsAdjust = null, WeaponModifiers? weaponModifiers = null, TalentModifiers? talentModifiers = null)
         {
             Key = key;
@@ -321,7 +311,7 @@ namespace HoloChronicles.Server.Dataclasses
         public string? Custom { get; set; }
         public StartingChars? StartingChars { get; set; }
         public StartingAttrs? StartingAttrs { get; set; }
-        public SkillModifiers? SkillModifiers { get; set; }
+        public List<SkillModifier>? SkillModifiers { get; set; }
         public TalentModifiers? TalentModifiers { get; set; }
         public OptionChoices? OptionChoices { get; set; }
         public SubSpeciesList? SubSpeciesList { get; set; }
@@ -331,7 +321,7 @@ namespace HoloChronicles.Server.Dataclasses
 
         public Species(string? key = null, string? name = null, string? description = null, List<string>? sources = null, 
                        string? custom = null, StartingChars? startingChars = null, StartingAttrs? startingAttrs = null, 
-                       SkillModifiers? skillModifiers = null, TalentModifiers? talentModifiers = null, OptionChoices? optionChoices = null, 
+                       List<SkillModifier>? skillModifiers = null, TalentModifiers? talentModifiers = null, OptionChoices? optionChoices = null, 
                        SubSpeciesList? subSpeciesList = null, WeaponModifiers? weaponModifiers = null, string? noForceAbilities = null, 
                        string? cyberneticsAdjust = null)
         {
@@ -342,7 +332,7 @@ namespace HoloChronicles.Server.Dataclasses
             Custom = custom;
             StartingChars = startingChars;
             StartingAttrs = startingAttrs;
-            SkillModifiers = skillModifiers;
+            SkillModifiers = skillModifiers ?? new List<SkillModifier>();
             TalentModifiers = talentModifiers;
             OptionChoices = optionChoices;
             SubSpeciesList = subSpeciesList;
