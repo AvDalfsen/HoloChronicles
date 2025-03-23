@@ -1,0 +1,6 @@
+@HoloChronicles.Server_HostAddress = http://localhost:5111
+
+GET {{HoloChronicles.Server_HostAddress}}/characteristics/
+Accept: application/json
+
+###
