@@ -1,8 +1,7 @@
 ﻿using System.Xml;
-using HoloChronicles.Server.Services.XMLParsers;
 using HoloChronicles.Server.Dataclasses;
 
-namespace HoloChronicles.Server
+namespace HoloChronicles.Server.Services.XMLParsers
 {
     public class CharacteristicsParser
     {
@@ -24,8 +23,7 @@ namespace HoloChronicles.Server
                         string key = characteristicElement.GetElementsByTagName("Key")?.Item(0)?.InnerText ?? "";
                         string name = characteristicElement.GetElementsByTagName("Name")?.Item(0)?.InnerText ?? "";
                         string abbrev = characteristicElement.GetElementsByTagName("Abbrev")?.Item(0)?.InnerText ?? "";
-                        string description = characteristicElement.GetElementsByTagName("Description")?.Item(0)?.InnerText?.Trim()
-                            ?.Replace("\n", " ")?.Replace("\r", " ")?.Replace("\t", " ") ?? "";
+                        string description = DescriptionParser.ParseDescription(characteristicElement);
                         var sources = SourceParser.ParseSources(characteristicElement);
 
                         characteristics.Add(new Characteristic(key, name, abbrev, description, sources));

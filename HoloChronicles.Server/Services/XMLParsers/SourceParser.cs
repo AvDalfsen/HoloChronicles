@@ -4,14 +4,14 @@ namespace HoloChronicles.Server.Services.XMLParsers
 {
     public class SourceParser
     {
-        public static List<string> ParseSources(XmlElement characteristicElement)
+        public static List<string> ParseSources(XmlElement element)
         {
             var sources = new List<string>();
 
-            XmlNodeList sourcesNodeList = characteristicElement.GetElementsByTagName("Sources");
+            XmlNodeList sourcesNodeList = element.GetElementsByTagName("Sources");
             if (sourcesNodeList.Count > 0)
             {
-                XmlElement sourcesNode = sourcesNodeList[0] as XmlElement;
+                XmlElement? sourcesNode = sourcesNodeList[0] as XmlElement;
                 XmlNodeList sourceNodes = sourcesNode.GetElementsByTagName("Source");
 
                 foreach (XmlNode sourceNode in sourceNodes)
@@ -34,7 +34,7 @@ namespace HoloChronicles.Server.Services.XMLParsers
             else
             {
                 // If <Sources> tag is missing, look for individual <Source> tag
-                XmlNodeList sourceNodes = characteristicElement.GetElementsByTagName("Source");
+                XmlNodeList sourceNodes = element.GetElementsByTagName("Source");
 
                 foreach (XmlNode sourceNode in sourceNodes)
                 {
