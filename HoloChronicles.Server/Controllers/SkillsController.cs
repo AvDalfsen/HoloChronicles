@@ -18,14 +18,12 @@ namespace HoloChronicles.Server.Controllers
         [HttpGet(Name = "GetSkills")]
         public IEnumerable<Skill> Get()
         {
-            // Build the file path for the Characteristics.xml
             string basePath = AppContext.BaseDirectory;
             string relativePath = Path.Combine("Assets", "BaseData", "Skills.xml");
             string fullPath = Path.Combine(basePath, relativePath);
 
             _logger.LogInformation($"Attempting to parse characteristics from file: {fullPath}");
 
-            // Return parsed characteristics from the XML file
             return SkillsParser.ParseSkillsFromFile(fullPath);
         }
     }

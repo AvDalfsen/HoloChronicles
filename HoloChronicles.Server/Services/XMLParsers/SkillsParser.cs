@@ -24,7 +24,6 @@ namespace HoloChronicles.Server.Services.XMLParsers
                         string key = skillElement.GetElementsByTagName("Key")?.Item(0)?.InnerText ?? "";
                         string name = skillElement.GetElementsByTagName("Name")?.Item(0)?.InnerText ?? "";
                         string abbrev = skillElement.GetElementsByTagName("Abbrev")?.Item(0)?.InnerText ?? "";
-                        // Remove header info from description
                         string description = DescriptionParser.ParseDescription(skillElement);
                         string charKey = skillElement.GetElementsByTagName("CharKey")?.Item(0)?.InnerText ?? "";
                         string typeValue = skillElement.GetElementsByTagName("TypeValue")?.Item(0)?.InnerText ?? "";

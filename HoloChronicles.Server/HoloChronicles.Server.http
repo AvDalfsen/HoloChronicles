@@ -4,3 +4,13 @@ GET {{HoloChronicles.Server_HostAddress}}/characteristics/
 Accept: application/json
 
 ###
+
+GET {{HoloChronicles.Server_HostAddress}}/skills/
+Accept: application/json
+
+###
+
+GET {{HoloChronicles.Server_HostAddress}}/recalculator/wounds?currentWounds=12&changedValue=-1
+Accept: application/json
+
+###
