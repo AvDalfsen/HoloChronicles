@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/HoloChronicles.Server/Assets/BaseData/Species/Aqualish.xml
+/HoloChronicles.Server/Assets/BaseData/Species/Aqualish_old.xml
