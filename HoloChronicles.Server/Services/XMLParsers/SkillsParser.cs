@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Xml;
+﻿using System.Xml;
 using HoloChronicles.Server.Dataclasses;
 
 namespace HoloChronicles.Server.Services.XMLParsers
@@ -21,12 +20,12 @@ namespace HoloChronicles.Server.Services.XMLParsers
                 {
                     if (node is XmlElement skillElement)
                     {
-                        string key = skillElement.GetElementsByTagName("Key")?.Item(0)?.InnerText ?? "";
-                        string name = skillElement.GetElementsByTagName("Name")?.Item(0)?.InnerText ?? "";
-                        string abbrev = skillElement.GetElementsByTagName("Abbrev")?.Item(0)?.InnerText ?? "";
+                        string key = skillElement.SelectSingleNode("Key")?.InnerText ?? "";
+                        string name = skillElement.SelectSingleNode("Name")?.InnerText ?? "";
+                        string abbrev = skillElement.SelectSingleNode("Abbrev")?.InnerText ?? "";
                         string description = DescriptionParser.ParseDescription(skillElement);
-                        string charKey = skillElement.GetElementsByTagName("CharKey")?.Item(0)?.InnerText ?? "";
-                        string typeValue = skillElement.GetElementsByTagName("TypeValue")?.Item(0)?.InnerText ?? "";
+                        string charKey = skillElement.SelectSingleNode("CharKey")?.InnerText ?? "";
+                        string typeValue = skillElement.SelectSingleNode("TypeValue")?.InnerText ?? "";
                         var sources = SourceParser.ParseSources(skillElement);
 
                         skills.Add(new Skill(key, name, description, charKey, typeValue, sources));

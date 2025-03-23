@@ -20,9 +20,9 @@ namespace HoloChronicles.Server.Services.XMLParsers
                 {
                     if (node is XmlElement characteristicElement)
                     {
-                        string key = characteristicElement.GetElementsByTagName("Key")?.Item(0)?.InnerText ?? "";
-                        string name = characteristicElement.GetElementsByTagName("Name")?.Item(0)?.InnerText ?? "";
-                        string abbrev = characteristicElement.GetElementsByTagName("Abbrev")?.Item(0)?.InnerText ?? "";
+                        string key = characteristicElement.SelectSingleNode("Key")?.InnerText ?? "";
+                        string name = characteristicElement.SelectSingleNode("Name")?.InnerText ?? "";
+                        string abbrev = characteristicElement.SelectSingleNode("Abbrev")?.InnerText ?? "";
                         string description = DescriptionParser.ParseDescription(characteristicElement);
                         var sources = SourceParser.ParseSources(characteristicElement);
 

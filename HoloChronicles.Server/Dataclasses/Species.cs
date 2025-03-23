@@ -1,15 +1,18 @@
-﻿namespace HoloChronicles.Server.Dataclasses
+﻿using HoloChronicles.Server.Dataclasses;
+
+namespace HoloChronicles.Server.Dataclasses
 {
     public class StartingChars
     {
-        public string? Brawn { get; set; }
-        public string? Agility { get; set; }
-        public string? Intellect { get; set; }
-        public string? Cunning { get; set; }
-        public string? Willpower { get; set; }
-        public string? Presence { get; set; }
+        public int? Brawn { get; set; }
+        public int? Agility { get; set; }
+        public int? Intellect { get; set; }
+        public int? Cunning { get; set; }
+        public int? Willpower { get; set; }
+        public int? Presence { get; set; }
 
-        public StartingChars(string? brawn = null, string? agility = null, string? intellect = null, string? cunning = null, string? willpower = null, string? presence = null)
+        public StartingChars(int? brawn = null, int? agility = null, int? intellect = null, int? cunning = null, int? willpower = null, 
+                             int? presence = null)
         {
             Brawn = brawn;
             Agility = agility;
@@ -22,16 +25,17 @@
 
     public class StartingAttrs
     {
-        public string? WoundThreshold { get; set; }
-        public string? StrainThreshold { get; set; }
-        public string? Experience { get; set; }
-        public string? DefenseRanged { get; set; }
-        public string? DefenseMelee { get; set; }
-        public string? SoakValue { get; set; }
-        public string? ForceRating { get; set; }
-        public string? EncumbranceBonus { get; set; }
+        public int? WoundThreshold { get; set; }
+        public int? StrainThreshold { get; set; }
+        public int? Experience { get; set; }
+        public int? DefenseRanged { get; set; }
+        public int? DefenseMelee { get; set; }
+        public int? SoakValue { get; set; }
+        public int? ForceRating { get; set; }
+        public int? EncumbranceBonus { get; set; }
 
-        public StartingAttrs(string? woundThreshold = null, string? strainThreshold = null, string? experience = null, string? defenseRanged = null, string? defenseMelee = null, string? soakValue = null, string? forceRating = null, string? encumbranceBonus = null)
+        public StartingAttrs(int? woundThreshold = null, int? strainThreshold = null, int? experience = null, int? defenseRanged = null, 
+                             int? defenseMelee = null, int? soakValue = null, int? forceRating = null, int? encumbranceBonus = null)
         {
             WoundThreshold = woundThreshold;
             StrainThreshold = strainThreshold;
@@ -47,13 +51,14 @@
     public class SkillModifier
     {
         public string? Key { get; set; }
-        public string? RankStart { get; set; }
-        public string? RankLimit { get; set; }
-        public string? RankAdd { get; set; }
+        public int? RankStart { get; set; }
+        public int? RankLimit { get; set; }
+        public int? RankAdd { get; set; }
         public string? IsCareer { get; set; }
         public string? SkillType { get; set; }
 
-        public SkillModifier(string? key = null, string? rankStart = null, string? rankLimit = null, string? rankAdd = null, string? isCareer = null, string? skillType = null)
+        public SkillModifier(string? key = null, int? rankStart = null, int? rankLimit = null, int? rankAdd = null, 
+                             string? isCareer = null, string? skillType = null)
         {
             Key = key;
             RankStart = rankStart;
@@ -77,9 +82,9 @@
     public class TalentModifier
     {
         public string? Key { get; set; }
-        public string? RankAdd { get; set; }
+        public int? RankAdd { get; set; }
 
-        public TalentModifier(string? key = null, string? rankAdd = null)
+        public TalentModifier(string? key = null, int? rankAdd = null)
         {
             Key = key;
             RankAdd = rankAdd;
@@ -107,7 +112,9 @@
         public StartingAttributes? StartingAttributes { get; set; }
         public TalentModifiers? TalentModifiers { get; set; }
 
-        public Option(string? key = null, string? name = null, string? description = null, SkillModifiers? skillModifiers = null, DieModifiers? dieModifiers = null, StartingSkillTraining? startingSkillTraining = null, StartingAttributes? startingAttributes = null, TalentModifiers? talentModifiers = null)
+        public Option(string? key = null, string? name = null, string? description = null, SkillModifiers? skillModifiers = null,
+                      DieModifiers? dieModifiers = null, StartingSkillTraining? startingSkillTraining = null, 
+                      StartingAttributes? startingAttributes = null, TalentModifiers? talentModifiers = null)
         {
             Key = key;
             Name = name;
@@ -157,14 +164,15 @@
     public class DieModifier
     {
         public string? SkillKey { get; set; }
-        public string? AdvantageCount { get; set; }
+        public int? AdvantageCount { get; set; }
         public string? SkillType { get; set; }
-        public string? BoostCount { get; set; }
-        public string? SetbackCount { get; set; }
-        public string? SuccessCount { get; set; }
-        public string? AddSetbackCount { get; set; }
+        public int? BoostCount { get; set; }
+        public int? SetbackCount { get; set; }
+        public int? SuccessCount { get; set; }
+        public int? AddSetbackCount { get; set; }
 
-        public DieModifier(string? skillKey = null, string? advantageCount = null, string? skillType = null, string? boostCount = null, string? setbackCount = null, string? successCount = null, string? addSetbackCount = null)
+        public DieModifier(string? skillKey = null, int? advantageCount = null, string? skillType = null, int? boostCount = null,
+                           int? setbackCount = null, int? successCount = null, int? addSetbackCount = null)
         {
             SkillKey = skillKey;
             AdvantageCount = advantageCount;
@@ -194,7 +202,8 @@
         public string? SkillType { get; set; }
         public string? NonCareer { get; set; }
 
-        public Requirement(string? career = null, string? specialization = null, string? fromSkillType = null, string? skillType = null, string? nonCareer = null)
+        public Requirement(string? career = null, string? specialization = null, string? fromSkillType = null, 
+                           string? skillType = null, string? nonCareer = null)
         {
             Career = career;
             Specialization = specialization;
@@ -206,10 +215,10 @@
 
     public class SkillTraining
     {
-        public string? SkillCount { get; set; }
+        public int? SkillCount { get; set; }
         public Requirement? Requirement { get; set; }
 
-        public SkillTraining(string? skillCount = null, Requirement? requirement = null)
+        public SkillTraining(int? skillCount = null, Requirement? requirement = null)
         {
             SkillCount = skillCount;
             Requirement = requirement;
@@ -228,15 +237,28 @@
 
     public class WeaponModifier
     {
-        public string? AllSkillKey { get; set; }
-        public string? DamageAdd { get; set; }
-        public string? Crit { get; set; }
+        public string AllSkillKey { get; set; }
+        public int DamageAdd { get; set; }
+        public int Crit { get; set; }
+        public string Range { get; set; }
+        public string UnarmedName { get; set; }
+        public string SkillKey { get; set; }
+        public int Damage { get; set; }
+        public Qualities Qualities { get; set; }
+        public string RangeValue { get; set; }
 
-        public WeaponModifier(string? allSkillKey = null, string? damageAdd = null, string? crit = null)
+        public WeaponModifier(string allSkillKey, int damageAdd, int crit, string range, string unarmedName,
+                              string skillKey, int damage, Qualities qualities, string rangeValue)
         {
             AllSkillKey = allSkillKey;
             DamageAdd = damageAdd;
             Crit = crit;
+            Range = range;
+            UnarmedName = unarmedName;
+            SkillKey = skillKey;
+            Damage = damage;
+            Qualities = qualities;
+            RangeValue = rangeValue;
         }
     }
 
@@ -263,7 +285,9 @@
         public WeaponModifiers? WeaponModifiers { get; set; }
         public TalentModifiers? TalentModifiers { get; set; }
 
-        public SubSpecies(string? key = null, string? name = null, string? description = null, StartingChars? startingChars = null, StartingAttrs? startingAttrs = null, SkillModifiers? skillModifiers = null, OptionChoices? optionChoices = null, string? cyberneticsAdjust = null, WeaponModifiers? weaponModifiers = null, TalentModifiers? talentModifiers = null)
+        public SubSpecies(string? key = null, string? name = null, string? description = null, StartingChars? startingChars = null, 
+                          StartingAttrs? startingAttrs = null, SkillModifiers? skillModifiers = null, OptionChoices? optionChoices = null, 
+                          string? cyberneticsAdjust = null, WeaponModifiers? weaponModifiers = null, TalentModifiers? talentModifiers = null)
         {
             Key = key;
             Name = name;
@@ -293,7 +317,7 @@
         public string? Key { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? Source { get; set; }
+        public List<string>? Sources { get; set; } = new();
         public string? Custom { get; set; }
         public StartingChars? StartingChars { get; set; }
         public StartingAttrs? StartingAttrs { get; set; }
@@ -302,16 +326,19 @@
         public OptionChoices? OptionChoices { get; set; }
         public SubSpeciesList? SubSpeciesList { get; set; }
         public WeaponModifiers? WeaponModifiers { get; set; }
-        public List<string>? Sources { get; set; } = new();
         public string? NoForceAbilities { get; set; }
         public string? CyberneticsAdjust { get; set; }
 
-        public Species(string? key = null, string? name = null, string? description = null, string? source = null, string? custom = null, StartingChars? startingChars = null, StartingAttrs? startingAttrs = null, SkillModifiers? skillModifiers = null, TalentModifiers? talentModifiers = null, OptionChoices? optionChoices = null, SubSpeciesList? subSpeciesList = null, WeaponModifiers? weaponModifiers = null, List<string>? sources = null, string? noForceAbilities = null, string? cyberneticsAdjust = null)
+        public Species(string? key = null, string? name = null, string? description = null, List<string>? sources = null, 
+                       string? custom = null, StartingChars? startingChars = null, StartingAttrs? startingAttrs = null, 
+                       SkillModifiers? skillModifiers = null, TalentModifiers? talentModifiers = null, OptionChoices? optionChoices = null, 
+                       SubSpeciesList? subSpeciesList = null, WeaponModifiers? weaponModifiers = null, string? noForceAbilities = null, 
+                       string? cyberneticsAdjust = null)
         {
             Key = key;
             Name = name;
             Description = description;
-            Source = source;
+            Sources = sources ?? new List<string>();
             Custom = custom;
             StartingChars = startingChars;
             StartingAttrs = startingAttrs;
@@ -320,7 +347,6 @@
             OptionChoices = optionChoices;
             SubSpeciesList = subSpeciesList;
             WeaponModifiers = weaponModifiers;
-            Sources = sources ?? new List<string>();
             NoForceAbilities = noForceAbilities;
             CyberneticsAdjust = cyberneticsAdjust;
         }

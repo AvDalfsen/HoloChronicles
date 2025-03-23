@@ -14,3 +14,8 @@ GET {{HoloChronicles.Server_HostAddress}}/recalculator/wounds?currentWounds=12&c
 Accept: application/json
 
 ###
+
+GET {{HoloChronicles.Server_HostAddress}}/species/
+Accept: application/json
+
+###
