@@ -26,7 +26,7 @@ namespace HoloChronicles.Server.Services.XMLParsers
                         continue;
                     }
 
-                    var species = ParseSpecies(rootElement);
+                    Species species = ParseSpecies(rootElement);
                     speciesList.Add(species);
                 }
 
