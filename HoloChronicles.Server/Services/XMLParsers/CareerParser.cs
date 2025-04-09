@@ -45,11 +45,11 @@ namespace HoloChronicles.Server.Services.XMLParsers
             string? name = careerElement.SelectSingleNode("Name")?.InnerText;
             string? description = DescriptionParser.ParseDescription(careerElement);
             var sources = SourceParser.ParseSources(careerElement);
-            var careerSkills = ParseList(careerElement, "CareerSkills/Key");
-            var specializations = ParseList(careerElement, "Specializations/Key");
-            int? forceRating = ParseNullableInt(careerElement.SelectSingleNode("ForceRating")?.InnerText);
-            int? freeRanks = ParseNullableInt(careerElement.SelectSingleNode("FreeRanks")?.InnerText);
-            var attributes = ParseAttributes(careerElement.SelectSingleNode("Attributes") as XmlElement);
+            List<string>? careerSkills = ParseList(careerElement, "CareerSkills/Key");
+            List<string>? specializations = ParseList(careerElement, "Specializations/Key");
+            int? forceRating = Converters.GetIntFromNode(careerElement, "ForceRating");
+            int? freeRanks = Converters.GetIntFromNode(careerElement, "FreeRanks");
+            Attributes? attributes = ParseAttributes(careerElement.SelectSingleNode("Attributes") as XmlElement);
 
             return new Career(key, name, description, sources, careerSkills, specializations, forceRating, freeRanks, attributes);
         }
@@ -71,26 +71,17 @@ namespace HoloChronicles.Server.Services.XMLParsers
             return list;
         }
 
-        private static int? ParseNullableInt(string? value)
-        {
-            if (int.TryParse(value, out int result))
-            {
-                return result;
-            }
-            return null;
-        }
-
         private static Attributes? ParseAttributes(XmlElement? attributesElement)
         {
             if (attributesElement == null) return null;
 
-            int woundThreshold = ParseNullableInt(attributesElement.SelectSingleNode("WoundThreshold")?.InnerText) ?? 0;
-            int strainThreshold = ParseNullableInt(attributesElement.SelectSingleNode("StrainThreshold")?.InnerText) ?? 0;
-            int defenseRanged = ParseNullableInt(attributesElement.SelectSingleNode("DefenseRanged")?.InnerText) ?? 0;
-            int defenseMelee = ParseNullableInt(attributesElement.SelectSingleNode("DefenseMelee")?.InnerText) ?? 0;
-            int soakValue = ParseNullableInt(attributesElement.SelectSingleNode("SoakValue")?.InnerText) ?? 0;
-            int experience = ParseNullableInt(attributesElement.SelectSingleNode("Experience")?.InnerText) ?? 0;
-            int forceRating = ParseNullableInt(attributesElement.SelectSingleNode("ForceRating")?.InnerText) ?? 0;
+            int? woundThreshold = Converters.GetIntFromNode(attributesElement, "WoundThreshold");
+            int? strainThreshold = Converters.GetIntFromNode(attributesElement, "StrainThreshold");
+            int? defenseRanged = Converters.GetIntFromNode(attributesElement, "DefenseRanged");
+            int? defenseMelee = Converters.GetIntFromNode(attributesElement, "DefenseMelee");
+            int? soakValue = Converters.GetIntFromNode(attributesElement, "SoakValue");
+            int? experience = Converters.GetIntFromNode(attributesElement, "Experience");
+            int? forceRating = Converters.GetIntFromNode(attributesElement, "ForceRating");
 
             var requirement = ParseRequirement(attributesElement.SelectSingleNode("Requirement") as XmlElement);
 
@@ -101,11 +92,11 @@ namespace HoloChronicles.Server.Services.XMLParsers
         {
             if (requirementElement == null) return null;
 
-            bool wearingArmor = bool.TryParse(requirementElement.SelectSingleNode("WearingArmor")?.InnerText, out bool armor) && armor;
-            bool career = bool.TryParse(requirementElement.SelectSingleNode("Career")?.InnerText, out bool isCareer) && isCareer;
-            bool specialization = bool.TryParse(requirementElement.SelectSingleNode("Specialization")?.InnerText, out bool isSpecialization) && isSpecialization;
-            bool nonCareer = bool.TryParse(requirementElement.SelectSingleNode("NonCareer")?.InnerText, out bool isNonCareer) && isNonCareer;
-            int soakAtLeast = ParseNullableInt(requirementElement.SelectSingleNode("SoakAtLeast")?.InnerText) ?? 0;
+            bool? wearingArmor = Converters.GetBoolFromNode(requirementElement, "WearingArmor");
+            bool? career = Converters.GetBoolFromNode(requirementElement, "Career");
+            bool? specialization = Converters.GetBoolFromNode(requirementElement, "Specialization");
+            bool? nonCareer = Converters.GetBoolFromNode(requirementElement, "NonCareer");
+            int? soakAtLeast = Converters.GetIntFromNode(requirementElement, "SoakAtLeast");
 
             return new CareerRequirement(wearingArmor, career, specialization, nonCareer, soakAtLeast);
         }

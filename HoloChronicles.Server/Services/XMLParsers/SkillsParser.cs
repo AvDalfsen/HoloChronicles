@@ -20,12 +20,12 @@ namespace HoloChronicles.Server.Services.XMLParsers
                 {
                     if (node is XmlElement skillElement)
                     {
-                        string key = skillElement.SelectSingleNode("Key")?.InnerText ?? "";
-                        string name = skillElement.SelectSingleNode("Name")?.InnerText ?? "";
-                        string abbrev = skillElement.SelectSingleNode("Abbrev")?.InnerText ?? "";
-                        string description = DescriptionParser.ParseDescription(skillElement);
-                        string charKey = skillElement.SelectSingleNode("CharKey")?.InnerText ?? "";
-                        string typeValue = skillElement.SelectSingleNode("TypeValue")?.InnerText ?? "";
+                        string? key = skillElement.SelectSingleNode("Key")?.InnerText;
+                        string? name = skillElement.SelectSingleNode("Name")?.InnerText;
+                        string? abbrev = skillElement.SelectSingleNode("Abbrev")?.InnerText;
+                        string? description = DescriptionParser.ParseDescription(skillElement);
+                        string? charKey = skillElement.SelectSingleNode("CharKey")?.InnerText;
+                        string? typeValue = skillElement.SelectSingleNode("TypeValue")?.InnerText;
                         var sources = SourceParser.ParseSources(skillElement);
 
                         skills.Add(new Skill(key, name, description, charKey, typeValue, sources));
