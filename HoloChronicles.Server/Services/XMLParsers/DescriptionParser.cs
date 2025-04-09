@@ -10,6 +10,7 @@ namespace HoloChronicles.Server.Services.XMLParsers
         {
             string description = element.SelectSingleNode("Description")?.InnerText?.Replace("\n", " ")?.Replace("\r", " ")?.Replace("\t", " ") ?? "";
             description = Regex.Replace(description, @"\[H\d+\](.*?)\[h\d+\]", "");
+            description = Regex.Replace(description, @"\s+", " ");
             description = description.Trim();
 
             return description;

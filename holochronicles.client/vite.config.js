@@ -47,6 +47,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
+            '^/career'          : { target, secure: false },
             '^/characteristics' : { target, secure: false },
             '^/skills'          : { target, secure: false },
             '^/species'         : { target, secure: false },
