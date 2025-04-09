@@ -16,24 +16,34 @@ namespace HoloChronicles.Server.Services.XMLParsers
 
                 foreach (var filePath in xmlFiles)
                 {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(filePath);
-
-                    XmlElement? rootElement = doc.DocumentElement;
-                    if (rootElement == null || rootElement.Name != "Species")
+                    try
                     {
-                        Console.WriteLine($"Skipping file: {filePath}. Root element is not <Species> or is missing.");
-                        continue;
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(filePath);
+
+                        XmlElement? rootElement = doc.DocumentElement;
+                        if (rootElement == null || rootElement.Name != "Species")
+                        {
+                            Console.WriteLine($"Skipping file: {filePath}. Root element is not <Species> or is missing.");
+                            continue;
+                        }
+
+                        Species species = ParseSpecies(rootElement);
+                        speciesList.Add(species);
                     }
-
-                    Species species = ParseSpecies(rootElement);
-                    speciesList.Add(species);
+                    catch (XmlException ex)
+                    {
+                        Console.WriteLine($"Error parsing XML file {filePath}: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Unexpected error processing file {filePath}: {ex.Message}");
+                    }
                 }
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error parsing XML file: " + ex.Message);
+                Console.WriteLine($"Error accessing folder {folderpath}: {ex.Message}");
             }
 
             return speciesList;
@@ -63,39 +73,51 @@ namespace HoloChronicles.Server.Services.XMLParsers
 
         private static List<SkillModifier>? ParseSkillModifiers(XmlElement speciesElement)
         {
-            List<SkillModifier> skillModifiers = new List<SkillModifier>();
+            var skillModifiers = new List<SkillModifier>();
 
-            XmlNodeList? skillModifiersNodeList = speciesElement.GetElementsByTagName("SkillModifiers");
-            if (skillModifiersNodeList.Count > 0)
+            try
             {
-                XmlElement? skillModifiersNode = skillModifiersNodeList[0] as XmlElement;
-
-                if (skillModifiersNode != null)
+                XmlNodeList? skillModifiersNodeList = speciesElement.GetElementsByTagName("SkillModifiers");
+                if (skillModifiersNodeList.Count > 0)
                 {
-                    XmlNodeList skillModifierNodeList = skillModifiersNode.GetElementsByTagName("SkillModifier");
+                    XmlElement? skillModifiersNode = skillModifiersNodeList[0] as XmlElement;
 
-                    foreach (XmlNode skillModifierNode in skillModifierNodeList)
+                    if (skillModifiersNode != null)
                     {
-                        SkillModifier skillModifier = new SkillModifier();
+                        XmlNodeList skillModifierNodeList = skillModifiersNode.GetElementsByTagName("SkillModifier");
 
-                        if (skillModifierNode is XmlElement skillModifierElement)
+                        foreach (XmlNode skillModifierNode in skillModifierNodeList)
                         {
-                            skillModifier.Key = skillModifierElement.SelectSingleNode("Key")?.InnerText;
-                            skillModifier.RankStart = Converters.GetIntFromNode(skillModifierElement, "RankStart");
-                            skillModifier.RankLimit = Converters.GetIntFromNode(skillModifierElement, "RankLimit");
-                            skillModifier.RankAdd = Converters.GetIntFromNode(skillModifierElement, "RankAdd");
-                            skillModifier.IsCareer = Converters.GetBoolFromNode(skillModifierElement, "IsCareer");
-                            skillModifier.SkillType = skillModifierElement.SelectSingleNode("SkillType")?.InnerText;
-                        }
+                            if (skillModifierNode is XmlElement skillModifierElement)
+                            {
+                                try
+                                {
+                                    string? key = skillModifierElement.SelectSingleNode("Key")?.InnerText;
+                                    int? rankStart = Converters.GetIntFromNode(skillModifierElement, "RankStart");
+                                    int? rankLimit = Converters.GetIntFromNode(skillModifierElement, "RankLimit");
+                                    int? rankAdd = Converters.GetIntFromNode(skillModifierElement, "RankAdd");
+                                    bool? isCareer = Converters.GetBoolFromNode(skillModifierElement, "IsCareer");
+                                    string? skillType = skillModifierElement.SelectSingleNode("SkillType")?.InnerText;
 
-                        skillModifiers.Add(skillModifier);
+                                    skillModifiers.Add(new SkillModifier(key, rankStart, rankLimit, rankAdd, isCareer, skillType));
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine($"Error parsing SkillModifier: {ex.Message}");
+                                }
+                            }
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing SkillModifiers: {ex.Message}");
+            }
 
             return skillModifiers;
-        }        
-        
+        }
+
         private static List<SubSpecies>? ParseSubSpecies(XmlElement speciesElement)
         {
             List<SubSpecies>? subSpeciesList = new List<SubSpecies>();
@@ -222,6 +244,7 @@ namespace HoloChronicles.Server.Services.XMLParsers
                             option.Description = DescriptionParser.ParseDescription(optionElement);
                             option.SkillModifiers = ParseSkillModifiers(optionElement);
                             option.DieModifiers = ParseDieModifiers(optionElement);
+                            option.StartingSkillTraining = ParseSkillTraining(optionElement);
                             option.Experience = Converters.GetIntFromNode(optionElement, "StartingAttributes/Experience");
                             option.TalentModifiers = ParseTalentModifiers(optionElement);
                         }
@@ -379,6 +402,41 @@ namespace HoloChronicles.Server.Services.XMLParsers
                 ForceRating = Converters.GetIntFromNode(startingAttrsNode, "ForceRating"),
                 EncumbranceBonus = Converters.GetIntFromNode(startingAttrsNode, "EncumbranceBonus")
             };
+        }
+
+        private static List<SkillTraining>? ParseSkillTraining(XmlElement optionElement)
+        {
+            List<SkillTraining> skillTrainingList = new List<SkillTraining>();
+
+            XmlNodeList? skillTrainingNodes = optionElement.GetElementsByTagName("SkillTraining");
+            if (skillTrainingNodes != null)
+            {
+                foreach (XmlNode skillTrainingNode in skillTrainingNodes)
+                {
+                    if (skillTrainingNode is XmlElement skillTrainingElement)
+                    {
+                        int? skillCount = Converters.GetIntFromNode(skillTrainingElement, "SkillCount");
+                        var requirement = ParseSpeciesRequirement(skillTrainingElement.SelectSingleNode("Requirement") as XmlElement);
+
+                        skillTrainingList.Add(new SkillTraining(skillCount, requirement));
+                    }
+                }
+            }
+
+            return skillTrainingList;
+        }
+
+        private static SpeciesRequirement? ParseSpeciesRequirement(XmlElement? requirementElement)
+        {
+            if (requirementElement == null) return null;
+
+            string? career = requirementElement.SelectSingleNode("Career")?.InnerText;
+            string? specialization = requirementElement.SelectSingleNode("Specialization")?.InnerText;
+            string? fromSkillType = requirementElement.SelectSingleNode("FromSkillType")?.InnerText;
+            string? skillType = requirementElement.SelectSingleNode("SkillType")?.InnerText;
+            string? nonCareer = requirementElement.SelectSingleNode("NonCareer")?.InnerText;
+
+            return new SpeciesRequirement(career, specialization, fromSkillType, skillType, nonCareer);
         }
     }
 }

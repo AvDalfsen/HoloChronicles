@@ -61,18 +61,30 @@ function App() {
     );
 
     async function populateCharacteristics() {
-        const response = await fetch('characteristics');
-        if (response.ok) {
-            const data = await response.json();
-            setCharacteristics(data);
+        try {
+            const response = await fetch('characteristics');
+            if (response.ok) {
+                const data = await response.json();
+                setCharacteristics(data);
+            } else {
+                console.error('Failed to fetch characteristics:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching characteristics:', error);
         }
     }
 
     async function populateSkills() {
-        const response = await fetch('skills');
-        if (response.ok) {
-            const data = await response.json();
-            setSkills(data);
+        try {
+            const response = await fetch('skills');
+            if (response.ok) {
+                const data = await response.json();
+                setSkills(data);
+            } else {
+                console.error('Failed to fetch skills:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching skills:', error);
         }
     }
 }

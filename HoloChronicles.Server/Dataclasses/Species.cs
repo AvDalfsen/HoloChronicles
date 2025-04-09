@@ -143,7 +143,7 @@ namespace HoloChronicles.Server.Dataclasses
         }
     }
 
-    public class Requirement
+    public class SpeciesRequirement
     {
         public string? Career { get; set; }
         public string? Specialization { get; set; }
@@ -151,7 +151,7 @@ namespace HoloChronicles.Server.Dataclasses
         public string? SkillType { get; set; }
         public string? NonCareer { get; set; }
 
-        public Requirement(string? career = null, string? specialization = null, string? fromSkillType = null, 
+        public SpeciesRequirement(string? career = null, string? specialization = null, string? fromSkillType = null, 
                            string? skillType = null, string? nonCareer = null)
         {
             Career = career;
@@ -165,9 +165,9 @@ namespace HoloChronicles.Server.Dataclasses
     public class SkillTraining
     {
         public int? SkillCount { get; set; }
-        public Requirement? Requirement { get; set; }
+        public SpeciesRequirement? Requirement { get; set; }
 
-        public SkillTraining(int? skillCount = null, Requirement? requirement = null)
+        public SkillTraining(int? skillCount = null, SpeciesRequirement? requirement = null)
         {
             SkillCount = skillCount;
             Requirement = requirement;
