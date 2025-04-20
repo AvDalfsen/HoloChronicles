@@ -51,7 +51,9 @@ export default defineConfig({
             '^/characteristics' : { target, secure: false },
             '^/skills'          : { target, secure: false },
             '^/species'         : { target, secure: false },
-            '^/recalculator'    : { target, secure: false }
+            '^/recalculator'    : { target, secure: false },
+            '^/healthcheck'     : { target, secure: false }
+
         },
         port: parseInt(env.DEV_SERVER_PORT || '60939'),
         https: {
