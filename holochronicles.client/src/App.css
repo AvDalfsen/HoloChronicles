@@ -1,15 +1,74 @@
-﻿#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+﻿/* Ensure the app container takes full height */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
 }
 
+/* TopBar styling */
+.topbar {
+    background-color: #1e1e2f;
+    color: white;
+    text-align: center;
+    flex-shrink: 0; /* Prevent TopBar from shrinking */
+    width: 100%; /* Ensure TopBar spans the full width of the screen */
+    position: sticky; /* Fix the TopBar at the top */
+    top: 0;
+    left: 0;
+    z-index: 10; /* Ensure TopBar is above other content */
+}
+
+/* Content container where sidebar and main content are placed side by side */
+.content-container {
+    display: flex;
+    flex: 1; /* Take the remaining vertical space */
+    margin-top: 2rem; /* This margin will help to avoid overlapping the top bar */
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 200px; /* Fixed width */
+    background-color: #282c34;
+    color: white;
+    padding: 1rem;
+    flex-shrink: 0; /* Prevent Sidebar from shrinking */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    /* Sidebar links styling */
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar li {
+        margin-bottom: 1rem;
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+    }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+            color: #61dafb;
+        }
+
+/* Main content area */
+.main-content {
+    flex: 1; /* Take remaining space next to the Sidebar */
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+/* Table styles for characteristics and skills */
 th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
 
+/* Spinner styling */
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     width: 36px;
@@ -20,8 +79,16 @@ th, td {
     margin: 1rem auto;
 }
 
+/* Spinner animation */
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Root container for centering */
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
