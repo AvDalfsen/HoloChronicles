@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import React from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/fetcher';
+import { Button } from '@/components/ui/button';
+import { Minus, Plus } from 'lucide-react';
 
 export interface Characteristic {
     key?: string;
@@ -14,6 +15,7 @@ const CHARACTERISTICS_CACHE_KEY = 'characteristicsCache';
 
 function Characteristics() {
     const [characteristics, setCharacteristics] = useState<Characteristic[]>([]);
+    const [values, setValues] = useState<Record<string, number>>({});
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -24,6 +26,12 @@ function Characteristics() {
             );
             if (data) {
                 setCharacteristics(data);
+                // Initialize values to zero
+                const initialValues: Record<string, number> = {};
+                data.forEach((char) => {
+                    if (char.key) initialValues[char.key] = 0;
+                });
+                setValues(initialValues);
             } else {
                 setError('Failed to fetch characteristics');
             }
@@ -32,12 +40,19 @@ function Characteristics() {
         loadCharacteristics();
     }, []);
 
-    return (
-        <div>
-            <h1>Characteristics</h1>
-            <p>Them sweet Characteristics, baby!</p>
+    const adjustValue = (key: string, delta: number) => {
+        setValues((prev) => ({
+            ...prev,
+            [key]: Math.max(0, (prev[key] ?? 0) + delta),
+        }));
+    };
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+    return (
+        <div className="p-6 space-y-4">
+            <h1 className="text-3xl font-bold">Characteristics</h1>
+            <p className="text-muted-foreground mb-6">Adjust your stats below:</p>
+
+            {error && <p className="text-red-500">{error}</p>}
 
             {characteristics.length === 0 ? (
                 <div>
@@ -45,36 +60,26 @@ function Characteristics() {
                     <div className="spinner" />
                 </div>
             ) : (
-                <table className="table table-striped" aria-labelledby="tableLabel">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Key</th>
-                            <th>Abbrev</th>
-                            <th>Sources</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {characteristics.map((char) => (
-                            <tr key={char.name}>
-                                <td>{char.name}</td>
-                                <td>{char.key}</td>
-                                <td>{char.abbrev}</td>
-                                <td>
-                                    {char.sources && char.sources.length > 0 ? (
-                                        char.sources.map((source, idx) => (
-                                            <span key={idx}>{source}<br /></span>
-                                        ))
-                                    ) : (
-                                        <em>No sources listed</em>
-                                    )}
-                                </td>
-                                <td>{char.description}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {characteristics.map((char) => (
+                        <div
+                            key={char.key}
+                            className="bg-white shadow-md rounded-2xl p-4 flex flex-col items-center text-center border"
+                        >
+                            <h2 className="text-xl font-semibold mb-2">{char.name}</h2>
+                            {char.abbrev && <p className="text-muted-foreground text-sm mb-2">({char.abbrev})</p>}
+                            <div className="flex items-center space-x-4 mt-4">
+                                <Button size="icon" onClick={() => adjustValue(char.key!, -1)} variant="outline">
+                                    <Minus />
+                                </Button>
+                                <span className="text-2xl w-10 text-center">{values[char.key!] ?? 0}</span>
+                                <Button size="icon" onClick={() => adjustValue(char.key!, 1)} variant="outline">
+                                    <Plus />
+                                </Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );

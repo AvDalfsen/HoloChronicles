@@ -1,14 +1,6 @@
 {
-    "files": [],
-    "references": [
-        {
-            "path": "./tsconfig.app.json"
-        },
-        {
-            "path": "./tsconfig.node.json"
-        }
-    ],
     "compilerOptions": {
+        "jsx": "react-jsx",
         "baseUrl": ".",
         "paths": {
             "@/*": [ "./src/*" ]
@@ -16,17 +8,11 @@
         "target": "esnext",
         "module": "esnext",
         "moduleResolution": "node",
-        "jsx": "react-jsx",
         "esModuleInterop": true,
         "strict": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [ "dom", "esnext" ]
     },
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": [ "src" ]
 }

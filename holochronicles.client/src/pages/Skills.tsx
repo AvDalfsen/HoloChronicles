@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import React from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/fetcher'; // Import the generic function
+import { fetchDataWithRetryAndCache } from '@/api/fetcher';
 
 export interface Skill {
     key?: string;
