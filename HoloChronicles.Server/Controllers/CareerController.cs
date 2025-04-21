@@ -5,7 +5,7 @@ using HoloChronicles.Server.Services.XMLParsers;
 namespace HoloChronicles.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CareerController : ControllerBase
     {
         private readonly ILogger<CareerController> _logger;

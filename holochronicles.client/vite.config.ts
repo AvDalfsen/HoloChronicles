@@ -47,12 +47,12 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/career'          : { target, secure: false },
-            '^/characteristics' : { target, secure: false },
-            '^/skills'          : { target, secure: false },
-            '^/species'         : { target, secure: false },
-            '^/recalculator'    : { target, secure: false },
-            '^/healthcheck'     : { target, secure: false }
+            '^/api/career'          : { target, secure: false },
+            '^/api/characteristics' : { target, secure: false },
+            '^/api/skills'          : { target, secure: false },
+            '^/api/species'         : { target, secure: false },
+            '^/api/recalculator'    : { target, secure: false },
+            '^/api/healthcheck'     : { target, secure: false }
 
         },
         port: parseInt(env.DEV_SERVER_PORT || '60939'),

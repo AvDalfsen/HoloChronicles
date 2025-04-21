@@ -1,8 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';  // Use RouterProvider instead of BrowserRouter
+import { RouterProvider } from 'react-router-dom';
 import './index.css';
-import { router } from './router';  // Import the router from router.tsx
+import { router } from './router'; 
+import React from 'react';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {

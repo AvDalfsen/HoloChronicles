@@ -4,7 +4,7 @@ using HoloChronicles.Server.Services.Utils;
 namespace HoloChronicles.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RecalculatorController : ControllerBase
     {
         private readonly ILogger<RecalculatorController> _logger;

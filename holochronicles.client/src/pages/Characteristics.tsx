@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import React from 'react';
+import { fetchDataWithRetryAndCache } from '@/api/fetcher';
 
 export interface Characteristic {
     key?: string;
@@ -8,57 +10,27 @@ export interface Characteristic {
     sources?: string[];
 }
 
+const CHARACTERISTICS_CACHE_KEY = 'characteristicsCache';
+
 function Characteristics() {
     const [characteristics, setCharacteristics] = useState<Characteristic[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        async function fetchDataWithRetry(attempts = 5, delay = 1000) {
-            for (let i = 0; i < attempts; i++) {
-                try {
-                    const isBackendReady = await checkBackendReady();
-                    if (isBackendReady) {
-                        await populateCharacteristics();
-                        return;
-                    }
-                } catch (err) {
-                    // ignore and retry
-                }
-
-                await new Promise(res => setTimeout(res, delay));
-            }
-
-            setError("Backend is not ready. Please try again later.");
-        }
-
-        fetchDataWithRetry();
-    }, []);
-
-    const checkBackendReady = async (): Promise<boolean> => {
-        try {
-            const response = await fetch('/healthcheck');
-            return response.ok;
-        } catch (error) {
-            console.error("Error checking backend readiness:", error);
-            return false;
-        }
-    };
-
-    async function populateCharacteristics() {
-        try {
-            const response = await fetch('characteristics');
-            if (response.ok) {
-                const data: Characteristic[] = await response.json();
+        async function loadCharacteristics() {
+            const data = await fetchDataWithRetryAndCache<Characteristic[]>(
+                '/api/characteristics',
+                CHARACTERISTICS_CACHE_KEY
+            );
+            if (data) {
                 setCharacteristics(data);
             } else {
-                console.error('Failed to fetch characteristics:', response.statusText);
-                throw new Error('Failed to fetch characteristics');
+                setError('Failed to fetch characteristics');
             }
-        } catch (error) {
-            console.error('Error fetching characteristics:', error);
-            throw error;
         }
-    }
+
+        loadCharacteristics();
+    }, []);
 
     return (
         <div>

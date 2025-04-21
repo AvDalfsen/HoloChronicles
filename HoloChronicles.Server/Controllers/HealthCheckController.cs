@@ -3,7 +3,7 @@
 namespace HoloChronicles.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class HealthCheckController : ControllerBase
     {
         private readonly ILogger<HealthCheckController> _logger;
@@ -16,6 +16,7 @@ namespace HoloChronicles.Server.Controllers
         [HttpGet(Name = "GetHealthCheck")]
         public bool Get()
         {
+            _logger.LogInformation($"Checking the health of the API!");
             return true;
         }
     }
