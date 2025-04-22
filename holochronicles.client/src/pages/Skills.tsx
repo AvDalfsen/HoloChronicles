@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/fetcher';
-
-export interface Skill {
-    key?: string;
-    name?: string;
-    description?: string;
-    charKey?: string;
-    typeValue?: string;
-    source?: string[];
-}
+import { Skill } from '@/types/skill';
 
 const SKILLS_CACHE_KEY = 'skillsCache';
 

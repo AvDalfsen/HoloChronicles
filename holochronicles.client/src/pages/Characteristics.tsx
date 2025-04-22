@@ -2,14 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/fetcher';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
-
-export interface Characteristic {
-    key?: string;
-    name?: string;
-    abbrev?: string;
-    description?: string;
-    sources?: string[];
-}
+import { Characteristic } from '@/types/characteristic';
 
 const CHARACTERISTICS_CACHE_KEY = 'characteristicsCache';
 
