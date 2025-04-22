@@ -11,7 +11,7 @@ interface CharacterState {
 }
 
 // Default character template
-const defaultCharacter: Character = {
+export const defaultCharacter: Character = {
     name: '',
     species: '',
     career: '',
