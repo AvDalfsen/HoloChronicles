@@ -1,18 +1,19 @@
-import './App.css';
+import './index.css';
 
 import TopBar from './components/TopBar';
 import Sidebar from './components/SideBar';
 import { Outlet } from 'react-router-dom';
-import React from 'react';
 
 function App() {
     return (
-        <div className="app-container">
+        <div className="flex flex-col min-h-screen bg-background text-foreground">
             <TopBar />
-            <div className="content-container">
+
+            <div className="flex flex-1 mt-14"> {/* mt-14 = topbar height (3.5rem) */}
                 <Sidebar />
-                <main className="main-content">
-                    <Outlet /> {/* This is where page components like Characteristics or Skills will be rendered */}
+
+                <main className="flex-1 p-4 overflow-y-auto">
+                    <Outlet />
                 </main>
             </div>
         </div>
