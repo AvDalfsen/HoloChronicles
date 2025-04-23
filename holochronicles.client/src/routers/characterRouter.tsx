@@ -1,0 +1,20 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@/components/ui/theme-context';
+import CharacterLayout from '@/layouts/characterLayout';
+import Characteristics from '@/pages/character/characteristics';
+import Skills from '@/pages/character/skills';
+
+export default function CharacterRouter() {
+    return (
+        <ThemeProvider>
+            <Routes>
+                <Route element={<CharacterLayout />}>
+                    <Route index element={<Navigate to="characteristics" replace />} />
+                    <Route path="characteristics" element={<Characteristics />} />
+                    <Route path="skills" element={<Skills />} />
+                    {/* Add more character creation routes here */}
+                </Route>
+            </Routes>
+        </ThemeProvider>
+    );
+}

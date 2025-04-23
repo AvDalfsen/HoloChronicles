@@ -1,23 +1,23 @@
-import './index.css';
+import { Routes, Route } from 'react-router-dom';
+import Landing from '@/pages/mainLanding';
+import CharacterLanding from '@/pages/characterLanding';
+//import DataLanding from '@/pages/dataLanding';
+//import GMLanding from '@/pages/gmLanding';
+//import EditorLanding from '@/pages/editorLanding';
 
-import TopBar from './components/TopBar';
-import Sidebar from './components/SideBar';
-import { Outlet } from 'react-router-dom';
+import CharacterRouter from './routers/characterRouter';
 
-function App() {
+export default function App() {
     return (
-        <div className="flex flex-col min-h-screen bg-background text-foreground">
-            <TopBar />
+        <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/character/*" element={<CharacterLanding />} />
+            {/*<Route path="/data/*" element={<DataLanding />} />*/}
+            {/*<Route path="/gm/*" element={<GMLanding />} />*/}
+            {/*<Route path="/editor/*" element={<EditorLanding />} />*/}
 
-            <div className="flex flex-1 mt-14"> {/* mt-14 = topbar height (3.5rem) */}
-                <Sidebar />
-
-                <main className="flex-1 p-4 overflow-y-auto">
-                    <Outlet />
-                </main>
-            </div>
-        </div>
+            {/* Nested route that kicks in once you go into actual character creation */}
+            <Route path="/character/build/*" element={<CharacterRouter />} />
+        </Routes>
     );
 }
-
-export default App;
