@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '@/stores/characterStore';
 import { useState } from 'react';
+import { defaultCharacter } from '@/types/defaultCharacter';
 
 export default function CharacterLanding() {
     const navigate = useNavigate();
@@ -20,11 +21,12 @@ export default function CharacterLanding() {
 
     const createNewCharacter = () => {
         const newCharacter = {
-            ...storedCharacter,
+            ...defaultCharacter,
             name: 'New Character',  // Or any other initial data you want to assign
         };
 
         updateCharacter(newCharacter); // Update the store with the new character
+        console.log('char.key:', newCharacter.characteristics);
         navigate('/character/build');
     };
 
