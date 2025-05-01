@@ -1,6 +1,7 @@
 export interface Character {
     name: string;
     species: string;
+    xp: number;
     career: string;
     specialization: string[];
     characteristics: {

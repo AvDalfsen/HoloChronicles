@@ -30,13 +30,28 @@ function Characteristics() {
         loadCharacteristics();
     }, []);
 
-    const adjustValue = (key: string, characteristic: CharacteristicValue, bought: number, delta: number) => {
+    const adjustValue = (key: string, characteristic: CharacteristicValue, bought: number, total: number, delta: number) => {
 
-        if (!characteristic) return;
+        if (!characteristic || (bought == 0 && delta == -1)) return;
 
         const newBought = Math.max(0, bought + delta);
 
+        let xpChange = 0;
+
+        if (Math.sign(delta) == 1) {
+            xpChange = ((total + delta) * -10);
+        }
+        else {
+            xpChange = ((total) * 10);
+        }
+
+        const xp = character.xp + xpChange;
+
+        console.log('XP change:', xpChange, 'XP:', xp);
+
         updateCharacter({
+            ...character,
+            xp: xp,
             characteristics: {
                 ...character.characteristics,
                 [key]: {
@@ -80,7 +95,7 @@ function Characteristics() {
                                 <div className="flex items-center space-x-4 mt-4">
                                     <Button
                                         size="icon"
-                                        onClick={() => adjustValue(key, characteristic, bought, -1)}
+                                        onClick={() => adjustValue(key, characteristic, bought, value, -1)}
                                         variant="outline"
                                     >
                                         <Minus />
@@ -88,7 +103,7 @@ function Characteristics() {
                                     <span className="text-2xl w-10 text-center">{value}</span>
                                     <Button
                                         size="icon"
-                                        onClick={() => adjustValue(key, characteristic, bought, 1)}
+                                        onClick={() => adjustValue(key, characteristic, bought, value, 1)}
                                         variant="outline"
                                     >
                                         <Plus />

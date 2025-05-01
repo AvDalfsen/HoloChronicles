@@ -22,21 +22,21 @@ export function applyDerivedStats(state: CharacterState, updates: Partial<Charac
                 },
             };
 
-            console.log('Changed characteristic', typedKey, 'total', total);
-        }
+            if (key == 'brawn') {
+                const soak = recalculateSoak(character);
+                const woundsThreshold = recalculateWoundThreshold(character);
 
-        if ('brawn' in changedCharacteristics) {
-            const soak = recalculateSoak(character);
-            const woundsThreshold = recalculateWoundThreshold(character);
-
-            return {
-                ...character,
-                soak,
-                wounds: {
-                    ...character.wounds,
-                    threshold: woundsThreshold,
+                character = {
+                    ...character,
+                    soak,
+                    wounds: {
+                        ...character.wounds,
+                        threshold: woundsThreshold,
+                    } 
                 }
             }
+
+            console.log('Changed characteristic', typedKey, 'total', total);
         }
     }
 
