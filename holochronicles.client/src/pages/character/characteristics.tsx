@@ -3,6 +3,7 @@ import { fetchDataWithRetryAndCache } from '@/api/fetcher';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { Characteristic } from '@/types/characteristic';
+import { CharacteristicValue } from '@/types/character';
 import { useCharacterStore } from '@/stores/characterStore';
 
 const CHARACTERISTICS_CACHE_KEY = 'characteristicsCache';
@@ -29,17 +30,23 @@ function Characteristics() {
         loadCharacteristics();
     }, []);
 
-    const adjustValue = (key: string, delta: number) => {
-        const currentVal = (character.characteristics as Record<string, number>)[key] ?? 0;
-        const newValue = Math.max(1, currentVal + delta);
+    const adjustValue = (key: string, characteristic: CharacteristicValue, bought: number, delta: number) => {
+
+        if (!characteristic) return;
+
+        const newBought = Math.max(0, bought + delta);
 
         updateCharacter({
             characteristics: {
                 ...character.characteristics,
-                [key]: newValue,
+                [key]: {
+                    ...characteristic,
+                    bought: newBought,
+                },
             },
         });
     };
+
 
     return (
         <div className="p-6 space-y-4">
@@ -57,7 +64,9 @@ function Characteristics() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {characteristics.map((char) => {
                         const key = (char.name ?? '').toLowerCase();
-                        const value = (character.characteristics as Record<string, number>)[key] ?? 0;
+                        const characteristic = character.characteristics[key as keyof typeof character.characteristics];
+                        const value = characteristic.total ?? 0;
+                        const bought = characteristic.bought ?? 0;
 
                         return (
                             <div
@@ -71,7 +80,7 @@ function Characteristics() {
                                 <div className="flex items-center space-x-4 mt-4">
                                     <Button
                                         size="icon"
-                                        onClick={() => adjustValue(key, -1)}
+                                        onClick={() => adjustValue(key, characteristic, bought, -1)}
                                         variant="outline"
                                     >
                                         <Minus />
@@ -79,7 +88,7 @@ function Characteristics() {
                                     <span className="text-2xl w-10 text-center">{value}</span>
                                     <Button
                                         size="icon"
-                                        onClick={() => adjustValue(key, 1)}
+                                        onClick={() => adjustValue(key, characteristic, bought, 1)}
                                         variant="outline"
                                     >
                                         <Plus />

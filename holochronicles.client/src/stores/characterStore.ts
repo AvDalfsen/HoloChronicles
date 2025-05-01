@@ -2,8 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Character } from '@/types/character';
 import { defaultCharacter } from '@/types/defaultCharacter';
+import { applyDerivedStats } from '@/lib/derivedStats';
 
-interface CharacterState {
+export interface CharacterState {
     [x: string]: any;
     character: Character;
     updateCharacter: (updates: Partial<Character>) => void;
@@ -15,10 +16,14 @@ export const useCharacterStore = create<CharacterState>()(
     persist(
         (set, get) => ({
             character: defaultCharacter,
-            updateCharacter: (updates) =>
-                set((state) => ({
-                    character: { ...state.character, ...updates },
-                })),
+            updateCharacter: (changes) =>
+                set((state) => {
+                    let updatedCharacter = { ...state.character, ...changes };
+
+                    updatedCharacter = checkUpdates(state, changes, updatedCharacter);
+
+                    return { character: updatedCharacter };
+                }),
             resetCharacter: () =>
                 set(() => ({
                     character: defaultCharacter,
@@ -49,3 +54,11 @@ export const useCharacterStore = create<CharacterState>()(
         }
     )
 );
+
+function checkUpdates(state: CharacterState, updates: Partial<Character>, updatedCharacter: Character): Character {
+    if ('characteristics' in updates && updates.characteristics) {
+        updatedCharacter = applyDerivedStats(state, updates, 'characteristics', updatedCharacter);
+    }
+
+    return updatedCharacter;
+}

@@ -4,12 +4,12 @@ export interface Character {
     career: string;
     specialization: string[];
     characteristics: {
-        brawn: number;
-        agility: number;
-        intellect: number;
-        cunning: number;
-        willpower: number;
-        presence: number;
+        brawn: CharacteristicValue;
+        agility: CharacteristicValue;
+        intellect: CharacteristicValue;
+        cunning: CharacteristicValue;
+        willpower: CharacteristicValue;
+        presence: CharacteristicValue;
     };
     skills: Record<string, number>;
     talents: string[];
@@ -30,4 +30,12 @@ export interface Character {
     credits: number;
     background: string;
     motivations: string[];
+}
+
+export interface CharacteristicValue {
+    total: number;
+    species: number;
+    bought: number;
+    gear: number;
+    cybernetics: number;
 }
