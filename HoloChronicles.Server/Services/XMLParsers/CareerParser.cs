@@ -1,4 +1,4 @@
-﻿using System.Xml;
+﻿using System.Xml.Linq;
 using HoloChronicles.Server.Dataclasses;
 using HoloChronicles.Server.Services.Utils;
 
@@ -8,97 +8,77 @@ namespace HoloChronicles.Server.Services.XMLParsers
     {
         public static List<Career> ParseCareersFromFiles(string folderpath)
         {
-            var careerList = new List<Career>();
+            var careers = new List<Career>();
 
             try
             {
                 var xmlFiles = Directory.GetFiles(folderpath, "*.xml");
 
-                foreach (var filePath in xmlFiles)
+                foreach (var file in xmlFiles)
                 {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(filePath);
+                    var doc = XDocument.Load(file);
+                    var root = doc.Root;
 
-                    XmlElement? rootElement = doc.DocumentElement;
-                    if (rootElement == null || rootElement.Name != "Career")
+                    if (root == null || root.Name != "Career")
                     {
-                        Console.WriteLine($"Skipping file: {filePath}. Root element is not <Career> or is missing.");
+                        Console.WriteLine($"Skipping file: {file}. Root element is not <Career> or is missing.");
                         continue;
                     }
 
-                    Career career = ParseCareer(rootElement);
-                    careerList.Add(career);
+                    var career = ParseCareer(root);
+                    careers.Add(career);
                 }
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error parsing XML file: " + ex.Message);
+                Console.WriteLine("Error parsing Careers XML: " + ex.Message);
             }
 
-            return careerList;
+            return careers;
         }
 
-        private static Career ParseCareer(XmlElement careerElement)
+        private static Career ParseCareer(XElement el)
         {
-            string? key = careerElement.SelectSingleNode("Key")?.InnerText;
-            string? name = careerElement.SelectSingleNode("Name")?.InnerText;
-            string? description = DescriptionParser.ParseDescription(careerElement);
-            var sources = SourceParser.ParseSources(careerElement);
-            List<string>? careerSkills = ParseList(careerElement, "CareerSkills/Key");
-            List<string>? specializations = ParseList(careerElement, "Specializations/Key");
-            int? forceRating = Converters.GetIntFromNode(careerElement, "ForceRating");
-            int? freeRanks = Converters.GetIntFromNode(careerElement, "FreeRanks");
-            Attributes? attributes = ParseAttributes(careerElement.SelectSingleNode("Attributes") as XmlElement);
-
-            return new Career(key, name, description, sources, careerSkills, specializations, forceRating, freeRanks, attributes);
+            return new Career(
+                key: el.Get("Key"),
+                name: el.Get("Name"),
+                description: el.ParseDescription(),
+                sources: el.ParseSources(),
+                careerSkills: el.Elements("CareerSkills").Elements("Key").Select(x => x.Value).ToList(),
+                specializations: el.Elements("Specializations").Elements("Key").Select(x => x.Value).ToList(),
+                forceRating: el.GetInt("ForceRating"),
+                freeRanks: el.GetInt("FreeRanks"),
+                attributes: ParseAttributes(el.Element("Attributes"))
+            );
         }
 
-        private static List<string> ParseList(XmlElement parentElement, string xpath)
+        private static Attributes? ParseAttributes(XElement? el)
         {
-            var list = new List<string>();
-            var nodes = parentElement.SelectNodes(xpath);
-            if (nodes != null)
-            {
-                foreach (XmlNode node in nodes)
-                {
-                    if (node.InnerText != null)
-                    {
-                        list.Add(node.InnerText);
-                    }
-                }
-            }
-            return list;
+            if (el == null) return null;
+
+            return new Attributes(
+                woundThreshold: el.GetInt("WoundThreshold"),
+                strainThreshold: el.GetInt("StrainThreshold"),
+                defenseRanged: el.GetInt("DefenseRanged"),
+                defenseMelee: el.GetInt("DefenseMelee"),
+                soakValue: el.GetInt("SoakValue"),
+                experience: el.GetInt("Experience"),
+                forceRating: el.GetInt("ForceRating"),
+                requirement: ParseRequirement(el.Element("Requirement"))
+            );
         }
 
-        private static Attributes? ParseAttributes(XmlElement? attributesElement)
+        private static CareerRequirement? ParseRequirement(XElement? el)
         {
-            if (attributesElement == null) return null;
+            if (el == null) return null;
 
-            int? woundThreshold = Converters.GetIntFromNode(attributesElement, "WoundThreshold");
-            int? strainThreshold = Converters.GetIntFromNode(attributesElement, "StrainThreshold");
-            int? defenseRanged = Converters.GetIntFromNode(attributesElement, "DefenseRanged");
-            int? defenseMelee = Converters.GetIntFromNode(attributesElement, "DefenseMelee");
-            int? soakValue = Converters.GetIntFromNode(attributesElement, "SoakValue");
-            int? experience = Converters.GetIntFromNode(attributesElement, "Experience");
-            int? forceRating = Converters.GetIntFromNode(attributesElement, "ForceRating");
-
-            var requirement = ParseRequirement(attributesElement.SelectSingleNode("Requirement") as XmlElement);
-
-            return new Attributes(woundThreshold, strainThreshold, defenseRanged, defenseMelee, soakValue, experience, forceRating, requirement);
-        }
-
-        private static CareerRequirement? ParseRequirement(XmlElement? requirementElement)
-        {
-            if (requirementElement == null) return null;
-
-            bool? wearingArmor = Converters.GetBoolFromNode(requirementElement, "WearingArmor");
-            bool? career = Converters.GetBoolFromNode(requirementElement, "Career");
-            bool? specialization = Converters.GetBoolFromNode(requirementElement, "Specialization");
-            bool? nonCareer = Converters.GetBoolFromNode(requirementElement, "NonCareer");
-            int? soakAtLeast = Converters.GetIntFromNode(requirementElement, "SoakAtLeast");
-
-            return new CareerRequirement(wearingArmor, career, specialization, nonCareer, soakAtLeast);
+            return new CareerRequirement(
+                wearingArmor: el.GetBool("WearingArmor"),
+                career: el.GetBool("Career"),
+                specialization: el.GetBool("Specialization"),
+                nonCareer: el.GetBool("NonCareer"),
+                soakAtLeast: el.GetInt("SoakAtLeast")
+            );
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.Xml;
+﻿using System.Xml.Linq;
 using HoloChronicles.Server.Dataclasses;
+using HoloChronicles.Server.Services.Utils;
 
 namespace HoloChronicles.Server.Services.XMLParsers
 {
@@ -7,35 +8,24 @@ namespace HoloChronicles.Server.Services.XMLParsers
     {
         public static List<Characteristic> ParseCharacteristicsFromFile(string filepath)
         {
-            var characteristics = new List<Characteristic>();
-
             try
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(filepath);
-
-                XmlNodeList characteristicNodes = doc.GetElementsByTagName("Characteristic");
-
-                foreach (XmlNode node in characteristicNodes)
-                {
-                    if (node is XmlElement characteristicElement)
-                    {
-                        string key = characteristicElement.SelectSingleNode("Key")?.InnerText ?? "";
-                        string name = characteristicElement.SelectSingleNode("Name")?.InnerText ?? "";
-                        string abbrev = characteristicElement.SelectSingleNode("Abbrev")?.InnerText ?? "";
-                        string description = DescriptionParser.ParseDescription(characteristicElement);
-                        var sources = SourceParser.ParseSources(characteristicElement);
-
-                        characteristics.Add(new Characteristic(key, name, abbrev, description, sources));
-                    }
-                }
+                var doc = XDocument.Load(filepath);
+                return doc.Descendants("Characteristic")
+                    .Select(el => new Characteristic(
+                        key: el.Get("Key"),
+                        name: el.Get("Name"),
+                        abbrev: el.Get("Abbrev"),
+                        description: el.ParseDescription(),
+                        sources: el.ParseSources()
+                    ))
+                    .ToList();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error parsing XML file: " + ex.Message);
+                Console.WriteLine("Error parsing Characteristics XML: " + ex.Message);
+                return new List<Characteristic>();
             }
-
-            return characteristics;
         }
     }
 }

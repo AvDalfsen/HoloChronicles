@@ -1,5 +1,6 @@
-﻿using System.Xml;
+﻿using System.Xml.Linq;
 using HoloChronicles.Server.Dataclasses;
+using HoloChronicles.Server.Services.Utils;
 
 namespace HoloChronicles.Server.Services.XMLParsers
 {
@@ -11,30 +12,21 @@ namespace HoloChronicles.Server.Services.XMLParsers
 
             try
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(filepath);
-
-                XmlNodeList skillNodes = doc.GetElementsByTagName("Skill");
-
-                foreach (XmlNode node in skillNodes)
-                {
-                    if (node is XmlElement skillElement)
-                    {
-                        string? key = skillElement.SelectSingleNode("Key")?.InnerText;
-                        string? name = skillElement.SelectSingleNode("Name")?.InnerText;
-                        string? abbrev = skillElement.SelectSingleNode("Abbrev")?.InnerText;
-                        string? description = DescriptionParser.ParseDescription(skillElement);
-                        string? charKey = skillElement.SelectSingleNode("CharKey")?.InnerText;
-                        string? typeValue = skillElement.SelectSingleNode("TypeValue")?.InnerText;
-                        var sources = SourceParser.ParseSources(skillElement);
-
-                        skills.Add(new Skill(key, name, description, charKey, typeValue, sources));
-                    }
-                }
+                var doc = XDocument.Load(filepath);
+                return doc.Descendants("Skill")
+                    .Select(el => new Skill(
+                        key: el.Get("Key"),
+                        name: el.Get("Name"),
+                        description: el.ParseDescription(),
+                        charKey: el.Get("CharKey"),
+                        typeValue: el.Get("TypeValue"),
+                        source: el.ParseSources()
+                    ))
+                    .ToList();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error parsing XML file: " + ex.Message);
+                Console.WriteLine($"Error parsing Skills XML: {ex.Message}");
             }
 
             return skills;

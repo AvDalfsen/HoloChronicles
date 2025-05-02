@@ -50,7 +50,6 @@ export default defineConfig({
             '^/api/characteristics' : { target, secure: false },
             '^/api/skills'          : { target, secure: false },
             '^/api/species'         : { target, secure: false },
-            '^/api/recalculator'    : { target, secure: false },
             '^/api/healthcheck'     : { target, secure: false }
 
         },

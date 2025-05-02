@@ -1,27 +1,19 @@
-﻿using System.Xml;
+﻿using System.Xml.Linq;
 
 namespace HoloChronicles.Server.Services.Utils
 {
-    public class Converters
+    public static class Converters
     {
-        public static int? GetIntFromNode(XmlNode node, string tagName)
+        public static int? GetIntFromElement(XElement? parent, string tagName)
         {
-            var integerAsString = node.SelectSingleNode(tagName);
-            if (integerAsString != null && int.TryParse(integerAsString.InnerText, out int result))
-            {
-                return result;
-            }
-            return null;
-        }        
-        
-        public static bool? GetBoolFromNode(XmlNode node, string tagName)
+            var element = parent?.Element(tagName);
+            return int.TryParse(element?.Value, out int result) ? result : null;
+        }
+
+        public static bool? GetBoolFromElement(XElement? parent, string tagName)
         {
-            var booleanAsString = node.SelectSingleNode(tagName);
-            if (booleanAsString != null && bool.TryParse(booleanAsString.InnerText, out bool result))
-            {
-                return result;
-            }
-            return null;
+            var element = parent?.Element(tagName);
+            return bool.TryParse(element?.Value, out bool result) ? result : null;
         }
     }
 }
