@@ -4,6 +4,7 @@ import { Character } from './character';
 export const defaultCharacter: Character = {
     name: '',
     species: 'HUMAN',
+    xp: 110,
     experience: {
         experienceRanks: {
             startingRanks: 0,
@@ -25,11 +26,11 @@ export const defaultCharacter: Character = {
     skills: {},
     talents: [],
     wounds: {
-        threshold: 12,
+        threshold: 10,
         current: 0,
     },
     strain: {
-        threshold: 12,
+        threshold: 10,
         current: 0,
     },
     soak: 2,

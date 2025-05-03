@@ -23,7 +23,7 @@ export function applyDerivedStats(state: CharacterState, changes: Partial<Charac
     return character;
 }
 
-function getSelectedSpeciesFromCache(character: Character): Species | null {
+export function getSelectedSpeciesFromCache(character: Character): Species | null {
     const cached = localStorage.getItem(SPECIES_CACHE_KEY);
     if (!cached) return null;
 

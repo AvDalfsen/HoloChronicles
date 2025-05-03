@@ -3,6 +3,12 @@ import '@testing-library/jest-dom/vitest';
 import { afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
+// Mock global `URL` object with `createObjectURL` and `revokeObjectURL`
+vi.stubGlobal('URL', {
+    createObjectURL: vi.fn().mockReturnValue('blob:url'),
+    revokeObjectURL: vi.fn().mockImplementation(() => { }),
+});
+
 // Optionally mock matchMedia for components that depend on it (like responsive UIs)
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
