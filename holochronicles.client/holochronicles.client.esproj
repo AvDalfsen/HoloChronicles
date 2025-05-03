@@ -12,5 +12,8 @@
     <Folder Include="src\pages\data\" />
     <Folder Include="src\pages\editor\" />
     <Folder Include="src\pages\gm\" />
+    <Folder Include="unittests\pages\data\" />
+    <Folder Include="unittests\pages\editor\" />
+    <Folder Include="unittests\pages\gm\" />
   </ItemGroup>
 </Project>
