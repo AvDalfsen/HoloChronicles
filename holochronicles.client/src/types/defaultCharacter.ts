@@ -3,8 +3,15 @@ import { Character } from './character';
 // Default character template
 export const defaultCharacter: Character = {
     name: '',
-    species: '',
-    xp: 110,
+    species: 'HUMAN',
+    experience: {
+        experienceRanks: {
+            startingRanks: 0,
+            purchasedRanks: 0,
+            speciesRanks: 110
+        },
+        usedExperience: 0
+    },
     career: '',
     specialization: [],
     characteristics: {

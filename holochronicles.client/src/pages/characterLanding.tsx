@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '@/stores/characterStore';
-import { useState } from 'react';
 import { defaultCharacter } from '@/types/defaultCharacter';
+import { Species } from '@/types/species';
+import { SPECIES_CACHE_KEY, SPECIES_API } from '@/pages/character/species'
+import { fetchDataWithRetryAndCache } from '@/api/fetcher'
 
 export default function CharacterLanding() {
     const navigate = useNavigate();
@@ -10,6 +13,23 @@ export default function CharacterLanding() {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const hasStoredCharacter = storedCharacter?.name?.trim() !== ''; // crude check for presence
+
+    useEffect(() => {
+        const ensureSpeciesCache = async () => {
+            const cached = localStorage.getItem(SPECIES_CACHE_KEY);
+
+            if (!cached) {
+                try {
+                    await fetchDataWithRetryAndCache<Species[]>(SPECIES_API, SPECIES_CACHE_KEY);
+                    console.log('Species data fetched and cached.');
+                } catch (err) {
+                    console.error('Failed to fetch species data:', err);
+                }
+            }
+        };
+
+        ensureSpeciesCache();
+    }, []);
 
     const handleNewCharacter = () => {
         if (hasStoredCharacter) {

@@ -1,9 +1,10 @@
 ﻿import { useEffect, useState } from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/fetcher';
 import { Species, StartingChars } from '@/types/species';
+import { useCharacterStore } from '@/stores/characterStore';
 
 export const SPECIES_CACHE_KEY = 'speciesCache';
-const SPECIES_API = '/api/species';
+export const SPECIES_API = '/api/species';
 const ATTR_ORDER: [keyof StartingChars, string][] = [
     ['brawn', 'Br'],
     ['agility', 'Ag'],
@@ -21,8 +22,8 @@ export default function SpeciesListPage() {
     const [error, setError] = useState<string | null>(null);
     const [sortKey, setSortKey] = useState<SortKey>('name');
     const [sortAsc, setSortAsc] = useState(true);
-
     const [selectedSpecies, setSelectedSpecies] = useState<Species | null>(null);
+    const { character, updateCharacter } = useCharacterStore();
 
     useEffect(() => {
         async function loadSpecies() {
@@ -33,6 +34,10 @@ export default function SpeciesListPage() {
                 );
                 if (data) {
                     setSpecies(data);
+
+                    const currentSpecies = data.find((speciesItem) => speciesItem.key === character.species)
+
+                    setSelectedSpecies(currentSpecies ?? null);
                 } else {
                     setError('No species data returned');
                 }
@@ -50,7 +55,12 @@ export default function SpeciesListPage() {
     const onSpeciesClick = (s: Species) => {
         setSelectedSpecies(s);
         console.log('Species selected:', s.key);
-        // TODO: Implement character sheet update logic
+    };
+
+    const selectSpeciesClick = () => {
+        updateCharacter({
+            species: selectedSpecies?.key,
+        });
     };
 
     const sortBy = (key: SortKey) => {
@@ -72,8 +82,7 @@ export default function SpeciesListPage() {
         } else if (sortKey === 'name') {
             aVal = a.name ?? '';
             bVal = b.name ?? '';
-        } else {
-            // Sorting by a characteristic
+        } else { // Sorting by a characteristic - see SortKey for adding more sortable columns
             aVal = a.startingChars?.[sortKey] ?? 0;
             bVal = b.startingChars?.[sortKey] ?? 0;
         }
@@ -157,10 +166,12 @@ export default function SpeciesListPage() {
                     </table>
                 </div>
             )}
+            <button
+                onClick={selectSpeciesClick}
+                className="fixed bottom-6 right-6 bg-blue-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
+            >
+                Select Species
+            </button>
         </div>
     );
-}
-
-function capitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }

@@ -55,9 +55,14 @@ export const useCharacterStore = create<CharacterState>()(
     )
 );
 
-function checkUpdates(state: CharacterState, updates: Partial<Character>, updatedCharacter: Character): Character {
-    if ('characteristics' in updates && updates.characteristics) {
-        updatedCharacter = applyDerivedStats(state, updates, 'characteristics', updatedCharacter);
+function checkUpdates(state: CharacterState, changes: Partial<Character>, updatedCharacter: Character): Character {
+    console.log(changes);
+
+    if ('species' in changes && changes.species) {
+        updatedCharacter = applyDerivedStats(state, changes, 'species', updatedCharacter);
+    }
+    if ('characteristics' in changes && changes.characteristics) {
+        updatedCharacter = applyDerivedStats(state, changes, 'characteristics', updatedCharacter);
     }
 
     return updatedCharacter;

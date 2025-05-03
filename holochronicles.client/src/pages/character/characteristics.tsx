@@ -32,26 +32,28 @@ function Characteristics() {
 
     const adjustValue = (key: string, characteristic: CharacteristicValue, bought: number, total: number, delta: number) => {
 
-        if (!characteristic || (bought == 0 && delta == -1)) return;
+        if (!characteristic || (bought === 0 && delta === -1)) return;
 
         const newBought = Math.max(0, bought + delta);
 
         let xpChange = 0;
 
         if (Math.sign(delta) == 1) {
-            xpChange = ((total + delta) * -10);
+            xpChange = ((total + delta) * 10);
         }
         else {
-            xpChange = ((total) * 10);
+            xpChange = ((total) * -10);
         }
 
-        const xp = character.xp + xpChange;
+        const xp = character.experience.usedExperience + xpChange;
 
-        console.log('XP change:', xpChange, 'XP:', xp);
+        console.log('XP change:', xpChange, 'XP:', xp, 'previously used total:', character.experience.usedExperience, 'new used total:', (character.experience.usedExperience + xpChange));
 
         updateCharacter({
-            ...character,
-            xp: xp,
+            experience: {
+                ...character.experience,
+                usedExperience: xp
+            },
             characteristics: {
                 ...character.characteristics,
                 [key]: {

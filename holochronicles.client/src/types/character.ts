@@ -1,6 +1,14 @@
 export interface Character {
     name: string;
     species: string;
+    experience: {
+        experienceRanks: {
+            startingRanks: number
+            purchasedRanks: number //Duty, Obligation, etc.
+            speciesRanks: number
+        }
+        usedExperience: number
+    }
     xp: number;
     career: string;
     specialization: string[];
