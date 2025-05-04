@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/fetcher';
 import { Skill } from '@/types/skill';
+import * as diceIcons from '@/components/ui/diceIcons';
+import { JSX } from 'react/jsx-runtime';
+import { useCharacterStore } from '@/stores/characterStore';
 
 const SKILLS_CACHE_KEY = 'skillsCache';
+const SKILLS_API_KEY = '/api/skills';
 
 function Skills() {
     const [skills, setSkills] = useState<Skill[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const { character, updateCharacter } = useCharacterStore();
 
     useEffect(() => {
         async function loadSkills() {
             const data = await fetchDataWithRetryAndCache<Skill[]>(
-                '/api/skills',
+                SKILLS_API_KEY,
                 SKILLS_CACHE_KEY
             );
             if (data) {
@@ -23,6 +28,24 @@ function Skills() {
 
         loadSkills();
     }, []);
+
+    function displaySkillIcon(skillName: string, skillCharKey: string): JSX.Element {
+        let charCount = 0;
+
+        if (skillCharKey === 'BR') {
+            charCount = character.characteristics.brawn.total;
+        }
+
+        return (
+            <span style={{ display: 'flex' }}>
+                {Array.from({ length: charCount }, (_, index) => (
+                    <diceIcons.abilityIcon key={index} />
+                ))}
+            </span>
+        );
+    }
+
+
 
     return (
         <div>
@@ -49,6 +72,9 @@ function Skills() {
                             <tr key={skill.name}>
                                 <td>{skill.name}</td>
                                 <td>{skill.charKey}</td>
+                                <td>
+                                    {displaySkillIcon(skill.name, skill.charKey)}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,16 +1,16 @@
 export interface StartingChars {
-    brawn?: number;
-    agility?: number;
-    intellect?: number;
-    cunning?: number;
-    willpower?: number;
-    presence?: number;
+    brawn: number;
+    agility: number;
+    intellect: number;
+    cunning: number;
+    willpower: number;
+    presence: number;
 }
 
 export interface StartingAttrs {
-    woundThreshold?: number;
-    strainThreshold?: number;
-    experience?: number;
+    woundThreshold: number;
+    strainThreshold: number;
+    experience: number;
     defenseRanged?: number;
     defenseMelee?: number;
     soakValue?: number;
@@ -98,13 +98,13 @@ export interface SubSpecies {
 }
 
 export interface Species {
-    key?: string;
-    name?: string;
-    description?: string;
+    key: string;
+    name: string;
+    description: string;
     sources?: string[];
     custom?: string;
-    startingChars?: StartingChars;
-    startingAttrs?: StartingAttrs;
+    startingChars: StartingChars;
+    startingAttrs: StartingAttrs;
     skillModifiers?: SkillModifier[];
     talentModifiers?: TalentModifier[];
     optionChoices?: OptionChoice[];

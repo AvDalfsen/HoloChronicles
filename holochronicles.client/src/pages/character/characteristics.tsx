@@ -6,10 +6,10 @@ import { Characteristic } from '@/types/characteristic';
 import { CharacteristicValue } from '@/types/character';
 import { useCharacterStore } from '@/stores/characterStore';
 
-const CHARACTERISTICS_CACHE_KEY = 'characteristicsCache';
+export const CHARACTERISTICS_CACHE_KEY = 'characteristicsCache';
 const CHARACTERISTICS_API = '/api/characteristics';
 
-function Characteristics() {
+export function Characteristics() {
     const [characteristics, setCharacteristics] = useState<Characteristic[]>([]);
     const [error, setError] = useState<string | null>(null);
     const { character, updateCharacter } = useCharacterStore();

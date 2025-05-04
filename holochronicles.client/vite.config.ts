@@ -5,6 +5,7 @@ import path from 'path';
 import child_process from 'child_process';
 import { env } from 'process';
 import tailwindcss from '@tailwindcss/vite';
+import svgr from 'vite-plugin-svgr';
 
 const baseFolder =
     env.APPDATA !== undefined && env.APPDATA !== ''
@@ -47,7 +48,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
         : 'https://localhost:7240';
 
 export default defineConfig({
-    plugins: [react(), tailwindcss()],
+    plugins: [tailwindcss(), svgr(), react()],
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),

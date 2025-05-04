@@ -20,7 +20,19 @@ export interface Character {
         willpower: CharacteristicValue;
         presence: CharacteristicValue;
     };
-    skills: Record<string, number>;
+    skills: {
+        key: string;
+        rank: {
+            speciesRanks?: number;
+            careerRanks?: number;
+            purchasedRanks?: number;
+            nonCareerRanks?: number;
+            cyberRanks?: number;
+
+        }
+        isCareer?: boolean;
+        charKeyOverride?: string;
+    }[];
     talents: string[];
     wounds: {
         threshold: number;
