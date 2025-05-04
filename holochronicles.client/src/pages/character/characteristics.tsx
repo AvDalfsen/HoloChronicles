@@ -31,9 +31,7 @@ export function Characteristics() {
     }, []);
 
     const adjustValue = (key: string, characteristic: CharacteristicValue, bought: number, total: number, delta: number) => {
-
-        //TODO ensure a ceiling for purchasing characteristcs.. need to look up the exact rules. Pretty sure you can't go about 5 with XP? Or just not during creation?
-        if (!characteristic || (bought === 0 && delta === -1) || (bought === 5 && delta === 1)) return;
+        if (!characteristic || (bought === 0 && delta === -1) || (total === 5 && delta === 1)) return;
 
         const newBought = Math.max(0, bought + delta);
 
