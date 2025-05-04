@@ -26,7 +26,6 @@ export interface Character {
             speciesRanks?: number;
             careerRanks?: number;
             purchasedRanks?: number;
-            nonCareerRanks?: number;
             cyberRanks?: number;
 
         }

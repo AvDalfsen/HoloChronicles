@@ -23,7 +23,7 @@ export const defaultCharacter: Character = {
         willpower: { total: 2, species: 2, bought: 0, gear: 0, cybernetics: 0 },
         presence: { total: 2, species: 2, bought: 0, gear: 0, cybernetics: 0 },
     },
-    skills: {},
+    skills:[],
     talents: [],
     wounds: {
         threshold: 10,

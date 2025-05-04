@@ -5,7 +5,7 @@ import { useCharacterStore } from '@/stores/characterStore';
 
 export const SPECIES_CACHE_KEY = 'speciesCache';
 export const SPECIES_API = '/api/species';
-const ATTR_ORDER: [keyof StartingChars, string][] = [
+export const CHAR_ORDER: [keyof StartingChars, string][] = [
     ['brawn', 'Br'],
     ['agility', 'Ag'],
     ['intellect', 'Int'],
@@ -135,7 +135,7 @@ export default function SpeciesListPage() {
                                 >
                                     Starting XP {sortKey === 'experience' && (sortAsc ? '▲' : '▼')}
                                 </th>
-                                {ATTR_ORDER.map(([key, label]) => (
+                                {CHAR_ORDER.map(([key, label]) => (
                                     <th
                                         key={key}
                                         className="cursor-pointer px-2 py-2 text-right min-w-[40px]"
@@ -155,7 +155,7 @@ export default function SpeciesListPage() {
                                 >
                                     <td className="border-t px-4 py-2">{s.name ?? 'Unnamed'}</td>
                                     <td className="border-t px-4 py-2">{s.startingAttrs?.experience ?? '-'}</td>
-                                    {ATTR_ORDER.map(([key]) => (
+                                    {CHAR_ORDER.map(([key]) => (
                                         <td key={key} className="border-t px-4 py-2 text-sm text-gray-700">
                                             {s.startingChars?.[key] ?? '—'}
                                         </td>
