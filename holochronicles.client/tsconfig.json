@@ -16,10 +16,6 @@
         "lib": [ "dom", "esnext" ],
         "types": [ "vite-plugin-svgr/client" ]
     },
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": [ "src", "src/env.d.ts", "unittest/**/*.test.ts" ],
+    "exclude": [ "node_modules" ]
 }

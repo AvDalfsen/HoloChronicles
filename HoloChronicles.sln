@@ -6,6 +6,13 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "HoloChronicles.client", "ho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloChronicles.Server", "HoloChronicles.Server\HoloChronicles.Server.csproj", "{52F01B90-F7A1-4FAA-80A9-112C6B33E576}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		.env.example = .env.example
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

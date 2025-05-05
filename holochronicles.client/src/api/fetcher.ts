@@ -1,10 +1,9 @@
 import { getCachedData, setCachedData } from './cache';
 
 // Generic function to fetch data from an API with retry logic and caching
-// This function will first check if the data is already cached. If it is, it will return the cached data.
+// This function will first check if there's data already cached under the same name. If it is, it will return the cached data.
 // If not, it will attempt to fetch the data from the API.
 
-// TODO : Add a way to invalidate the cache after a certain time or based on some condition
 export const fetchDataWithRetryAndCache = async<T>(
     url: string,
     cacheKey: string,
@@ -19,7 +18,7 @@ export const fetchDataWithRetryAndCache = async<T>(
             } else {
                 const isBackendReady = await checkBackendReady();
                 if (isBackendReady) {
-                    const response = await fetch(url);
+                    const response = await fetch(`${url}`);
                     if (response.ok) {
                         const data: T = await response.json();
                         setCachedData<T>(cacheKey, data);
@@ -42,6 +41,7 @@ export const fetchDataWithRetryAndCache = async<T>(
 
 // Check if the backend is ready, if it has been checked before, no need to call the API again
 const checkBackendReady = async (): Promise<boolean> => {
+    //TODO add some sort of timeout to the health response in local storage
     const storedHealthStatus = sessionStorage.getItem('apiHealth');
 
     if (storedHealthStatus !== null) {
