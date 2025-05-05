@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/fetcher';
+import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { Skill } from '@/types/skill';

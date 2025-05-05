@@ -1,8 +1,24 @@
+using Microsoft.AspNetCore.Identity;
+using Npgsql;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<IPasswordHasher<string>, PasswordHasher<string>>();
+
+DotNetEnv.Env.Load(); // Optional step, see below
+
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPass = Environment.GetEnvironmentVariable("DB_PASS");
+
+var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPass}";
+
+builder.Services.AddTransient<NpgsqlConnection>(_ => new NpgsqlConnection(connectionString));
 
 var app = builder.Build();
 

@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/fetcher';
+import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { Species, StartingChars } from '@/types/species';
 import { useCharacterStore } from '@/stores/characterStore';
 

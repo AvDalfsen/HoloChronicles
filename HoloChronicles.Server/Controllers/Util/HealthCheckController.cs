@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace HoloChronicles.Server.Controllers
+namespace HoloChronicles.Server.Controllers.Util
 {
     [ApiController]
     [Route("api/[controller]")]

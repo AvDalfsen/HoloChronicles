@@ -4,7 +4,7 @@ import { useCharacterStore } from '@/stores/characterStore';
 import { defaultCharacter } from '@/types/defaultCharacter';
 import { Species } from '@/types/species';
 import { SPECIES_CACHE_KEY, SPECIES_API } from '@/pages/character/species'
-import { fetchDataWithRetryAndCache } from '@/api/fetcher'
+import { fetchDataWithRetryAndCache } from '@/api/dataFetcher'
 
 export default function CharacterLanding() {
     const navigate = useNavigate();
