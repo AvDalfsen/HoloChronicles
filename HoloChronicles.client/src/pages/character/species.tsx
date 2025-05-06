@@ -2,6 +2,7 @@
 import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { Species, StartingChars } from '@/types/species';
 import { useCharacterStore } from '@/stores/characterStore';
+import { FormattedDescription } from '@/lib/descriptionFormatter';
 
 export const SPECIES_CACHE_KEY = 'speciesCache';
 export const SPECIES_API = '/api/species';
@@ -34,9 +35,7 @@ export default function SpeciesListPage() {
                 );
                 if (data) {
                     setSpecies(data);
-
                     const currentSpecies = data.find((speciesItem) => speciesItem.key === character.species)
-
                     setSelectedSpecies(currentSpecies ?? null);
                 } else {
                     setError('No species data returned');
@@ -82,7 +81,7 @@ export default function SpeciesListPage() {
         } else if (sortKey === 'name') {
             aVal = a.name ?? '';
             bVal = b.name ?? '';
-        } else { // Sorting by a characteristic - see SortKey for adding more sortable columns
+        } else { // Sorting by a characteristic
             aVal = a.startingChars?.[sortKey] ?? 0;
             bVal = b.startingChars?.[sortKey] ?? 0;
         }
@@ -95,7 +94,6 @@ export default function SpeciesListPage() {
             ? String(aVal).localeCompare(String(bVal))
             : String(bVal).localeCompare(String(aVal));
     });
-
 
     if (loading) {
         return (
@@ -113,59 +111,85 @@ export default function SpeciesListPage() {
         );
     }
 
+    //TODO: Add all of the extra details (options, modifiers, etc.) and choices (skills, talents, subspecies), as well as a picture.
+    //TODO: Make the characteristics look better.
+    //TODO: Add a way to filter
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-bold mb-4">Species List</h1>
-            {species.length === 0 ? (
-                <p><em>No species found.</em></p>
-            ) : (
-                <div className="overflow-x-auto">
-                    <table className="table-auto border border-gray-300">
-                        <thead className="bg-gray-100">
-                            <tr>
+        <div className="z-20 p-5 w-full flex space-x-6">
+            {/* Species Table */}
+            <div className="sticky top-0 left-0 bg-white border rounded-lg shadow-md h-[calc(100vh-130px)] overflow-auto max-w-2xl">
+                <table className="w-full table-fixed text-sm text-left border-collapse">
+                    <thead className="sticky top-0 z-10 bg-gray-100 border-b text-xs uppercase tracking-wide text-gray-700">
+                        <tr>
+                            <th
+                                className="cursor-pointer px-4 py-2 w-[20%] min-w-[150px]"
+                                onClick={() => sortBy('name')}
+                            >
+                                Name {sortKey === 'name' && (sortAsc ? '▲' : '▼')}
+                            </th>
+                            <th
+                                className="cursor-pointer px-4 py-2 w-[20px]"
+                                onClick={() => sortBy('experience')}
+                            >
+                                Starting XP {sortKey === 'experience' && (sortAsc ? '▲' : '▼')}
+                            </th>
+                            {CHAR_ORDER.map(([key, label]) => (
                                 <th
-                                    className="cursor-pointer px-4 py-2 text-left"
-                                    onClick={() => sortBy('name')}
+                                    key={key}
+                                    className="cursor-pointer px-2 py-2 w-[15px]"
+                                    onClick={() => sortBy(key)}
                                 >
-                                    Name {sortKey === 'name' && (sortAsc ? '▲' : '▼')}
+                                    {label} {sortKey === key && (sortAsc ? '▲' : '▼')}
                                 </th>
-                                <th
-                                    className="cursor-pointer px-4 py-2 text-left"
-                                    onClick={() => sortBy('experience')}
-                                >
-                                    Starting XP {sortKey === 'experience' && (sortAsc ? '▲' : '▼')}
-                                </th>
-                                {CHAR_ORDER.map(([key, label]) => (
-                                    <th
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sortedSpecies.map((s) => (
+                            <tr
+                                key={s.key}
+                                className={`hover:bg-gray-50 transition-colors cursor-pointer ${selectedSpecies?.key === s.key ? 'bg-blue-50' : ''}`}
+                                onClick={() => onSpeciesClick(s)}
+                            >
+                                <td className="border-t px-4 py-2 w-[20%] font-medium">{s.name ?? 'Unnamed'}</td>
+                                <td className="border-t px-4 py-2 w-[20px]">{s.startingAttrs?.experience ?? '-'}</td>
+                                {CHAR_ORDER.map(([key]) => (
+                                    <td
                                         key={key}
-                                        className="cursor-pointer px-2 py-2 text-right min-w-[40px]"
-                                        onClick={() => sortBy(key)}
+                                        className="border-t px-2 py-2 w-[15px]"
                                     >
-                                        {label} {sortKey === key && (sortAsc ? '▲' : '▼')}
-                                    </th>
+                                        {s.startingChars?.[key] ?? '—'}
+                                    </td>
                                 ))}
                             </tr>
-                        </thead>
-                        <tbody>
-                            {sortedSpecies.map((s) => (
-                                <tr
-                                    key={s.key}
-                                    className={`hover:bg-gray-100 cursor-pointer ${selectedSpecies?.key === s.key ? 'bg-blue-100' : ''}`}
-                                    onClick={() => onSpeciesClick(s)}
-                                >
-                                    <td className="border-t px-4 py-2">{s.name ?? 'Unnamed'}</td>
-                                    <td className="border-t px-4 py-2">{s.startingAttrs?.experience ?? '-'}</td>
-                                    {CHAR_ORDER.map(([key]) => (
-                                        <td key={key} className="border-t px-4 py-2 text-sm text-gray-700">
-                                            {s.startingChars?.[key] ?? '—'}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Selected Species Info Card */}
+            {selectedSpecies && (
+                <div className="bg-white border rounded-lg shadow-md p-6 w-1/3 h-[calc(100vh-130px)] overflow-auto">
+                    <h2 className="text-lg font-semibold mb-4">{selectedSpecies.name}</h2>
+                    <div>
+                        <p><strong>Starting Experience:</strong> {selectedSpecies.startingAttrs?.experience ?? '-'}</p>
+                        <p><strong>Brawn:</strong> {selectedSpecies.startingChars?.brawn ?? '—'}</p>
+                        <p><strong>Agility:</strong> {selectedSpecies.startingChars?.agility ?? '—'}</p>
+                        <p><strong>Intellect:</strong> {selectedSpecies.startingChars?.intellect ?? '—'}</p>
+                        <p><strong>Cunning:</strong> {selectedSpecies.startingChars?.cunning ?? '—'}</p>
+                        <p><strong>Willpower:</strong> {selectedSpecies.startingChars?.willpower ?? '—'}</p>
+                        <p><strong>Presence:</strong> {selectedSpecies.startingChars?.presence ?? '—'}</p>
+                        <p><strong>Description:</strong> <FormattedDescription description={selectedSpecies.description} /></p>
+                        <p><strong>Sources:</strong></p>
+                        <ul>
+                            {selectedSpecies.sources?.map((source, index) => (
+                                <li key={index}>{source}</li>
+                            )) ?? <li>—</li>}
+                        </ul>
+                    </div>
                 </div>
             )}
+
             <button
                 onClick={selectSpeciesClick}
                 className="fixed bottom-6 right-6 bg-blue-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors"

@@ -14,29 +14,36 @@ const TopBar = () => {
     const [isSignup, setIsSignup] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO ensure persistent login in localstorage
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
         setErrorMessage('');
+        setLoading(true);
 
-        if (isSignup) {
-            const { success, message } = await signup(username, password, email);
-            if (success) {
-                setModalOpen(false);
-                setIsLoggedIn(true);
-            } else {
-                setErrorMessage(message);
-            }
-        } else {
-            const { success, message } = await login(username, password);
-            if (success) {
-                setModalOpen(false);
-                setIsLoggedIn(true);
-            } else {
-                setErrorMessage(message);
-            }
-        }
-    };
+        try {
+            let success = false;
 
+            if (isSignup) {
+                const { success, message } = await signup(username, password, email);
+                if (success) {
+                    setModalOpen(false);
+                    setIsLoggedIn(true);
+                } else {
+                    setErrorMessage(message);
+                }
+            } else {
+                const { success, message } = await login(username, password);
+                if (success) {
+                    setModalOpen(false);
+                    setIsLoggedIn(true);
+                } else {
+                    setErrorMessage(message);
+                }
+            }
+        } finally {
+                setLoading(false);
+            }
+        };
 
     return (
         <>
@@ -124,10 +131,33 @@ const TopBar = () => {
                             )}
                             <button
                                 onClick={handleSubmit}
-                                className="mt-2 px-4 py-2 rounded bg-primary text-primary-foreground text-sm hover:bg-primary/80 transition"
+                                disabled={loading}
+                                className="mt-2 px-4 py-2 rounded bg-primary text-primary-foreground text-sm hover:bg-primary/80 transition flex items-center justify-center gap-2"
                             >
-                                {isSignup ? 'Register' : 'Login'}
+                                {loading ? (
+                                    <>
+                                        <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            />
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M12 2a10 10 0 00-7.07 17.07l1.42-1.42A8 8 0 1112 4v4l5-5-5-5v4z"
+                                            />
+                                        </svg>
+                                        Processing...
+                                    </>
+                                ) : (
+                                    isSignup ? 'Register' : 'Login'
+                                )}
                             </button>
+
                             {errorMessage && (
                                 <div className="text-sm text-destructive mt-2">
                                     {errorMessage}
