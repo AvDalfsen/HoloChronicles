@@ -26,6 +26,7 @@ namespace HoloChronicles.Server.Controllers.Util
         {
             public string Username { get; set; } = string.Empty;
             public string Password { get; set; } = string.Empty;
+            public string Email { get; set; } = string.Empty;
         }
 
         [HttpPost("login")]
@@ -62,7 +63,7 @@ namespace HoloChronicles.Server.Controllers.Util
             await _conn.OpenAsync();
 
             // Ensure the username isn't already taken
-            const string checkSql = @"SELECT 1 FROM users WHERE username = @u;";
+            string checkSql = @"SELECT 1 FROM users WHERE username = @u;";
             await using (var checkCmd = new NpgsqlCommand(checkSql, _conn))
             {
                 checkCmd.Parameters.AddWithValue("u", req.Username);
@@ -70,7 +71,20 @@ namespace HoloChronicles.Server.Controllers.Util
                 if (exists != null)
                 {
                     await _conn.CloseAsync();
-                    return Conflict("Username already taken.");
+                    return Conflict("Username is already taken.");
+                }
+            }
+
+            // Ensure the email address isn't already taken
+            checkSql = @"SELECT 1 FROM users WHERE email = @e;";
+            await using (var checkCmd = new NpgsqlCommand(checkSql, _conn))
+            {
+                checkCmd.Parameters.AddWithValue("e", req.Email);
+                var exists = await checkCmd.ExecuteScalarAsync();
+                if (exists != null)
+                {
+                    await _conn.CloseAsync();
+                    return Conflict("Email address is already taken.");
                 }
             }
 
@@ -79,13 +93,14 @@ namespace HoloChronicles.Server.Controllers.Util
 
             // Insert the new user
             const string insertSql = @"
-                INSERT INTO users (username, password_hash)
-                VALUES (@u, @ph)
+                INSERT INTO users (username, password_hash, email)
+                VALUES (@u, @ph, @e)
                 RETURNING id;
             ";
             await using var insertCmd = new NpgsqlCommand(insertSql, _conn);
             insertCmd.Parameters.AddWithValue("u", req.Username);
             insertCmd.Parameters.AddWithValue("ph", hash);
+            insertCmd.Parameters.AddWithValue("e", req.Email);
 
             var newId = (int?)await insertCmd.ExecuteScalarAsync();
             await _conn.CloseAsync();

@@ -1,4 +1,4 @@
-export const login = async (username: string, password: string): Promise<boolean> => {
+export const login = async (username: string, password: string): Promise<{ success: boolean, message: string }> => {
     try {
         const response = await fetch('/api/authentication/login', {
             method: 'POST',
@@ -8,36 +8,39 @@ export const login = async (username: string, password: string): Promise<boolean
             body: JSON.stringify({ username, password }),
         });
 
+        const text = await response.text();
+
         if (!response.ok) {
-            console.error('Login failed');
-            return false;
+            return { success: false, message: text || 'Login failed' };
         }
 
-        return true;
+        return { success: true, message: text || 'Login successful' };
     } catch (error) {
         console.error('Error during login:', error);
-        return false;
+        return { success: false, message: 'Network error or server not reachable' };
     }
 };
 
-export const signup = async (username: string, password: string): Promise<boolean> => {
+
+export const signup = async (username: string, password: string, email?: string): Promise<{ success: boolean, message: string }> => {
     try {
         const response = await fetch('/api/authentication/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, password, email }),
         });
 
+        const text = await response.text();
+
         if (!response.ok) {
-            console.error('Signup failed');
-            return false;
+            return { success: false, message: text || 'Signup failed' };
         }
 
-        return true;
+        return { success: true, message: text || 'Signup successful' };
     } catch (error) {
         console.error('Error during signup:', error);
-        return false;
+        return { success: false, message: 'Network error or server not reachable' };
     }
 };

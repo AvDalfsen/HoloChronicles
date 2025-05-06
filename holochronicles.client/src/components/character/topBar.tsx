@@ -9,23 +9,34 @@ const TopBar = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO ensure persistent login in localstorage
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async () => {
+        setErrorMessage('');
+
         if (isSignup) {
-            const success = await signup(username, password);
+            const { success, message } = await signup(username, password, email);
             if (success) {
                 setModalOpen(false);
-                // optionally clear fields or set logged-in state
+                setIsLoggedIn(true);
+            } else {
+                setErrorMessage(message);
             }
         } else {
-            const success = await login(username, password);
+            const { success, message } = await login(username, password);
             if (success) {
                 setModalOpen(false);
+                setIsLoggedIn(true);
+            } else {
+                setErrorMessage(message);
             }
         }
     };
+
 
     return (
         <>
@@ -42,18 +53,29 @@ const TopBar = () => {
                     </nav>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button
-                        onClick={() => { setModalOpen(true); setIsSignup(false); }}
-                        className="px-3 py-1 rounded bg-secondary text-secondary-foreground text-sm hover:bg-secondary/80 transition"
-                    >
-                        Login
-                    </button>
-                    <button
-                        onClick={() => { setModalOpen(true); setIsSignup(true); }}
-                        className="px-3 py-1 rounded bg-accent text-accent-foreground text-sm hover:bg-accent/80 transition"
-                    >
-                        Sign Up
-                    </button>
+                    {isLoggedIn ? (
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm">Logged in as: {username}</span>
+                            <button
+                                onClick={() => {
+                                    setUsername('');
+                                    setPassword('');
+                                    setIsLoggedIn(false);
+                                    //TODO ensure that user is moved to character landing upon logout
+                                }}
+                                className="px-3 py-1 rounded bg-destructive text-destructive-foreground text-sm hover:bg-destructive/80 transition"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => { setModalOpen(true); setIsSignup(false); }}
+                            className="px-3 py-1 rounded bg-secondary text-secondary-foreground text-sm hover:bg-secondary/80 transition"
+                        >
+                            Login
+                        </button>
+                    )}
                     <button
                         onClick={toggleTheme}
                         className="p-2 rounded-md hover:bg-primary/80 transition"
@@ -91,12 +113,26 @@ const TopBar = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="px-3 py-2 rounded border border-border bg-background text-foreground text-sm"
                             />
+                            {isSignup && (
+                                <input
+                                    type="email"
+                                    placeholder="Email (optional)"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="px-3 py-2 rounded border border-border bg-background text-foreground text-sm"
+                                />
+                            )}
                             <button
                                 onClick={handleSubmit}
                                 className="mt-2 px-4 py-2 rounded bg-primary text-primary-foreground text-sm hover:bg-primary/80 transition"
                             >
                                 {isSignup ? 'Register' : 'Login'}
                             </button>
+                            {errorMessage && (
+                                <div className="text-sm text-destructive mt-2">
+                                    {errorMessage}
+                                </div>
+                            )}
                         </div>
                         <div className="mt-4 text-center text-sm">
                             {isSignup ? (
@@ -111,7 +147,7 @@ const TopBar = () => {
                                 </>
                             ) : (
                                 <>
-                                    New here?{' '}
+                                    Don't have an account yet?{' '}
                                     <button
                                         onClick={() => setIsSignup(true)}
                                         className="text-accent hover:underline"
