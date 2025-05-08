@@ -3,7 +3,12 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opts =>
+    {
+        // Ignore properties that have their default CLR value (false for bool, 0 for int, null for ref types)
+        opts.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault;
+    });
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IPasswordHasher<string>, PasswordHasher<string>>();

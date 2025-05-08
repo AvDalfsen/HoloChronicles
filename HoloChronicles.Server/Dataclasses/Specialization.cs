@@ -1,19 +1,10 @@
-﻿using System.Text.Json.Serialization;
-
-namespace HoloChronicles.Server.Dataclasses
+﻿namespace HoloChronicles.Server.Dataclasses
 {
     public class Direction
     {
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool Down { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool Up { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool Right { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool Left { get; set; }
 
         public Direction(bool down = false, bool up = false, bool right = false, bool left = false)

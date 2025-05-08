@@ -54,10 +54,10 @@ namespace HoloChronicles.Server.Services.XMLParsers
                              directions: tr.Element("Directions")
                                           ?.Elements("Direction")
                                           .Select(d => new Direction(
-                                              down: d.GetDirectionBool("Down"),
-                                              up: d.GetDirectionBool("Up"),
-                                              right: d.GetDirectionBool("Right"),
-                                              left: d.GetDirectionBool("Left")
+                                              down: d.GetNonNullBool("Down"),
+                                              up: d.GetNonNullBool("Up"),
+                                              right: d.GetNonNullBool("Right"),
+                                              left: d.GetNonNullBool("Left")
                                           ))
                                           .ToList() ?? new List<Direction>()
                          ))

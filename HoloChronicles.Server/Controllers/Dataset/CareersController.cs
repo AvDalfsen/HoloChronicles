@@ -6,11 +6,11 @@ namespace HoloChronicles.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CareerController : ControllerBase
+    public class CareersController : ControllerBase
     {
-        private readonly ILogger<CareerController> _logger;
+        private readonly ILogger<CareersController> _logger;
 
-        public CareerController(ILogger<CareerController> logger)
+        public CareersController(ILogger<CareersController> logger)
         {
             _logger = logger;
         }

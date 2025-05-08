@@ -6,7 +6,7 @@ namespace HoloChronicles.Server.Services.Utils
     public static class XElementExtensions
     {
         public static string? Get(this XElement el, string name) =>
-            el.Element(name)?.Value ?? "";
+            el.Element(name)?.Value ?? null;
 
         public static int? GetInt(this XElement el, string name) =>
             Converters.GetIntFromElement(el, name);
@@ -14,8 +14,8 @@ namespace HoloChronicles.Server.Services.Utils
         public static bool? GetBool(this XElement el, string name) =>
             Converters.GetBoolFromElement(el, name);
         
-        public static bool GetDirectionBool(this XElement el, string name) =>
-            Converters.GetDirectionBoolFromElement(el, name);
+        public static bool GetNonNullBool(this XElement el, string name) =>
+            Converters.GetNonNullBoolFromElement(el, name);
 
         public static List<string> ParseSources(this XElement el)
         {

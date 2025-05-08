@@ -16,7 +16,7 @@ namespace HoloChronicles.Server.Services.Utils
             return bool.TryParse(element?.Value, out bool result) ? result : null;
         }
 
-        public static bool GetDirectionBoolFromElement(XElement parent, string tagName)
+        public static bool GetNonNullBoolFromElement(XElement parent, string tagName)
         {
             var element = parent?.Element(tagName);
             if (bool.TryParse(element?.Value, out var result))
