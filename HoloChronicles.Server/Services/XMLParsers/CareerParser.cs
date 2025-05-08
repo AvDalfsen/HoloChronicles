@@ -52,11 +52,11 @@ namespace HoloChronicles.Server.Services.XMLParsers
             );
         }
 
-        private static Attributes? ParseAttributes(XElement? el)
+        private static CareerAttributes? ParseAttributes(XElement? el)
         {
             if (el == null) return null;
 
-            return new Attributes(
+            return new CareerAttributes(
                 woundThreshold: el.GetInt("WoundThreshold"),
                 strainThreshold: el.GetInt("StrainThreshold"),
                 defenseRanged: el.GetInt("DefenseRanged"),

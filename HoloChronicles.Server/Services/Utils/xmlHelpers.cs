@@ -13,6 +13,9 @@ namespace HoloChronicles.Server.Services.Utils
 
         public static bool? GetBool(this XElement el, string name) =>
             Converters.GetBoolFromElement(el, name);
+        
+        public static bool GetDirectionBool(this XElement el, string name) =>
+            Converters.GetDirectionBoolFromElement(el, name);
 
         public static List<string> ParseSources(this XElement el)
         {

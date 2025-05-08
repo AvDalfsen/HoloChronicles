@@ -1,13 +1,22 @@
-﻿namespace HoloChronicles.Server.Dataclasses.Specialization
-{    
+﻿using System.Text.Json.Serialization;
+
+namespace HoloChronicles.Server.Dataclasses
+{
     public class Direction
     {
-        public bool? Down { get; set; }
-        public bool? Up { get; set; }
-        public bool? Right { get; set; }
-        public bool? Left { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool Down { get; set; }
 
-        public Direction(bool? down = null, bool? up = null, bool? right = null, bool? left = null)
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool Up { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool Right { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool Left { get; set; }
+
+        public Direction(bool down = false, bool up = false, bool right = false, bool left = false)
         {
             Down = down;
             Up = up;
@@ -20,15 +29,13 @@
     {
         public int? Cost { get; set; }
         public List<string>? Talents { get; set; }
-        public List<Direction> Directions { get; set; }
-        public int? Index { get; set; }
+        public List<Direction>? Directions { get; set; }
 
-        public TalentRow(int? cost = null, List<string>? talents = null, List<Direction>? directions = null, int? index = null)
+        public TalentRow(int? cost = null, List<string>? talents = null, List<Direction>? directions = null)
         {
             Cost = cost;
             Talents = talents;
             Directions = directions;
-            Index = index;
         }
     }
 
@@ -61,7 +68,7 @@
         }
     }
 
-    public class Attributes
+    public class SpecializationAttributes
     {
         public int? WoundThreshold { get; set; }
         public int? StrainThreshold { get; set; }
@@ -72,7 +79,7 @@
         public int? ForceRating { get; set; }
         public Requirement? Requirement { get; set; }
 
-        public Attributes(
+        public SpecializationAttributes(
             int? woundThreshold = null, int? strainThreshold = null, int? defenseRanged = null,
             int? defenseMelee = null, int? soakValue = null, int? experience = null,
             int? forceRating = null, Requirement? requirement = null)
@@ -117,6 +124,14 @@
         public int? SkillCount { get; set; }
         public bool? ChooseByType { get; set; }
         public string? TypeValue { get; set; }
+
+        public AddlCareerSkills(
+            int? skillCount = null, bool? chooseByType = null, string? typeValue = null)
+        {
+            SkillCount = skillCount;
+            ChooseByType = chooseByType;
+            TypeValue = typeValue;
+        }
     }
 
     public class Specialization
@@ -129,14 +144,14 @@
         public List<string>? CareerSkills { get; set; }
         public List<TalentRow>? TalentRows { get; set; }
         public bool? Universal { get; set; }
-        public Attributes? Attributes { get; set; }
+        public SpecializationAttributes? Attributes { get; set; }
         public Requirements? Requirements { get; set; }
         public List<AddlCareerSkills>? AddlCareerSkills { get; set; }
 
         public Specialization(
             string? key = null, string? name = null, string? description = null, List<string>? sources = null,
             string? custom = null, List<string>? careerSkills = null, List<TalentRow>? talentRows = null,
-            string? universal = null, Attributes? attributes = null, Requirements? requirements = null,
+            bool? universal = null, SpecializationAttributes? attributes = null, Requirements? requirements = null,
             List<AddlCareerSkills>? addlCareerSkills = null)
         {
             Key = key;

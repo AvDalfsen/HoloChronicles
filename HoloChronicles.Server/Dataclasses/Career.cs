@@ -10,13 +10,13 @@
         public List<string>? Specializations { get; set; }
         public int? ForceRating { get; set; }
         public int? FreeRanks { get; set; }
-        public Attributes? Attributes { get; set; }
+        public CareerAttributes? Attributes { get; set; }
 
         // Constructor
         public Career(string? key = null, string? name = null, string? description = null,
                       List<string>? sources = null, List<string>? careerSkills = null,
                       List<string>? specializations = null, int? forceRating = null, int? freeRanks = null,
-                      Attributes? attributes = null)
+                      CareerAttributes? attributes = null)
         {
             Key = key;
             Name = name;
@@ -30,7 +30,7 @@
         }
     }
 
-    public class Attributes
+    public class CareerAttributes
     {
         public int? WoundThreshold { get; set; }
         public int? StrainThreshold { get; set; }
@@ -42,7 +42,7 @@
         public CareerRequirement? Requirement { get; set; } // Nested Requirement class
 
         // Constructor
-        public Attributes(int? woundThreshold = null, int? strainThreshold = null, int? defenseRanged = null,
+        public CareerAttributes(int? woundThreshold = null, int? strainThreshold = null, int? defenseRanged = null,
                           int? defenseMelee = null, int? soakValue = null, int? experience = null, int? forceRating = null,
                           CareerRequirement? requirement = null)
         {

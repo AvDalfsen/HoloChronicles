@@ -20,6 +20,7 @@ namespace HoloChronicles.Server.Services.XMLParsers
                         : text;
                 })
                 .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Cast<string>()
                 .ToList();
 
             return sources;

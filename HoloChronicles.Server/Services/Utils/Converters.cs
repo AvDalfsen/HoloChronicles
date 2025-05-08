@@ -15,5 +15,13 @@ namespace HoloChronicles.Server.Services.Utils
             var element = parent?.Element(tagName);
             return bool.TryParse(element?.Value, out bool result) ? result : null;
         }
+
+        public static bool GetDirectionBoolFromElement(XElement parent, string tagName)
+        {
+            var element = parent?.Element(tagName);
+            if (bool.TryParse(element?.Value, out var result))
+                return result;
+            return false;
+        }
     }
 }

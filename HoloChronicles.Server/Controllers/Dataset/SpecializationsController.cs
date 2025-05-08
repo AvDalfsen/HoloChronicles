@@ -8,7 +8,7 @@ namespace HoloChronicles.Server.Controllers
     [Route("api/[controller]")]
     public class SpecializationsController : ControllerBase
     {
-        private readonly ILogger<CareerController> _logger;
+        private readonly ILogger<SpecializationsController> _logger;
 
         public SpecializationsController(ILogger<SpecializationsController> logger)
         {
@@ -22,9 +22,9 @@ namespace HoloChronicles.Server.Controllers
             string relativePath = Path.Combine("Assets", "BaseData", "Specializations");
             string fullPath = Path.Combine(basePath, relativePath);
 
-            _logger.LogInformation($"Attempting to parse characteristics from file: {fullPath}");
+            _logger.LogInformation($"Attempting to parse specialisations from folder: {fullPath}");
 
-            return CareerParser.ParseCareersFromFiles(fullPath);
+            return SpecializationsParser.ParseSpecializationsFromFiles(fullPath);
         }
     }
 }
