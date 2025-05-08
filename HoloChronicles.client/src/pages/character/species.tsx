@@ -114,21 +114,22 @@ export default function SpeciesListPage() {
     //TODO: Add all of the extra details (options, modifiers, etc.) and choices (skills, talents, subspecies), as well as a picture.
     //TODO: Make the characteristics look better.
     //TODO: Add a way to filter
+    //TODO: Sort out global text and padding sizes instead of setting pixels
     return (
         <div className="z-20 p-5 w-full flex space-x-6">
             {/* Species Table */}
             <div className="sticky top-0 left-0 bg-white border rounded-lg shadow-md h-[calc(100vh-130px)] overflow-auto max-w-2xl">
                 <table className="w-full table-fixed text-sm text-left border-collapse">
-                    <thead className="sticky top-0 z-10 bg-gray-100 border-b text-xs uppercase tracking-wide text-gray-700">
+                    <thead className="table-header">
                         <tr>
                             <th
-                                className="cursor-pointer px-4 py-2 w-[20%] min-w-[150px]"
+                                className="table-cell w-[20%] min-w-[150px]"
                                 onClick={() => sortBy('name')}
                             >
                                 Name {sortKey === 'name' && (sortAsc ? '▲' : '▼')}
                             </th>
                             <th
-                                className="cursor-pointer px-4 py-2 w-[20px]"
+                                className="table-cell w-[20px]"
                                 onClick={() => sortBy('experience')}
                             >
                                 Starting XP {sortKey === 'experience' && (sortAsc ? '▲' : '▼')}
@@ -136,7 +137,7 @@ export default function SpeciesListPage() {
                             {CHAR_ORDER.map(([key, label]) => (
                                 <th
                                     key={key}
-                                    className="cursor-pointer px-2 py-2 w-[15px]"
+                                    className="table-cell-small w-[15px]"
                                     onClick={() => sortBy(key)}
                                 >
                                     {label} {sortKey === key && (sortAsc ? '▲' : '▼')}
@@ -169,7 +170,7 @@ export default function SpeciesListPage() {
 
             {/* Selected Species Info Card */}
             {selectedSpecies && (
-                <div className="bg-white border rounded-lg shadow-md p-6 w-1/3 h-[calc(100vh-130px)] overflow-auto">
+                <div className="card w-1/3 h-[calc(100vh-130px)] overflow-auto">
                     <h2 className="text-lg font-semibold mb-4">{selectedSpecies.name}</h2>
                     <div>
                         <p><strong>Starting Experience:</strong> {selectedSpecies.startingAttrs?.experience ?? '-'}</p>

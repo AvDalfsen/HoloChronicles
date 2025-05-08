@@ -28,6 +28,14 @@ export default function Sidebar() {
                         Skills
                     </Link>
                 </li>
+                <li>
+                    <Link
+                        to="/character/build/careers"
+                        className="block hover:underline hover:text-sidebar-accent-foreground transition"
+                    >
+                        Careers
+                    </Link>
+                </li>
             </ul>
         </aside>
     );

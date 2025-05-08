@@ -4,6 +4,7 @@ import CharacterLayout from '@/layouts/characterLayout';
 import Species from '@/pages/character/species';
 import Characteristics from '@/pages/character/characteristics';
 import Skills from '@/pages/character/skills';
+import Careers from '@/pages/character/careers';
 
 export default function CharacterRouter() {
     return (
@@ -14,6 +15,7 @@ export default function CharacterRouter() {
                     <Route path="species" element={<Species />} />
                     <Route path="characteristics" element={<Characteristics />} />
                     <Route path="skills" element={<Skills />} />
+                    <Route path="careers" element={<Careers />} />
                     {/* Add more character creation routes here */}
                 </Route>
             </Routes>

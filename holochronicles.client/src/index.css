@@ -113,6 +113,26 @@
   --destructive-foreground: hsl(0 0% 100%);
 }
 
+.card {
+    @apply bg-white border rounded-lg shadow-md p-6;
+}
+
+.table-header {
+    @apply sticky top-0 z-10 bg-gray-100 border-b text-xs uppercase tracking-wide;
+}
+
+.table-cell {
+    @apply border-t px-4 py-2 text-sm;
+}
+
+.table-cell-small {
+    @apply border-t px-2 py-2 text-sm;
+}
+
+.select-button {
+    @apply fixed bottom-6 right-6 bg-blue-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

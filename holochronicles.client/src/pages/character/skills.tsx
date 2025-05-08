@@ -142,9 +142,6 @@ function Skills() {
 
     return (
         <div>
-            <h1>Skills</h1>
-            <p>All them awesome skills, yo!</p>
-
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {skills.length === 0 ? (
