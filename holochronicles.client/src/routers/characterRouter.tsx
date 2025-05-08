@@ -5,6 +5,8 @@ import Species from '@/pages/character/species';
 import Characteristics from '@/pages/character/characteristics';
 import Skills from '@/pages/character/skills';
 import Careers from '@/pages/character/careers';
+import Specializations from '@/pages/character/specializations';
+import Talents from '@/pages/character/talents';
 
 export default function CharacterRouter() {
     return (
@@ -16,6 +18,8 @@ export default function CharacterRouter() {
                     <Route path="characteristics" element={<Characteristics />} />
                     <Route path="skills" element={<Skills />} />
                     <Route path="careers" element={<Careers />} />
+                    <Route path="specializations" element={<Specializations />} />
+                    <Route path="talents" element={<Talents />} />
                     {/* Add more character creation routes here */}
                 </Route>
             </Routes>

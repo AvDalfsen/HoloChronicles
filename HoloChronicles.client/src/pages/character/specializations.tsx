@@ -1,39 +1,39 @@
 import { useEffect, useState } from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { useCharacterStore } from '@/stores/characterStore';
-import { Career } from '@/types/career';
+import { Specialization } from '@/types/specialization';
 
-const CAREERS_CACHE_KEY = 'careersCache';
-const CAREERS_API_KEY = '/api/career';
+const SPECIALIZATIONS_CACHE_KEY = 'specializationsCache';
+const SPECIALIZATIONS_API_KEY = '/api/specializations';
 
-function Careers() {
-    const [careers, setCareers] = useState<Career[]>([]);
+function Specializations() {
+    const [specializations, setSpecializations] = useState<Specialization[]>([]);
     const [error, setError] = useState<string | null>(null);
     const { character, updateCharacter } = useCharacterStore();
 
     useEffect(() => {
-        async function loadCareers() {
-            const data = await fetchDataWithRetryAndCache<Career[]>(
-                CAREERS_API_KEY,
-                CAREERS_CACHE_KEY
+        async function loadSkills() {
+            const data = await fetchDataWithRetryAndCache<Specialization[]>(
+                SPECIALIZATIONS_API_KEY,
+                SPECIALIZATIONS_CACHE_KEY
             );
             if (data) {
-                setCareers(data);
+                setSpecializations(data);
             } else {
-                setError('Failed to fetch careers');
+                setError('Failed to fetch specializations');
             }
         }
 
-        loadCareers();
+        loadSkills();
     }, []);
 
     return (
         <div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            {careers.length === 0 ? (
+            {specializations.length === 0 ? (
                 <div>
-                    <p><em>Loading careers...</em></p>
+                    <p><em>Loading specializations...</em></p>
                     <div className="spinner" />
                 </div>
             ) : (
@@ -44,9 +44,9 @@ function Careers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {careers.map(career => (
-                            <tr key={career.name}>
-                                <td>{career.name}</td>
+                        {specializations.map(specializations => (
+                            <tr key={specializations.name}>
+                                <td>{specializations.name}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -56,4 +56,4 @@ function Careers() {
     );
 }
 
-export default Careers;
+export default Specializations;

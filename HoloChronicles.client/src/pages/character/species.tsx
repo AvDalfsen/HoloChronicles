@@ -180,7 +180,10 @@ export default function SpeciesListPage() {
                         <p><strong>Cunning:</strong> {selectedSpecies.startingChars?.cunning ?? '—'}</p>
                         <p><strong>Willpower:</strong> {selectedSpecies.startingChars?.willpower ?? '—'}</p>
                         <p><strong>Presence:</strong> {selectedSpecies.startingChars?.presence ?? '—'}</p>
-                        <p><strong>Description:</strong> <FormattedDescription description={selectedSpecies.description} /></p>
+                        <div>
+                            <strong>Description:</strong>
+                            <FormattedDescription description={selectedSpecies.description} />
+                        </div>
                         <p><strong>Sources:</strong></p>
                         <ul>
                             {selectedSpecies.sources?.map((source, index) => (

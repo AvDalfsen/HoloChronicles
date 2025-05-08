@@ -1,39 +1,39 @@
 import { useEffect, useState } from 'react';
 import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { useCharacterStore } from '@/stores/characterStore';
-import { Career } from '@/types/career';
+import { Talent } from '@/types/talent';
 
-const CAREERS_CACHE_KEY = 'careersCache';
-const CAREERS_API_KEY = '/api/career';
+const TALENTS_CACHE_KEY = 'talentsCache';
+const TALENTS_API_KEY = '/api/talents';
 
-function Careers() {
-    const [careers, setCareers] = useState<Career[]>([]);
+function Talents() {
+    const [talents, setTalents] = useState<Talent[]>([]);
     const [error, setError] = useState<string | null>(null);
     const { character, updateCharacter } = useCharacterStore();
 
     useEffect(() => {
-        async function loadCareers() {
-            const data = await fetchDataWithRetryAndCache<Career[]>(
-                CAREERS_API_KEY,
-                CAREERS_CACHE_KEY
+        async function loadTalents() {
+            const data = await fetchDataWithRetryAndCache<Talent[]>(
+                TALENTS_API_KEY,
+                TALENTS_CACHE_KEY
             );
             if (data) {
-                setCareers(data);
+                setTalents(data);
             } else {
-                setError('Failed to fetch careers');
+                setError('Failed to fetch talents');
             }
         }
 
-        loadCareers();
+        loadTalents();
     }, []);
 
     return (
         <div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            {careers.length === 0 ? (
+            {talents.length === 0 ? (
                 <div>
-                    <p><em>Loading careers...</em></p>
+                    <p><em>Loading skills...</em></p>
                     <div className="spinner" />
                 </div>
             ) : (
@@ -44,9 +44,9 @@ function Careers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {careers.map(career => (
-                            <tr key={career.name}>
-                                <td>{career.name}</td>
+                        {talents.map(talents => (
+                            <tr key={talents.name}>
+                                <td>{talents.name}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -56,4 +56,4 @@ function Careers() {
     );
 }
 
-export default Careers;
+export default Talents;
