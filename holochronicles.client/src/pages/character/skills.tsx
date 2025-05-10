@@ -8,8 +8,8 @@ import { JSX } from 'react/jsx-runtime';
 import { useCharacterStore } from '@/stores/characterStore';
 import { CHAR_ORDER } from '@/pages/character/species';
 
-const SKILLS_CACHE_KEY = 'skillsCache';
-const SKILLS_API_KEY = '/api/skills';
+export const SKILLS_CACHE_KEY = 'skillsCache';
+export const SKILLS_API_KEY = '/api/skills';
 
 function Skills() {
     const [skills, setSkills] = useState<Skill[]>([]);
@@ -164,14 +164,14 @@ function Skills() {
                                     <div className="flex items-center space-x-4 mt-4">
                                         <Button
                                             size="icon"
-                                            onClick={() => adjustValue(skill.name, -1)}
+                                            onClick={() => adjustValue(skill.key, -1)}
                                             variant="outline"
                                         >
                                             <Minus />
                                         </Button>
                                         <Button
                                             size="icon"
-                                            onClick={() => adjustValue(skill.name, 1)}
+                                            onClick={() => adjustValue(skill.key, 1)}
                                             variant="outline"
                                         >
                                             <Plus />
@@ -179,7 +179,7 @@ function Skills() {
                                     </div>
                                 </td>
                                 <td>
-                                    {deriveAndDisplaySkillIcons(skill.name, skill.charKey)}
+                                    {deriveAndDisplaySkillIcons(skill.key, skill.charKey)}
                                 </td>
                             </tr>
                         ))}

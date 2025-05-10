@@ -4,7 +4,11 @@ import { Species } from '@/types/species';
 import { deriveStatsFromCharacteristics } from '@/lib/derivedStatsFunctions/statsDerivedFromCharacteristics'
 
 export function deriveStatsFromSpecies(state: CharacterState, character: Character, species?: Species): Character {
-    const startingCharacteristics = species?.startingChars || {};
+    const startingCharacteristics = species?.startingChars;
+
+    if (!startingCharacteristics) {
+        return character;
+    }
 
     character = ({
         ...character,

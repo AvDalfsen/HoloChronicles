@@ -57,6 +57,7 @@ const TopBar = () => {
                         <Link to="/gm" className="hover:underline">GM</Link>
                         <Link to="/data" className="hover:underline">Data</Link>
                         <Link to="/editor" className="hover:underline">Editor</Link>
+                        <Link to="/character/testCharacter" className="hover:underline">Character Json</Link>
                     </nav>
                 </div>
                 <div className="flex items-center gap-2">

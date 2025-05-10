@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Landing from '@/pages/mainLanding';
 import CharacterLanding from '@/pages/characterLanding';
+import CharacterJsonPage from '@/pages/testCharacter';
 //import DataLanding from '@/pages/dataLanding';
 //import GMLanding from '@/pages/gmLanding';
 //import EditorLanding from '@/pages/editorLanding';
@@ -18,6 +19,8 @@ export default function App() {
 
             {/* Nested route that kicks in once you go into actual character creation */}
             <Route path="/character/build/*" element={<CharacterRouter />} />
+            <Route path="/character/testCharacter/*" element={<CharacterJsonPage />} />
+
         </Routes>
     );
 }
