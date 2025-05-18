@@ -1,11 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
 <Vehicle>
   <Key>PERSCARR</Key>
   <Name>Personnel Carrier</Name>
   <Description>
       [H3]Personnel Carrier[h3]
-      Please see page 252 of the Edge of the Empire Core Rulebook for details.
-    </Description>
+
+Many smaller or poorer fringe worlds can not afford military or law enforcement vehicles with expensive repulsorlift technology or construct the heavy walkers utilized by the Imperial Army. Instead, many of these worlds supply their militaries or self-defense forces with transports utilizing older but reliable wheeled or treaded propulsion. These personnel carriers are usually extremely simple, which does have the advantage of making them more reliable.</Description>
   <Source Page="252">Edge of the Empire Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <MaxAltitude>
   </MaxAltitude>
   <SensorRangeValue>srNone</SensorRangeValue>

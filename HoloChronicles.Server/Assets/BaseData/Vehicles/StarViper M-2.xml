@@ -1,10 +1,25 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>STARVIPERM2</Key>
   <Name>StarViper M-2</Name>
   <Description>[H3]StarViper M-2[h3]
-Please see page 81 of the Mask of the Pirate Queen adventure module for details.</Description>
+The StarViper M-2 is an aftermarket modification
+of the infamous MandalMotors space superiority
+starfighter. It possesses a distinctive profile, with
+four wings radiating from a central cockpit like the
+fins of a beautiful yet deadly ocean creature. Two
+“arms” extend from the cockpit, each holding a pair of
+weapons. The arms can swing forward and backward,
+enhancing targeting capability and even allowing the
+pilot to fire behind the ship.
+[P]The M-2 modification boasts improved versatility at
+the expense of raw killing power. The heavy laser cannons have been reduced in potency to save power for
+the StarViper’s boosted shields, while still leaving the
+craft with a potent punch. More importantly, the proton torpedo launchers have been replaced with a pair
+of ion cannons, making the fighter popular among
+pirates and criminal consortiums.</Description>
   <Source Page="81">Mask of the Pirate Queen</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

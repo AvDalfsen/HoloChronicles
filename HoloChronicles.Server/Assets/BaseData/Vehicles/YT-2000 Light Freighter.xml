@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>YT2000</Key>
   <Name>YT-2000 Light Freighter</Name>
   <Description>[H3]YT-2000 Light Freighter[h3]
-      Please see page 60 of the Fly Casual Sourcebook for details.</Description>
+
+Intended to be the pinnacle of the YT-series, the YT-2000 is by any measure an impressive light freighter. Retaining the distinctive saucer shape and powerful Girodyne engines of previous models, the YT-2000 features an in-line cockpit, giving the vessel a symmetrical appearance. The YT-2000 also boasts better armaments, improved maneuverability, and greater cargo capacity than its predecessors. Unfortunately for Corellian Engineering, however, industrial espionage resulted in the ship's designs leaking to its competitors, causing CEC to rush the YT-2000 into production before working out all of the avionics and component integration issues. As a consequence, the freighter is more temperamental than other YT models, causing grief for the mechanics and engineers tasked with keeping these ships in working order. Nevertheless, the YT-2000 was well-received by the public. The ship saw substantial sales prior to Corellian Engineering discontinuing it in favor of the newer YT-2400, the designs of which CEC kept closely under wraps until it entered production.</Description>
   <Source Page="60">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Light Freighter</Type>
   <Categories>
     <Category>Starship</Category>

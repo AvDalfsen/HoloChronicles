@@ -14,18 +14,26 @@ export const SKILLS_API_KEY = '/api/skills';
 function Skills() {
     const [skills, setSkills] = useState<Skill[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
     const { character, updateCharacter } = useCharacterStore();
 
     useEffect(() => {
         async function loadSkills() {
-            const data = await fetchDataWithRetryAndCache<Skill[]>(
-                SKILLS_API_KEY,
-                SKILLS_CACHE_KEY
-            );
-            if (data) {
-                setSkills(data);
-            } else {
+            try {
+                const data = await fetchDataWithRetryAndCache<Skill[]>(
+                    SKILLS_API_KEY,
+                    SKILLS_CACHE_KEY
+                );
+                if (data) {
+                    setSkills(data);
+                } else {
+                    setError('No skill data returned');
+                }
+            } catch (err) {
+                console.error(err);
                 setError('Failed to fetch skills');
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -40,10 +48,11 @@ function Skills() {
 
         const currentPurchasedRanks = skill?.rank.purchasedRanks ?? 0;
         const currentCareerRanks = skill?.rank.careerRanks ?? 0;
+        const currentSpecializationRanks = skill?.rank.specializationRanks ?? 0;
         const currentCyberRanks = skill?.rank.cyberRanks ?? 0;
         const currentSpeciesRanks = skill?.rank.speciesRanks ?? 0;
 
-        const currentSkillRankTotal = currentCareerRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
+        const currentSkillRankTotal = currentCareerRanks + currentSpecializationRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
 
         let characteristicTotal = 0;
 
@@ -76,10 +85,11 @@ function Skills() {
 
         const currentPurchasedRanks = skill?.rank.purchasedRanks ?? 0;
         const currentCareerRanks = skill?.rank.careerRanks ?? 0;
+        const currentSpecializationRanks = skill?.rank.specializationRanks ?? 0;
         const currentCyberRanks = skill?.rank.cyberRanks ?? 0;
         const currentSpeciesRanks = skill?.rank.speciesRanks ?? 0;
 
-        const currentSkillRankTotal = currentCareerRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
+        const currentSkillRankTotal = currentCareerRanks + currentSpecializationRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
 
         //Do nothing if user tries to go past the minimum or maximum number of trained ranks
         if ((currentSkillRankTotal === 0 && delta === -1) || (currentSkillRankTotal === 5 && delta === 1)) return;
@@ -140,52 +150,59 @@ function Skills() {
         });
     };
 
+    if (loading) {
+        return (
+            <div className="p-6">
+                <p><em>Loading careers...</em></p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="p-6">
+                <p className="text-red-500">Error: {error}</p>
+            </div>
+        );
+    }
+
     return (
         <div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-
-            {skills.length === 0 ? (
-                <div>
-                    <p><em>Loading skills...</em></p>
-                    <div className="spinner" />
-                </div>
-            ) : (
-                <table className="table table-striped" aria-labelledby="tableLabel">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
+            <table className="table table-striped" aria-labelledby="tableLabel">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {skills.map(skill => (
+                        <tr key={skill.name}>
+                            <td>{skill.name}</td>
+                            <td>
+                                <div className="flex items-center space-x-4 mt-4">
+                                    <Button
+                                        size="icon"
+                                        onClick={() => adjustValue(skill.key, -1)}
+                                        variant="outline"
+                                    >
+                                        <Minus />
+                                    </Button>
+                                    <Button
+                                        size="icon"
+                                        onClick={() => adjustValue(skill.key, 1)}
+                                        variant="outline"
+                                    >
+                                        <Plus />
+                                    </Button>
+                                </div>
+                            </td>
+                            <td>
+                                {deriveAndDisplaySkillIcons(skill.key, skill.charKey)}
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {skills.map(skill => (
-                            <tr key={skill.name}>
-                                <td>{skill.name}</td>
-                                <td>
-                                    <div className="flex items-center space-x-4 mt-4">
-                                        <Button
-                                            size="icon"
-                                            onClick={() => adjustValue(skill.key, -1)}
-                                            variant="outline"
-                                        >
-                                            <Minus />
-                                        </Button>
-                                        <Button
-                                            size="icon"
-                                            onClick={() => adjustValue(skill.key, 1)}
-                                            variant="outline"
-                                        >
-                                            <Plus />
-                                        </Button>
-                                    </div>
-                                </td>
-                                <td>
-                                    {deriveAndDisplaySkillIcons(skill.key, skill.charKey)}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

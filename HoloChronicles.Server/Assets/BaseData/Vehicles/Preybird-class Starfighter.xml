@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>PREYBIRD</Key>
   <Name>Preybird-class Starfighter</Name>
   <Description>
     [H3]Preybird-class Starfighter[h3]
-    Please see page 66 of the Dangerous Covenants Sourcebook for details.
-  </Description>
+
+SoroSuub always intended for the Preybird-class starfighter to be sold on the open market, rather than to a specific buyer or defense force. Unfortunately, the ship fell victim to design and manufacturing conflicts, forcing it over budget. Though the production run was limited, it proved to be a popular craft in some circles. Pirates in particular like the distinctive, intimidating look of the craft, and like its powerful weapons systems even more.</Description>
   <Source Page="66">Dangerous Covenants</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

@@ -1,11 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
 <Vehicle>
   <Key>FLARESSWOOP</Key>
   <Name>Mobquet Flare-S Swoop</Name>
   <Description>
       [H3]Mobquet Flare-S Swoop[h3]
-      Please see page 250 of the Edge of the Empire Core Rulebook for details.
-    </Description>
+
+Popular among swoop gangs and adrenaline junkies throughout the galaxy, the Fla re-S is the very epitome of the swoop builder's art. The Flare-S is a high-performance, one-person sport swoop built for raw, straight-line speed as opposed to agility. Powered by a supercharged Mobquet R1k repulsorlift engine supplemented by a number of thrust vectoring turbothrusters, this tiny swoop has enough power to overtake or outrun nearly anything in its class.</Description>
   <Source Page="250">Edge of the Empire Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <MaxAltitude>350 meters</MaxAltitude>
   <SensorRangeValue>srNone</SensorRangeValue>
   <Crew>One Pilot</Crew>

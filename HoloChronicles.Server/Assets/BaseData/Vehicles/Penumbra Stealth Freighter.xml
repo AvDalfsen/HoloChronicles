@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>PENSTEALTH</Key>
   <Name>Penumbra Stealth Freighter</Name>
   <Description>[H3][I]Penumbra[i] Stealth Freighter[h3]
-Please see page 62 of the Keeping the Peace sourcebook for details.</Description>
+[P]Made in an extremely limited run, the Penumbra remains practically peerless if one wishes to get a small amount of cargo somewhere covertly and quickly. The ship offers limited defenses and offensive power, but if no one ever knows you're there, these points are rendered moot. This freighter requires near-constant maintenence, as even the slightest scratch on its stealth coating can severely undermine the capabilities of this vessel. For the same reason, the craft cannot be significantly customized. However, several captains have boasted that they have been making regular runs to restricted locations for years using a [I]Penumbra[i] without ever having a close call with the authorities. The veracity of these tales is difficult to ascertain, but given the ship's design such claims can certainly not be ruled out altogether.</Description>
   <Source Page="62">Keeping the Peace</Source>
+  <Custom>DescOnly</Custom>
   <Type>Freighter</Type>
   <Categories>
     <Category>Starship</Category>

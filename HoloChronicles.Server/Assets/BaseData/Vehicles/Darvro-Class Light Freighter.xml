@@ -1,11 +1,14 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>DARVROLTFR</Key>
   <Name>Darvro-Class Light Freighter</Name>
   <Description>[H3]Darvro-Class Light Freighter[h3]
-Please see page 118 of the Strongholds of Resistance Sourcebook for details.</Description>
+[P]Along with the Tallanx fighter, the Darvro is a ship built on stealth and speed commonly used by the Ord Gimmel Defense Fleet. Named after a beast of burden found in the rural regions of Ord Gimmel, the Darvro is a highly effective smuggling vessel. Fitted with a cloaking device and equipped with numerous smuggling compartments and an ECM suite, the ship is designed to evade enemies rather than confront them directly.
+[P]Used by the Rebel Alliance to smuggle high-profile prisoners, passengers, and cargo through Imperial lines, the Darvro is also equipped with a powerful self-destruct mechanism so that its contents—whatever they may be—don’t fall
+into enemy hands.</Description>
   <Source Page="118">Strongholds of Resistance</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Light Freighter</Type>
   <Categories>
     <Category>Starship</Category>

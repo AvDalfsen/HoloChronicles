@@ -1,10 +1,41 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>MUNIFICENT</Key>
   <Name>Munificent-Class Command, Control, and Communications Frigate</Name>
   <Description>[H3][I]Munificent[i]-Class Command, Control, and Communications Frigate[h3]
-Please see page 52 of the Lead by Example Sourcebook for details.</Description>
+
+A rare sight in modern fleet formations, the Munificentclass
+frigates once formed the backbone of the Confederacy
+of Independent Systems (CIS) Navy. Produced
+by Hoersch-Kessel Drive for the CIS during the Clone
+Wars, the Munificent class filled a number of roles in
+the CIS Navy. Initially designed as “pocket cruisers," the first Munificents off the slips were fast, lightly armored,
+and almost comically overgunned vessels. They were
+designed to hunt in packs to take down powerful dreadnoughts
+and other capital ships. As the Munificents'
+capabilities became more apparent, numerous variants
+appeared, trading some of the powerful weapon systems
+for more effective sensors, sophisticated comms
+suites, and hangars filled to bursting with vulture droids.
+[P]Only a handful of Munificent-class frigates are in commission
+today, almost all with the Alliance Navy. The
+most common surviving variant is the command, control,
+and communications (C3) frigate, most of which
+have seen little direct combat. Instead, these vessels
+were originally equipped with what were, state-of-theart
+C3 suites and operated as fast reconnaissance vessels,
+advanced early warning pickets, fleet communications
+vessels, and command ships for small CIS Navy
+formations. Those in service with the Alliance have
+undergone extensive refits, replacing their droid systems
+and installing pressurized, gravity-controlled compartments
+suitable for organic habitation. Providing
+much-needed comms and command capabilities for
+the credit- and ship-strapped Rebellion, they continue
+to prove their worth even after decades of service.
+</Description>
   <Source Page="52">Lead by Example</Source>
+  <Custom>DescOnly</Custom>
   <Type>Frigate</Type>
   <Categories>
     <Category>Capital Ship</Category>

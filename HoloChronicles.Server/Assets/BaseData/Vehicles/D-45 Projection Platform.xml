@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>D45PROJPLAT</Key>
   <Name>D-45 Projection Platform</Name>
   <Description>[H3]D-45 Projection Platform[h3]
-Please see page 58 of the Keeping the Peace sourcebook for details.</Description>
+[P]After the success of the D-4, Icnom realized that the large generator necessary for the shield system could be used to power other devices. This craft is marketed as a way to keep building facades "intact" while under repairs, but many underworld elements quickly realized that a portable, large-scale hologram could be used to mask illicit activities.</Description>
   <Source Page="58">Keeping the Peace</Source>
+  <Custom>DescOnly</Custom>
   <Type>Heavy Landspeeder</Type>
   <Categories>
     <Category>Land Vehicle</Category>

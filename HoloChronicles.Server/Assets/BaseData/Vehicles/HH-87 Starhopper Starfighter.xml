@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>HH87STARHOPPER</Key>
   <Name>HH-87 Starhopper Starfighter</Name>
   <Description>[H3]HH-87 Starhopper Starfighter[h3]
-Please see page 114 of the Lords of Nal Hutta Sourcebook for details.</Description>
+
+A long-range, multipurpose starfighter introduced shortly before the Clone Wars, the HH-87 is popular among the Hutt crime families for its durability and versatility. Well-armored for a ship its size, the starhopper is a tough, capable snubfighter. Equipped with a pair of twin laser cannons and able to operate equally well in space or atmosphere, the fighter is suited for several roles. from patrolling the skies above Nal Hutta and Nar Shaddaa to hunting down debtors and other fugitives from Hutt "justice."</Description>
   <Source Page="114">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

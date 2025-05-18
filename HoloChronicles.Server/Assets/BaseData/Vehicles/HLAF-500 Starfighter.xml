@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>HLAF500</Key>
   <Name>HLAF-500 Starfighter</Name>
   <Description>
     [H3]HLAF-500 Starfighter[h3]
-    Please see page 108 of the Suns of Fortune Sourcebook for details.
-</Description>
+
+A modified and upgraded version of the LAF-250 starfighter, the Heavy/Light Attack Fighter 500 boasts a number of significant improvements over its predecessor. Built on the same frame as the LAF-250, the HLAF-500 has powerful SoroSuub 9X2 fusial thrust engines that give the craft better performance, acceleration, and handling. To increase the starfighter's offensive capabilities, additional weapons hardpoints were added, allowing the HLAF-500 to be equipped with proton torpedo launchers.</Description>
   <Source Page="108">Suns of Fortune</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

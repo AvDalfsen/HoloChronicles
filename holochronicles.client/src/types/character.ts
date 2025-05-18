@@ -11,7 +11,9 @@ export interface Character {
     }
     xp: number;
     career: string;
-    specialization: string[];
+    specializations: string[];
+    careerRanksRemaining: number;
+    specializationRanksRemaining: number;
     characteristics: {
         brawn: CharacteristicValue;
         agility: CharacteristicValue;
@@ -25,9 +27,9 @@ export interface Character {
         rank: {
             speciesRanks?: number;
             careerRanks?: number;
+            specializationRanks?: number;
             purchasedRanks?: number;
             cyberRanks?: number;
-
         }
         isCareer?: boolean;
         charKeyOverride?: string;
@@ -46,6 +48,7 @@ export interface Character {
         melee: number;
         ranged: number;
     };
+    forceRating: number;
     gear: string[];
     credits: number;
     background: string;

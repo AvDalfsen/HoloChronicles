@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>EBBFLOW</Key>
   <Name>Ebb/Flow</Name>
   <Description>
   [H4]Force Power: Imbue[h4]
-  Please see page 39 of the Disciples of Harmony Sourcebook for details.
 
-</Description>
+
+[P]Some Force users have compared the Force to an ocean. Like an ocean, they say, the Force has its tides and currents, its tempests and calms. When Force users truly let the Force flow through them, governing their actions, they feel the Force in every move it makes. It revitalizes and empowers them, even as it saps and hinders their enemies. These Force users do not even need to think about it, the Force simply does what they need it to do, and they obey the will of the Force in turn.</Description>
   <Source Page="39">Disciples of Harmony</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Abilities>

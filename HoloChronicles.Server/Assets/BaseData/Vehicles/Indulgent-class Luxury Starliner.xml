@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>INDULGENT</Key>
   <Name>Indulgent-class Luxury Starliner</Name>
   <Description>[H3]Indulgent-class Luxury Starliner[h3]
-Please see page 59 of the Far Horizons Sourcebook for details.</Description>
+
+Some of the largest, most exclusive, most flamboyantly luxurious luxury liners in production, the ships of Leonore Luxury Liners Incorporated's Indulgent-class are spacegoing monuments to wealth and flagrant excess. Huge, slow-moving vessels the size of a heavy cruiser, these liners set the standard for luxury accommodations. Designed to provide the ultimate space travel experience, no expense was spared in their building and fitting out, and each ship is brimming with rare and exotic materials, all tailored to exceed each passengers requirements. The Indulgent-class vessels are a limited production run sold exclusively to large cruise lines. They are a common sight in the more well traveled Outer Rim spacelanes, where they cruise a number of scenic areas and stop in the more civilized ports for resupply and a little slumming shore leave for passengers and crew. While they are susceptible to attack, these ships are not completely helpless. They mount sophisticated electronic countermeasures and a number of weapons to deal with all but the most persistent pirates.</Description>
   <Source Page="59">Far Horizons</Source>
+  <Custom>DescOnly</Custom>
   <Type>Yacht</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

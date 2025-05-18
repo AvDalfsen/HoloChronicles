@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>MISDIRECT</Key>
   <Name>Misdirect</Name>
   <Description>
     [H4]Force Power: Misdirect[h4]
-    Please see page 296 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+Trickery is an important part of many Force users' arsenals, letting them tip the scales of battle in their favor or even avoid some conflicts entirely. Force users versed in shrouding techniques often walk unseen amidst their foes-a particularly useful ability for any Force-sensitive hiding from the Empire. Especially skilled crafters of illusions can even project visions onto those around them, baffling pursuers or terrifying enemies with horrific phantasms.</Description>
   <Source Page="296">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>

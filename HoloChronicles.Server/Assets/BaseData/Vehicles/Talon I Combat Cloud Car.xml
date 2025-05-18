@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>TALON1CLOUD</Key>
   <Name>Talon I Combat Cloud Car</Name>
   <Description>
     [H3]Ubrikkian Industries Talon I Combat Cloud Car[h3]
-    Please see page 254 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+A sturdy, nimble, high-atmosphere cloud car designed specifically for combat and patrol duty, the Ubrikkian Industries' Talon I is utilized by planetary security from the Core Worlds to the Outer Rim. Filling the gap between starfighters and airspeeders, the Talon I is able to operate in virtually any atmosphere and comes equipped with armor plating and advanced weapon systems. The combat cloud car is commonly employed for patrol and scouting, as well as for customs enforcement and traffic control duties in busy spaceports such as those at Nar Shaddaa and Sleheyron.</Description>
   <Source Page="254">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <Type>Cloud Car</Type>
   <Categories>
     <Category>Air Vehicle</Category>

@@ -1,10 +1,23 @@
-<?xml version="1.0"?>
-<SigAbility xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<SigAbility>
   <Key>ROUSOR</Key>
   <Name>Rousing Oratory</Name>
-  <Description>Please see page 38 of the Lead by Example Sourcebook for details.
-</Description>
+  <Description>Many in the Empire think that a commander is defined
+by the loyalty and service that the soldiers serving
+under them owe to the office. What they fail to realize
+is that the true definition of a commander comes from
+his responsibility to those soldiers. A true commander
+is responsible for seeing the mission through, but not
+at the callous disregard for his troops. A true commander
+is responsible for defeating the enemy, but
+not at the sacrifice of his army’s humanity. A true commander
+is responsible for winning the war, but more
+importantly, for winning the war for the right reasons.
+The commander that can live up to these ideals is an
+inspiration to his troops and can drive them to ever
+greater feats of heroism for the cause.</Description>
   <Source Page="38">Lead by Example</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>

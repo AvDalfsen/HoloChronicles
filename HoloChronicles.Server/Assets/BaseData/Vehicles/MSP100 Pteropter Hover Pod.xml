@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>MSP100</Key>
   <Name>MSP100 Pteropter Hover Pod</Name>
   <Description>[H3]MSP100 Pteropter Hover Pod[h3]
-  Please see page 54 of the Onslaught at Arda I Adventure Module for details.
-</Description>
+
+Based off the design originally used by Trandoshans in their hunts on their hunts on their homeworld and surrounding colonies, the Pteropter is perfectly suited for short exploratory expeditions. With open-air cockpits, camouflage pain jobs, and mounted floodlights, the Rebel Alliance has acquired a number of these antiquated models over the years for scouting temperate yet treacherous planets.</Description>
   <Source Page="54">Onslaught at Arda I</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

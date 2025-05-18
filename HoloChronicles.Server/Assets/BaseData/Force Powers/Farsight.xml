@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>FARSIGHT</Key>
   <Name>Farsight</Name>
-  <Description>Please see page 36 of the Savage Spirits Sourcebook for details.
+  <Description>[H4]Force Power: Farsight[h4]
+In its most basic form, Farsight allows he Force user to see in situations in which normal visual detection would be impossible, such as in total darkness or heavily obscuring smoke. Using Farsight, it is even possible for those without eyes or have lost their sight to see with perfect vision.
 </Description>
   <Source Page="36">Savage Spirits</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Abilities>

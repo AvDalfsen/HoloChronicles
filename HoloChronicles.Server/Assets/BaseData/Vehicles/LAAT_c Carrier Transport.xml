@@ -1,13 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>LAATC</Key>
   <Name>LAAT/c Carrier Transport</Name>
-  <Description>
-    [H3]LAAT/I Carrier Transport[h3]
-    Please see page 61 of the Forged in Battle Sourcebook for details.</Description>
+  <Description>[H3]LAAT/I Carrier Transport[h3]
+The LAAT/c (carrier is a variant of the Low Altitude Assault Transport designed to carry large vehicles into battle, in particular the All Terrain Tactical Enforcer. Its profile is similar to the other LAAT models, with the central body hollowed out to make room for its vehicle component and four magnetic holding clamps. Additionally, the LAAT/c strips out most of the weapons systems, reducing the necessary crew to a single pilot.</Description>
   <Sources>
     <Source Page="61">Forged in Battle</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <Type>Heavy Assault Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>KELDABE</Key>
   <Name>Keldabe-class Battleship</Name>
   <Description>
     [H3]Keldabe-class Battleship[h3]
-    Please see page 69 of the Dangerous Covenants Sourcebook for details.
-  </Description>
+
+The Keldabe-class battleship became known for its construction and deployment by the criminal Zann Consortium, after they stole the design from Mandal-Motors. A modern and effective warship, the Keldabe is a handful for any contemporary capital ship, including an Imperial Star Destroyer. The Keldabe also carries an unusual device that allows it to drain and use the power from an enemy's shields. It reroutes the energy into the ship's own formidable weapons. Though effective, the technology is also very expensive, and the Consortium's reach is limited.</Description>
   <Source Page="69">Dangerous Covenants</Source>
+  <Custom>DescOnly</Custom>
   <Type>Battleship</Type>
   <Categories>
     <Category>Capital Ship</Category>

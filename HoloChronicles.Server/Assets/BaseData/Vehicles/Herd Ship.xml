@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>HERDSHIP</Key>
   <Name>Herd Ship</Name>
   <Description>[H3]Ithorian Herd Ship[h3]
-Please see page 61 of the Unlimited Power Sourcebook for details.</Description>
+These massive vessels, over 1.000 meters in diameter, were designed by the Ithorians as a home away from home. Based on the repulsorlift herd-cities of their native world, yet enclosed for space travel, each herd ship features an extensively-grown jungle habitat in its lower levels, featuring a complete and living ecosystem designed to simulate the jungles of Ithor. The upper levels of a herd ship feature the main city: the living quarters, starship landing facilities and workspaces. Herd ships are armed with four tractor beam projectors and twenty turbolaser batteries located around the outer perimeter of the vessel. A crew of approximately 3,000 Ithorians work constantly on the maintenance and operation of the herd ship, which also serves as the home of up to 10,000 additional lthorians.
+[P]The ships travel the galaxy on a specific course and schedule, set by the individual herd, trading with varying ports of call along the way. All vessels return to Ithor once every three years, at an event known as a Herd Meet.</Description>
   <Source Page="61">Unlimited Power</Source>
+  <Custom>DescOnly</Custom>
   <Type>Herd Ship</Type>
   <Categories>
     <Category>Starship</Category>

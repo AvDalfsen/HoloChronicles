@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>HEALHARM</Key>
   <Name>Heal/Harm</Name>
   <Description>
     [H4]Force Power: Heal/Harm[h4]
-    Please see page 292 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+This power reflects a Force user's capacity to manipulate the living energy in things around him. It is the individual's choice, however, whether to use this gift to help others flourish, binding their injuries and making them whole, or to steal their vital essence, ripping the life from them to watch as they wither and die.</Description>
   <Source Page="292">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>
@@ -196,53 +197,7 @@
         <Cost>15</Cost>
       </Costs>
     </AbilityRow>
-    <!--<AbilityRow>
-      <Index>0</Index>
-      <Abilities>
-        <Key />
-        <Key />
-        <Key>HEALHARMMAGNITUDE</Key>
-        <Key>HEALHARMMASTERY</Key>
-      </Abilities>
-      <Directions>
-        <Direction>
-          <Left>false</Left>
-          <Right>false</Right>
-          <Up>false</Up>
-          <Down>false</Down>
-        </Direction>
-        <Direction>
-          <Left>false</Left>
-          <Right>false</Right>
-          <Up>false</Up>
-          <Down>false</Down>
-        </Direction>
-        <Direction>
-          <Left>false</Left>
-          <Right>true</Right>
-          <Up>true</Up>
-          <Down>false</Down>
-        </Direction>
-        <Direction>
-          <Left>true</Left>
-          <Right>false</Right>
-          <Up>true</Up>
-          <Down>false</Down>
-        </Direction>
-      </Directions>
-      <AbilitySpan>
-        <Span>1</Span>
-        <Span>1</Span>
-        <Span>1</Span>
-        <Span>1</Span>
-      </AbilitySpan>
-      <Costs>
-        <Cost>5</Cost>
-        <Cost>5</Cost>
-        <Cost>5</Cost>
-        <Cost>20</Cost>
-      </Costs>
-    </AbilityRow>-->
+
   </AbilityRows>
   <MinForceRating>1</MinForceRating>
 </ForcePower>

@@ -1,57 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Species>
   <Key>FALLEEN</Key>
   <Name>Falleen</Name>
   <Description>
     [H4]Falleen[h4]
-    The Falleen are the indigenous reptilian sentient species of the planet Falleen.
-    [P][B]Physiology:[b]
-    The Falleen are an exotic, cold-blooded reptomammalian species known to be
-    long lived, with life spans averaging 250 years.
-    [P]The sleek symmetry of their features, calculating and cold demeanors, their
-    exotic looks, and their ability to alter their skin pigmentation means that
-    the Falleen are often considered to be among the most aesthetically pleasing
-    beings in the galaxy. In addition to their strikingly beautiful appearance,
-    the Falleen exude pheromones which made them all but irresistible to both
-    sexes. They have small scales all over their bodies, as well
-    as slightly clawed fingers and toes. In addition, the Falleen display
-    prominent facial and spinal ridges, though females tend to have slighter,
-    more subtle growths.
-    [P]The Falleen are semi-aquatic, and are able to hold their breath underwater
-    for a long period of time, leading exobiologists to believe that the Falleen's
-    ancestors were completely aquatic. The appearance of breasts and other mammalian
-    characteristics in Falleen females and males have also led exobiologists to
-    believe that Falleen had a mammal ancestor.
-    [P]They are one of the few species resistant to mind tricks, and had green blood.
-    [P][B]Society:[b]
-    Falleen society is of a feudal nature, with noble houses ruling over the lower
-    classes. The upper echelons of Falleen monarchies are rife with politics and intrigue,
-    but they rarely spill blood over blatant disputes or open warfare. The skin
-    pigmentation of the Falleen change naturally to reflect the mood of the individual;
-    however, the Falleen long ago mastered the ability to change their skin tone at
-    will and use this as something of a covert weapon in their politics, fostering
-    an appearance of calm, for example, when they are really panicking.
-    [P]As a cold-blooded species, the Falleen respect discipline and control,
-    particularly self-control. They tend to shun public displays of emotion, and are
-    very patient. As a result of this attitude, they tend to look down on the more
-    openly passionate, whom they see as lacking self-control. Indeed, the Falleen as a
-    species have a towering sense of superiority which they felt is only right and proper
-    due to their discipline and rigid self-control. They also tend to view Falleen,
-    and not Coruscant, as the civilized and cultural capital of the galaxy. This arrogance
-    make the Falleen something of an isolationist species, and though they are not a rare
-    species, it is rare to find them away from their homeworld.
-    [P]Young Falleen nobles often tour the galaxy for a while to acquire a taste of
-    life away from Falleen. More often than not, though, this merely reinforces the
-    Falleen's biased views and sense of superiority, ensuring that the youth of Falleen
-    never feel the desire to leave home.
-    [P][B]Homeworld:[b]
-    Falleen is a planet in the Mid Rim region and home to the Falleen species. It
-    has jungles, vast plains, and icy mountains.
-    [P][B]Language:[b]
-    Falleen is the native language of the Falleen species from the planet Falleen.
-    [P]Falleens leaving their home planet learn to speak Basic as well.
-  </Description>
+
+Beneath the glamorous reptilian features and serene facade of the mysterious Falleen lies a shrewd mind and cold-blooded precision. A Falleen uses wiles and unique pheromones, intoxicating to most species, to achieve great things and manipulate members of other species with ease.
+
+[P][B]Physiology:[b] The Falleen are alluring reptilian humanoids with skin of supple scales in tones ranging from deep green to a dull gray-green hue. However, Falleen can temporarily change their skin color at will to shades of orange or red when they exude potent pheromones to attract mates. The scales of their lithe, contoured physiques stiffen along their backs, where sharp ridges run down their spines. Female Falleen exhibit muted skin tones and less-defined spinal ridges compared to males, and their ability to modify their skin pigmentation is less pronounced.
+
+[P]The exotic features of the Falleen make them among the most universally attractive beings in the galaxy, and their grooming and the use of their pheromones only enhance this view. Flowing, silky black hair accentuates their etched cheekbones and chiseled facial features. The males typically wear their hair in a single long topknot or braid, while the females favor setting their flowing locks into elaborate styles adorned with beads and decorative combs. The talons on their fingers and toes remain manicured yet simple.
+
+[P][B]Society:[b] The Falleen species shares its name with its homeworld, which some say is as a tribute to its arrogance. Several feudal kingdoms rule over lower classes of artisans, laborers, slaves, and technicians. The ruling noble houses peacefully conduct business and political negotiations on behalf of their world while administering domestic corporations and private interests. While minor infighting between kingdoms occurs, Falleen nobles choose scheming and political maneuvering as their weapons in place of outright war.
+
+[P]Falleen value careful planning and reason, believing emotion is the natural enemy to a clear and intelligent mind. They consider displays of emotion taboo, and go to great lengths to control any outward emotional indicators. Through intense training and meditation, Falleen learn to rein in their emotions, control the color of their skin, and hone the use of pheromones to enthrall others. Falleen see species unable to control their emotions as inferior, and usually take little interest in their affairs—though many do enjoy the art of other, more expressive species.
+
+[P]While the technology of their civilization allows them to travel to other worlds, most Falleen commoners never leave their planet. The lower social classes work diligently to maintain their planet's self-sufficiency in order to keep from relying on lesser species elsewhere in the galaxy. Instead, the Falleen opt to isolate their society from outside influences. The sale of Falleen slaves to offworlders is one of the rare exceptions to this cultural norm.
+
+[P]As a rite of passage, young Falleen nobles embark on a pilgrimage around the known galaxy to behold its many spectacles and learn how to harness their abilities. When the pilgrims return from their journey, most use what they have learned to better govern the territories they inherit. However, some pilgrims decide to remain offworld to make their mark on the galaxy.
+
+[P][B]Homeworld:[b] The planet Falleen rests in a pocket of space in the Mid Rim off the Corellian Run called the Doldur sector, and in some small way, Falleen has been a part of the greater galactic community for nearly four thousand years. The expansive rain forests, sprawling plains, and snowy mountains of Falleen remain unmolested over most of the planet thanks to modest urban sectors reserved for industry. Industrial zones like the polluted Yellow District in the capital city of Throne are common within every kingdom. This efficient production allows the population of over 520 million inhabitants to remain self-sufficient. After joining the Republic, the Falleen nobility opened their world to galactic commerce and offered their manufacturing districts to offworld corporations.
+
+[P]Since the Empire's rise to power, Imperial research and development facilities monopolize Falleen's industrial sectors. Eisen Kerioth, Moff of the Doldur sector, distrusts the Falleen due to their ability to manipulate others, and he keeps a watchful eye on the planet. To minimize Falleen influence on the rest of the galaxy, and to monitor the Empire's interests on their world, Kerioth maintains a blockade around the planet. Throne's stellar-class starport, once open to offworld traders importing artwork and exotic fruits, now allows only Imperial traffic and Falleen nobility on pilgrimage. As a result, multiple shadow-ports operate around the planet, exporting staves and smuggling in offworld luxuries.
+
+[P][B]Language:[b] Almost all Falleen learn to speak Basic to interact with Imperial personnel or traders on their homeworld, to serve offworlders as slaves, or to communicate with other species while on their pilgrimage. However, Falleen believe that, like all other things, the offworlders' language is inferior to their own. The lack of inflection and emphasis in the Falleen language is indicative of their stoic culture and makes it easy for other species to learn.
+
+[P]However, the use of skin coloration and pheromones to replace the absent modulation makes it impossible for non-Falleen, even droid translators, to master the language. The fact that only Falleen can fully grasp the intricacies of their language serves to reinforce the elitist stance that Falleen stand above all other species.</Description>
   <Source Page="18">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>1</Brawn>
     <Agility>2</Agility>
@@ -84,8 +60,8 @@
         <Option>
           <Key>FALLEENOC1OP1</Key>
           <Name>Beguiling Pheromones</Name>
-          <Description>Once per check as an incidental, may suffer 2 strain to upgrade ability of Charm, Deception, 
-          or Negotiation check against living, sentient being within short range.  No effect if wearing breath mask 
+          <Description>Once per check as an incidental, may suffer 2 strain to upgrade ability of Charm, Deception,
+          or Negotiation check against living, sentient being within short range.  No effect if wearing breath mask
           or having no respiratory system.</Description>
         </Option>
       </Options>

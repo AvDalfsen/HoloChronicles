@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>LUCREHULK</Key>
   <Name>Lucrehulk-Class Battleship</Name>
   <Description>[H3][I]Lucrehulk[i] - Class Battleship[h3]
 Please see page 78 of the Rise of the Separatists Sourcebook for details.</Description>
   <Source Page="78">Rise of the Separatists</Source>
+  <Custom>AddedItem</Custom>
   <Type>Battleship</Type>
   <Categories>
     <Category>Starship</Category>

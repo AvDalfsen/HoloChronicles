@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SHEATHIPEDE</Key>
   <Name>Sheathipede-Class Transport Shuttle</Name>
   <Description>[H3][I]Sheathipede[i] - Class Transport Shuttle[h3]
@@ -8,6 +8,7 @@ Please see page 63 of the Unlimited Power Sourcebook, or page 73 of the Rise of 
     <Source Page="63">Unlimited Power</Source>
     <Source Page="73">Rise of the Separatists</Source>
   </Sources>
+  <Custom>AddedItem</Custom>
   <Type>Shuttle</Type>
   <Categories>
     <Category>Starship</Category>

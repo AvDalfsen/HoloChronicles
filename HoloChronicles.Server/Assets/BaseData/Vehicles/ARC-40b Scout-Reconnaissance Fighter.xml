@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>ARC40B</Key>
   <Name>ARC-40b Scout-Reconnaissance Fighter</Name>
   <Description>[H3]ARC-40b Scout-Reconnaissance Fighter[h3]
-Please see page 57 of the Savage Spirits Sourcebook for details.
-</Description>
+Kuat Drive Yards' ARC-40b is one of the unsung heroes of the Clone Wars. Built by KDY to be an escort fighter for the venerable ARC-170, the ARC-40b is a lightweight starfighter absolutely packed with weapon systems and sophisticated avionics. Fast and nimble, the 40b is a three-position multi-role fighter with an astromech socket. Armed to the teeth with laser cannons and ordnance launchers, this medium fighter was designed to fight its way into enemy territory, collect data, amd then fight its way back to base. While most of these old fighters were destroyed during the Clone Wars or were broken up for scrap by the Imperial Navy, some still remain in use in the Outer Rim, where their speed, stamina and respectable loadout make them highly attractive to mercenary survey outfits.</Description>
   <Source Page="57">Savage Spirits</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

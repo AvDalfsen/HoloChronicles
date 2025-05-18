@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>JEDISOJO</Key>
   <Name>Jedi Sojourner</Name>
   <Description>[H3]Jedi Sojourner[h3]
-Please see page 62 of the Unlimited Power Sourcebook for details.</Description>
+During the final years of the Old Republic, the Jedi Order commissioned Kuat Systems Engineering (designers of the Delta-7 [I]Aethersprite[i] interceptor, fielded in large numbers by the Jedi) to provide them with a ship designed to carry Jedi Knights and their Padawans on long journeys of meditation and training. The Jedi would venture out into the galaxy, heeding the call of the Living Force, traveling to wherever that called them. This would require a versatile starship, able to provide for the meditative and training needs of the Jedi, as well as drive, sensor, and defensive capabilities to meet any action required. The result was the Sojourner transport.
+[P]Simi lar in size to a light freighter, the Sojourner features areas devoted to a Jedi's meditation and training in place of extensive cargo capacity. Often the ships were sent out with a holocron on board, for use in lessons or research. Since the fall of the Order and the rise of the Empire, these rare ships have become even more rare-few are believed to have survived the Great Purge. Finding such a vessel (with or without an accompanying holocron) would be a tremendous benefit to any Mystic.</Description>
   <Source Page="62">Unlimited Power</Source>
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Starship</Category>

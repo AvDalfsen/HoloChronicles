@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>LAF250</Key>
   <Name>LAF-250 Starfighter</Name>
   <Description>
     [H3]LAF-250 Starfighter[h3]
-    Please see page 108 of the Suns of Fortune Sourcebook for details.
-  </Description>
+
+The Light Attack Fighter Model 250 is the primary starfighter used by the Corellian Defense Force and CorSec. Designed to combine the roles of space superiority fighter and patrol craft, the LAF-250 fulfills these functions adequately, but excels at neither. While a capable, well-made starfighter, its engines and shields are somewhat underpowered and its armament consists of just a twin-linked pair of laser cannons, leaving the LAF-250 at a disadvantage against faster, more heavily-armed craft.</Description>
   <Source Page="108">Suns of Fortune</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

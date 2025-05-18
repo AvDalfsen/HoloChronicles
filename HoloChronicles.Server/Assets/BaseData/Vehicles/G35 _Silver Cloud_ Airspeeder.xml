@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>AIRSPEEDG35</Key>
   <Name>G35 "Silver Cloud" Airspeeder</Name>
   <Description>
     [H3]G35 "Silver Cloud" Airspeeder[h3]
-    Please see page 104 of the Suns of Fortune Sourcebook for details.
-  </Description>
+
+A midsized airspeeder designed for corporate and light military use, the G35 is popular among business executives and moneyed interests of the Corellian Sector. Often luxuriously appointed, these fast airspeeders have a reputation for safety and reliability, and even come equipped with light deflector shields to protect the craft from in-air impacts and collisions.</Description>
   <Source Page="104">Suns of Fortune</Source>
+  <Custom>DescOnly</Custom>
   <Type>Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

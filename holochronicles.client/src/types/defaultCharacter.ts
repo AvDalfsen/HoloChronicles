@@ -14,7 +14,9 @@ export const defaultCharacter: Character = {
         usedExperience: 0
     },
     career: '',
-    specialization: [],
+    specializations: [],
+    careerRanksRemaining: 0,
+    specializationRanksRemaining: 0,
     characteristics: {
         brawn: { total: 2, species: 2, bought: 0, gear: 0, cybernetics: 0 },
         agility: { total: 2, species: 2, bought: 0, gear: 0, cybernetics: 0 },
@@ -38,6 +40,7 @@ export const defaultCharacter: Character = {
         melee: 0,
         ranged: 0,
     },
+    forceRating: 0,
     gear: [],
     credits: 500,
     background: '',

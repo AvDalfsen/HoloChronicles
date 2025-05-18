@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>V19TORRENT</Key>
   <Name>V-19 Torrent Starfighter</Name>
   <Description>[H3]V-19 Torrent Starfighter[h3]
-Please see page 57 of the Savage Spirits Sourcebook for details.
-    </Description>
+Introduced during the Clone Wars, V-19 Torrent still see use in the Outer Rim among local planetary governments large corporations, free traders, and pirates. Although they were originally produced without hyperdrives, later models were equipped with them and virtually all early models were retrofitted to make them hyperspace capable. Fast and maneuverable, with decent armor and good firepower, Torrents are still respectable starfighters despite their age and lack of deflector shields. The V-19s' distinctive trio of folding airfoils combined with powerful repulsorlift engines make them excellent at vertical take off and landing, though they can also make these ships somewhat tempermental to handle for inexperienced pilots. </Description>
   <Source Page="57">Savage Spirits</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

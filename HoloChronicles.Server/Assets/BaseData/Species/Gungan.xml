@@ -1,110 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Species>
   <Key>GUNGAN</Key>
   <Name>Gungan</Name>
   <Description>
     [H4]Gungan[h4]
-    The Gungans are sentient amphibious humanoids native to the planet of Naboo.
-    Prior to the Invasion of Naboo, the Gungans were a largely isolationist society.
-    They were able to combine machinery with biology. They lived in large bubble-like
-    domes under water. Gungans have strong leg muscles for swimming, and are aided by
-    their long fin-like ears. Their arms end in four-fingered hands, and their feet
-    have three stubby toes each. Females tend to be slightly smaller, with sleeker
-    faces. They often tie their long ears back.
-    [P]The long Gungan face has a tough yet flexible bill for burrowing and rooting
-    out food. They also have long muscular tongues with which they scooped mollusks
-    and lesser amphibians from the Naboo swamps. Their teeth are large and blunt,
-    capable of cracking through shellfish. Their large nostrils completely seal
-    for underwater travel.
-    [P]While most spacefarers would dismiss Gungans as primitives, they developed
-    an advanced, albeit unique, technology. They grow the basic structures of buildings,
-    vehicles and technology and adorn them with artistic flourishes and organic
-    lines. This gives Gungan technology a very fluid, non-rectilinear look.
-    [P][B]Physiology:[b]
-    The Gungans are separated into two races: the lanky orange, yellow or
-    red-skinned Otolla race, and the heavier green-skinned Ankura race.
-    However, they all exhibit many of the same basic physical traits.
-    Starting life as tadpoles, Gungans develop into tall beings with extremely
-    flexible cartilaginous skeletons. Strong leg muscles allow for powerful and
-    quick frog-kick style swimming through water as well as a remarkable jumping
-    ability while on land. Fin-like ears (called haillu) also aid them in swimming,
-    as well as expressing emotions like aggression, friendship, and fear. They have
-    partially retractable eyestalks with nictitating membranes when underwater. Green
-    eyes are unusual amongst Gungans.
-    [P]Expressive faces and long bills with flaring nostrils are signatures of
-    Gungan physiology. Lengthy muscular tongues and large blunt teeth allow them
-    to eat lesser amphibians, while a layer of tough skin on the head allow for
-    burrowing. A Gungan's arms end in four digits, and their feet have three stubby
-    toes. Females are smaller with sleeker faces and tend to tie their ears back.
-    Female with light-colored ear flaps are considered attractive by male Gungans,
-    while the ones with dark-colored haillu are thought of as 'boyish'. As male
-    Gungans aged, they develop prominent whiskers, resembling
-    those of a catfish. Both sexes have a lifespan of 65 galactic standard years.
-    [P]Gungans have nostrils that seal when they entered the water. They also boast
-    very strong lungs, allowing them to both hold their breath for extended periods of
-    time and to withstand the pressure of deep water, along with well-padded kneecaps
-    and powerful calves and legs for increased swimming speed. However, because they
-    are so well-adapted to their watery environment, their skin dries easily in hot
-    and arid climates.
-    [P][B]Society:[b]
-    Utilizing their own unique phraseology, Gungans established a rather successful
-    history of scholarly excellence, albeit unknown to the galaxy at large. Among their
-    achievements include the epic poem Das Depu Epu Sea, or Deep Dark Water. This ode
-    to Da Beauty Al'Round was a source of great pride to these noble beings.
-    [P]Gungan alpha-males often exhibit a series of oral clicks when aggravated or
-    angered. The Gungan military is made up of mostly male volunteers.
-    [P]Gungans were basically a generous and peaceful people until the Trade Federation
-    invaded. They loved to have visitors and warmly welcomed them; however, they would
-    remain suspicious until the visitors had earned their respect.
-    [P]Gungans are not tolerant of anyone who threatens their peaceful culture. They
-    have very strict laws, and will go to the extremes to punish anyone who has committed
-    a minor crime. Vandals, for example, could be given a sentence of exile, caning, or
-    even stoning.
-    [P]If a Gungan is cast out of society, it is very difficult for them to return.
-    If they do manage to return legally, they will often be subjected to heavy
-    discrimination. This can make life very difficult for them and can go on for
-    months or years, until their past offenses disappear from memory. In addition,
-    returning back to the settlement from which they were exiled illegally will sometimes result
-    in the death penalty, especially if they bring along outsiders. It usually requires
-    a significant deed to not only have their exile revoked, but also be welcomed back
-    to the fold.
-    [P][B]Homeworld:[b]
-    Naboo (pronounced /nə'bu/) is a planet that is the sector capital of the Chommell
-    sector near the Outer Rim territories. It is a largely unspoiled world with large
-    plains, swamps and seas
-    [P]Naboo is a geologically unique world in the galaxy. A plasmic molten outer core
-    surrounded an inner core, believed to be composed primarily of a nickel-iron alloy,
-    with very small amounts of some other elements. These elements are found in abundance
-    in other chemical compositions in the galaxy, but it is the unique properties of the
-    plasma which interested astrophysicists, plasma which the two primary civilizations
-    harnessed to supply clean and efficient energy highly valued throughout the galaxy.
-    [P]The plasmic magma "seethes and bubbles" from the center of the planet carving l
-    abyrinths of winding tunnels and caverns similar to lava tubes of traditional magma
-    flows. Much of these abyssal labyrinths are submerged in great underground oceans,
-    which are home to immense aquatic animals and creatures that are never seen on the
-    surface. Animals such as the colo claw fish, opee sea killer, sando aqua monster and
-    others inhabited this underworld realm. Gungans dominate these "underwaterways,"
-    using them as a highway of sorts between their surface Holy Places and their underwater
-    cities. The Gungans also use these tunnels for trading between Bubble cities.
-    [P]Plasmic eruptions find their way to the porous crust of the planet, affecting
-    geographic features there such as mountain chains and plate tectonics.
-    [P]The surface of Naboo is covered by dense swamps, rolling grass plains, seas and
-    verdant hills. The largest mountain chain, the Gallo Mountains, bisects the largest
-    continent and divides the great grass plains of the north from the Lianorm Swamp and
-    bayous in the south. South of the Lianorm Swamp is the great Paonga Sea, where at
-    the bottom lay the Gungan city of Otoh Gunga. The Lake Country is an area known for
-    its natural beauty, and is home to many vacation estates.
-    [P][B]Language:[b]
-    Gungan Basic, also called Gunganese, is the language spoken by the Gungans of the 
-    planet Naboo. It is a language mostly derived from Naboo settlers' language, Basic, 
-    spoken in an accent. Occasionally, a word from Old Gungan will appear in dialogue, a 
-    term usually without any obvious meaning unless translated.
-    [P]Humans can usually understand it and, similarly, Gungans can understand Humans 
-    speaking Basic (even in written form). Most one-syllable words pertaining to the self 
-    will contain a suffix of -sa, for example, "We-sa" and "You-sa". Many one-syllable 
-    words ending in a consonant will end with -u.
-  </Description>
+
+Few Gungans travel away from their homeworld of Naboo. Instead, most prefer to live in cooperation with their planet’s natural ecosystems. In fact, Gungan galactic travelers are often exiles. Gungan law is unforgiving, and expulsion is a common form of punishment. Consequently, Gungans found offworld are seldom characteristic of the species.
+[P][B]Physiology:[b] Gungans are a bipedal, amphibious species. They are tall and thin, averaging nearly two meters in height. Their expressive, long ears and eyestalks are set around a bill-like mouth. They are omnivorous, with a diet composed largely of mollusks and aquatic plants. Gungan compound lungs are capable of efficiently extracting oxygen from both air and water. Gungan infants are born as tadpoles within water cradles. Their limbs develop within a month of birth.
+[P][B]Society:[b] The various Gungan cities are largely stratified according to residents’ membership in particular clans. Interrelations between cities have been established through carefully worded treaties. A High Council serves as an overall governing body that exists largely to resolve disputes between the different cities.
+[P]Gungan society places a very high value on peace and order. While they are a generally happy people, they have little tolerance for elements that disrupt their lives. Even minor crimes are treated severely; Vandalism, for example, merits corporal punishment or even exile.
+[P]Gungans are proud of their independence and are willing to go to great lengths to defend it. Each city maintains its own militia armed with energy shields and plasmic energy balls. Gungans make extensive use of animal mounts, and their natural tools remain effective in combination with their shield technologies. The various militias train together regularly and can assemble into a planetary Grand Army to face broader threats.
+[P][B]Homeworld:[b] Gungans are native to the planet Naboo near the Outer Rim Territories, though they share habitation with humans on that world. The planet’s climate is primarily temperate. Substantial oceans separate its heavily forested landmasses. Almost all Gungan habitats are largely underwater,
+while cities dominated by humans are located upon dry land. The two species have a long history of interacting peacefully with one another. The Gungan High Council links Gungan and human societies together to form a planetary government. Members of both species contribute to the democratic process, particularly for interaction with offworld entities. Currently, this government is under the oversight of the Empire.
+[P]Naboo’s oceans have a broad range of predators, including the sando aqua monster and the opee, both large enough to swallow a bongo sub in a single bite. Areas immediately surrounding their cities are largely secure, but extended journeys can incorporate a high degree of risk.
+[P][B]Languages:[b] All Gungans speak their native Gungan as well as Basic.
+[P][B]Perception of the Force:[b] Gungans do not have a native Force tradition or a strong tradition of membership in the Jedi Order. However, their cultural tendencies to live in connection with the natural world are consistent with an understanding of the Living Force. Gungan underwater cities are relatively isolated, even from Naboo’s human population. It is likely that Jedi simply failed to discover the majority of Gungan Force sensitives who might have joined the order.</Description>
   <Source Page="101">Nexus of Power</Source>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>2</Brawn>
     <Agility>2</Agility>
@@ -140,24 +52,5 @@
       </Options>
     </OptionChoice>
   </OptionChoices>
-  <!--<SubSpeciesList>
-    <SubSpecies>
-      <Key>GUNGSUB1</Key>
-      <Name>Otolla</Name>
-      <Description>
-        The Otolla subspecies has long ears and eyes on extendable and
-        retractable stalks.  Otolla skin is either
-        orange or purple in hue.
-      </Description>
-    </SubSpecies>
-    <SubSpecies>
-      <Key>GUNGSUB2</Key>
-      <Name>Ankura</Name>
-      <Description>
-        The Ankuras have hooded eyes, broad wide heads, and green skin.
-        Like the Otolla, they also have long ears, which are sometimes tied together
-        behind the head.
-      </Description>
-    </SubSpecies>
-  </SubSpeciesList>-->
+
 </Species>

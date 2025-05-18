@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SEC22M</Key>
   <Name>Tetan Guard Airspeeder</Name>
   <Description>[H3]SEC-22m Tetan Guard Airspeeder[h3]
-Please see page 124 of the Nexus of Power Sourcebook for details.</Description>
+
+Kodoos Repulsor Ltd. is a speeder manufacturing company based on Empress Teta. Well known for creating high-end racing swoops, the manufacturer was contracted by the Tetan Guard to design its patrol and defense airspeeders. What the Tetan Guard Airspeeder sacrifices in maneuverability, it gains in durability and armament. The semi-open air cockpit features two externally sealed prisoner pods, a loudspeaker, and built-in encrypted comms.</Description>
   <Source Page="124">Nexus of Power</Source>
   <Sources />
+  <Custom>AddedItem</Custom>
   <Type>Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

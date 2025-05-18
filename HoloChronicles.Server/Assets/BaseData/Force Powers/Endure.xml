@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>ENDURE</Key>
   <Name>Endure</Name>
-  <Description>Please see page 36 of the Knights of Fate Sourcebook for details.
-</Description>
+  <Description>[H4]Force Power: Endure[h4]
+Those strong in the Force, and who learn to control that gift, can achieve great, even seemingly impossible feats of physical prowess. The Force flows through all living beings, and this connection to the physical allows some Force users to achieve miraculous control of their bodies. Masters of this ability can ignore otherwise-debilitating pain or even resist physical injury that would prove lethal to another being.</Description>
   <Source Page="36">Knights of Fate</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Abilities>

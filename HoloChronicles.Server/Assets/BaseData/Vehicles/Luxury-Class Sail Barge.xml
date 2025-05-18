@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>LUXURYSAILBARGE</Key>
   <Name>Luxury-Class Sail Barge</Name>
   <Description>[H3]Ubrikkian Industries Luxury-Class Sail Barge[h3]
-Please see page 112 of the Lords of Nal Hutta Sourcebook for details.</Description>
+
+Few of a Hutt's possessions are more significant than the sail barge. These repulsorcraft are built to order and are perhaps the ultimate symbols of luxury and status among the Hutts. Propelled by powerful triple-chambered repulsorlift engines, these ponderous-looking vessels can glide smoothly over virtually any terrain and are equipped with large, retractable sails that can be used to catch the wind for leisurely cruises. To Hutts, owning a sail barge that serves no practical purpose aside from scenic cruises and the indulgence of hedonistic pleasure is an indicator of success.</Description>
   <Source Page="112">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Sail Barge</Type>
   <Categories>
     <Category>Land Vehicle</Category>

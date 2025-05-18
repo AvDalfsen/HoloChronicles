@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>VINDCRUISER</Key>
   <Name>Vindicator-Class Heavy Cruiser</Name>
   <Description>
     [H3]Vindicator-Class Heavy Cruiser[h3]
-    Please see page 280 of the Age of Rebellion Core Rulebook for details.
-  </Description>
+
+The Vindicator-class heavy cruisers were designed by Sienar Fleet Systems to take the place of the elderly Dreadnought-class heavy cruisers as the standard, multi-role fleet cruiser for the Imperial Navy. Described as "A Star Destroyer that's been shrunk in the wash" by Alliance commanders, the Vindicator has the same thin, menacing, arrowhead-shaped hull as its larger Victory-class and Imperial-class siblings. With a thickly armored hull, heavy shields, and a broad and versatile array of offensive and defensive weaponry, Vindicators are assigned both as escorts and light battleships as well as solitary cruisers sent to hunt Alliance ships and maintain order in distant regions of the Empire. Many dashing young Imperial officers prefer the command of a Vindicator over that of a larger line of battle ship like the Imperial-II, as they often have more exciting missions and their common status as lone cruisers offer a much greater chance of personal glory and promotion for an enterprising and ambitious commander.</Description>
   <Source Page="280">Age of Rebellion Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <Type>Heavy Cruiser</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

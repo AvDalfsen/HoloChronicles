@@ -1,19 +1,28 @@
-<?xml version="1.0"?>
-<Species xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Species>
   <Key>DRESSELLIAN</Key>
   <Name>Dressellian</Name>
   <Description>[H4]Dressellian[h4]
-For most of their history, they lived a peaceful and isolated lifestyle on their homeworld, Dressel, until the Galactic Civil War forced them into closer contact with the rest of the galaxy as supporters of the Alliance to Restore the Republic, and later, the New Republic.
-[P][B]Physiology:[b]
-Dressellians are a tall, thin, humanoid species with elongated, hairless skulls, wrinkled skin, and teal-colored blood who value freedom above anything else.  Because of the masses of wrinkles on their faces, "outlanders" often referr to them as "prune-faces," a moniker which Dresselians consider derogatory and highly offensive.
-[P][B]Society:[b]
-Dresselians are generally fiercely independent, highly valuing personal freedom. Due to this fact, their government is a loose coalition that is determined periodically by popular vote. Their independence also plays a fairly significant role in their interactions with the rest of the galaxy, as they tend to be isolationists and usually opt out of the larger galactic meetings unless specifically encouraged by their Bothan neighbors to attend.
-[P][B]Homeworld:[b]
-The only planet in the Dressel system, Dressel is one of the more idyllic planets in the galaxy. Its lush forests and jungles give the planet a soothing feel and keep the air temperature at quite a pleasant level all year round. The grasslands and deserts allow a wide variety of fauna and flora to flourish, including the planet's only indigenous, sentient species, the Dresselians.
-[P]The planet was originally discovered by the Bothan Askarr clan around two hundred years ago, who decided to leave the Dresselians alone. With many small settlements, the Dresselians were never taken seriously by the rest of the galaxy as they were believed to be a primitive, undeveloped race. Only the Jedi scouts who came to the planet centuries ago saw the great potential in the Dresselians and the Dresselians bestowed great honour upon them. They followed the Jedi into larger galactic affairs and the Dresselians that were later trained to be Jedi were known for their proficiency with the Force.
-[P][B]Language:[b]
-The Dresselian language, Dresselese, has been described by galactic linguists as being somewhat primitive. Due to the fact that they have had a considerable amount of interaction with the Bothans, who initially discovered the Dresselians around 200 years before the Galactic Civil War began, Dresselians speak using many borrowed words from Bothese. Most of the borrowed words are for items which are considered more technologically advanced than those the Dresselians had created themselves.</Description>
+
+The gruff, wrinkle-faced Dressellians are best known as gritty, tough outdoorsmen and master scouts. They are difficult to get along with, and distrust non-Dressellians, but once they strike up a friendship they are known to be fierce and uncompromising allies.
+
+[P][B]Physiology:[b] The Dressellians are tall, thin mammalian humanoids with elongated skulls and wrinkled faces that mimic the shades and patterns of steepara tree bark. Some refer to them as "prune faces," a derogatory term guaranteed to incense any Dressellian within earshot. Most Dressellian eyes can range from bright yellow to golden orange and provide slightly improved night vision. Dressellians are bright and agile, making them fierce warriors when cornered. Their blood is a bright teal, which is indicative of inefficient circulatory systems and a genetically recent marine heritage. As a result, Dressellians consume oxygen at almost double the rate of comparably sized humanoids.
+
+[P][B]Society:[b] Modern Dressellian society consists of a number of city-states run by direct representative democracies. While Dressellians from the same city-state share common views and work together, those from different city-states across the globe struggle to agree on anything. Not all Dressellians have embraced urbanization, and a large number of Dressellians still live in traditional nomadic groups. These tribes of hunter-gatherers wander the vast steepara forests that cover many of Dressel's islands and larger continents.
+
+[P]Traditional Dressellians depend on the near-kilometer-high trees to provide for numerous facets of their life. Giant steepara leaves have a unique texture that isn't quite like rubber or leather, which makes them ideal for use in both textiles and construction. Each tree is practically a habitat all its own, and provides for much of the Dressellian diet, which consists of steepara seed and syrup, cuirreal climber meat, and a variety of mushrooms. The steepara forests are not without their challenges, however; fierce predators, such as the wild, Wookiee-like erselu, the stalking panagra, and the swooping, large-eyed astrigia pose a constant threat to the natives.
+
+[P]Imperial occupation has banded the Dressellians together in a common cause unprecedented in Dressellian history. General Orrimaarko, the former governor of Sreeharlo, leads the resistance with the help of Generals Panno and Neeralli. Many Dressellians have reverted to traditional lifestyles to better evade Imperial reprisals, and do their part to support Orrimaarko's efforts. The Dressellians, with assistance from their longtime allies the Bothans, have become masters of guerrilla warfare, striking Imperial patrols and outposts from the backs of selldu during nighttime raids. Imperials on Dressel are almost exclusively human, and as such, the Dressellians have developed a negative view of most outsiders, especially humans.
+
+[P]While known best for their combat prowess during the Galactic Civil War, the DressellianS are also accomplished artists. Critics find Dressellian music, literature, and art deeply inspirational and filled with profound, universally accessible themes. The popularity of many Dressellian works has exploded recently among enemies of the Empire.
+
+[P][B]Homeworld:[b] The moonless, temperate world of Dressel is in the Mid Rim's Noolian sector along the Askar Trace, a hyperspace route that once defined the coreward edge of Bothan Space. The planet has an oddly uniform distribution of large islands, and few true continents. The largest landmass is an equatorial island called Breehara, thought to be the birthplace of the Dressellians. Most land on Dressel is dominated by hilly grasslands and tall, ancient forests.
+
+[P]Bothan explorer Karka Vri'skar of clan Askar initially discovered the world two centuries before the Battle of Yavin, but, aside from the occasional trader or outlaw, the Bothans left the primitive Dressellians to their own devices while still maintaining regular diplomatic contact. Ten years before the Battle of Yavin, the Empire established a garrison and Imperialized Dressel's resources. The Dressellians engaged the Empire in guerrilla warfare, drawing on their skills as nomadic hunters and gatherers to evade the Empire.
+
+[P][B]Language:[b] The Dressellians speak a native language of the same name. Scholars have described the language as flowing and organic, filled with soft sounds. However, over the past two centuries, the Dressellians have adopted a number of Bothan words, particularly to describe technology. Many art critics have blamed Bothan interference for tainting one of the great romantic languages, but it is widely agreed that the Dressellian adoption of the Bothan alphabet over their own primitive hieroglyphs was a positive influence.</Description>
   <Source Page="22">Stay on Target</Source>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>2</Brawn>
     <Agility>2</Agility>

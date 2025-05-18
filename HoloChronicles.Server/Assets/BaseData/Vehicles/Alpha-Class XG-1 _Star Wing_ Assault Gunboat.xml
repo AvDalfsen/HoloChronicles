@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>ALPHAXG1</Key>
   <Name>Alpha-Class XG-1 "Star Wing" Assault Gunboat</Name>
   <Description>[H3]Alpha-Class XG-1 "Star Wing" Assault Gunboat[h3]
-      Please see page 54 of the Fly Casual Sourcebook for details.</Description>
+
+Designed by Cygnus Spaceworks, the Alpha-class Xg-1 assault gunboat is a multipurpose starfighter, excelling at space and planetary attack, interdiction, and long-range reconnaissance and patrol. Unlike the more common TIE series, the Alpha-class is equipped with heavy armor, deflector shields, and hyperdrives, though these come at the cost of speed and maneuverability, making it a less than stellar dogfighter. Heavily armed, the Star Wing is more than a match for most threats, disabling them with its ion cannons to allow for boarding actions or blasting them out of space with its lasers and concussion missiles. While used primarily by the Imperial Navy, Star Wings have begun to be employed by Imperial Customs and some planetary defense forces.</Description>
   <Source Page="54">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SYLIUREHYPERRING</Key>
   <Name>Syliure-31 Hyperdrive Docking Ring</Name>
   <Description>
     [H3]Syliure-31 Hyperdrive Ring[h3]
-    Please see sidebar on page 259 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+Designed by TransGalMeg in association  with KSE. the Syliure-31 is a medium-range hyperspace sled made to provide hyperspace capabilities to the Delta-7, Delta-7B, and Delta-12 starfighters. The Syliure-31 is a simple affair consisting of two powerful ion engines and a medium-range Class 1 hyperdrive giving the Delta-series fighters respectable range and hyperspace capabilities. Docking with a hyperspace ring takes an [B]Easy ([DI]) Piloting (Space) check[b] as an action. </Description>
   <Source Page="259">Force and Destiny Core Rulebook</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Hyperdrive Docking Ring</Type>
   <Categories />
   <Encumbrance>0</Encumbrance>

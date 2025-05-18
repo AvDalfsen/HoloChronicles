@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>REPZ95</Key>
   <Name>Republic Z-95 Headhunter</Name>
   <Description>[H3]Republic Z-95 Headhunter[h3]
 Please see page 74 of the Rise of the Separatists Sourcebook for details.</Description>
   <Source Page="74">Rise of the Separatists</Source>
+  <Custom>AddedItem</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

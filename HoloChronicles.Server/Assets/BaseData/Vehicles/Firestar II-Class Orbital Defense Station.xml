@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>FIRESTARIISTATION</Key>
   <Name>Firestar II-Class Orbital Defense Station</Name>
-  <Description>[H3][I]Firestar II[i]-Class Orbital Defense Station[h3]
- Please see page 89 of the Fully Operational Sourcebook for details.
-  </Description>
+  <Description>[H3][I]FireStar II[i]-Class Orbital Defense Station[h3]
+The [I]FireStar II[i]-class battle station was designed to provide concentrated firepower from a smaller, less expensive, and more easily produced station than the original FireStar.</Description>
   <Source Page="89">Fully Operational</Source>
+  <Custom>DescOnly</Custom>
   <Type>Space Station</Type>
   <Categories>
     <Category>Station</Category>

@@ -1,10 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>GLADSTARDEST</Key>
   <Name>Gladiator-Class Star Destroyer</Name>
-  <Description>[H3][I]Gladiator[i]-Class Star Destroyer[h3]
-Please see page 78 of the Friends Like These Adventure Module for details.</Description>
+  <Description>[H3][I]Gladiator [i]-Class Star Destroyer[h3]
+Originally conceived by the legendary Walex Blissex as a Star Destroyer escort in the heavy battle lines of the Clone Wars, the [I]Gladiator I [i] was repurposed by the Galactic Empire as an independent, long-range patrol craft. The overpowered patrol vessel is able to project Imperial strength and pacify entire systems for up to two years without resupply. The [I]Gladiator [i] also has two battalions of stormtroopers, five AT-ST walkers, and the various shuttlecraft necessary to land them.
+[P]
+The 600-meter Star Destroyer packs incredible firepower, and it is equally comfortable performing system patrol, orbital bombardment, anti-ship, and escort missions. Its relatively low price point enables the Empire to send [I]Gladiators [i] throughout the Outer Rim, where they are unlikely to encounter anything more threatening than pirates in converted haulers or salvaged starfighters.</Description>
   <Source Page="78">Friends Like These</Source>
+  <Custom>DescOnly</Custom>
   <Type>Star Destroyer</Type>
   <Categories>
     <Category>Capital Ship</Category>

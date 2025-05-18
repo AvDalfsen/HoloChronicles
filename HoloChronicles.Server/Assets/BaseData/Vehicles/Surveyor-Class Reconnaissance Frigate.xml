@@ -1,10 +1,41 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SURVFRIG</Key>
   <Name>Surveyor-Class Reconnaissance Frigate</Name>
   <Description>[H3][I]Surveyor[i]-Class Reconnaissance Frigate[h3]
-Please see page 53 of the Lead by Example Sourcebook for details.</Description>
+
+The Imperial Navy’s Surveyor class is a small, fast,
+frigate-sized vessel used for reconnaissance and long
+range exploration. Based on Kuat Drive Yards’ Activeclass
+fast attack frigate, these vessels are a relatively
+common sight in battle groups operating in the Core
+and Mid Rim regions of the galaxy. Lightly armed
+and armored, they have a thin, dagger-shaped hull
+similar to that of the larger Vindicator-class cruisers.
+Unlike those ships, however, the Surveyor class has
+no command tower. Instead, a broad, heavily shielded
+structure like a bunker rises at the aft of the ship and
+extends over the main drives; a similar structure can be seen on Bellator-class dreadnoughts. This structure
+houses not only the command deck, but also the powerful
+sensor suites with which the ship is equipped.
+[P]While the Surveyor class can fight — it possesses a
+respectable collection of turbolasers and ion cannons,
+along with one squadron of fightercraft — its primary
+purpose is reconnaissance and exploration. The reconnaissance
+and sensor suites these ships carry are
+among the most sophisticated in the Imperial Fleet. A
+collection of passive and active sensors, multispectrum
+detection arrays, signals and data intercept systems,
+and a powerful dedicated computer system that collates
+and analyzes incoming data makes these small
+ships frighteningly effective at scouting and information
+gathering. In addition to their sensors, these ships
+are also equipped with a number of stealth systems
+that allow them to hide in star systems, relatively safe
+from detection, as they gather their information and
+feed it back to their battle groups.</Description>
   <Source Page="53">Lead by Example</Source>
+  <Custom>DescOnly</Custom>
   <Type>Frigate</Type>
   <Categories>
     <Category>Capital Ship</Category>

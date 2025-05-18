@@ -1,14 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
 <Vehicle>
   <Key>AIRSPEEDER</Key>
   <Name>Airspeeder</Name>
   <Description>
       [H3]Airspeeder[h3]
-      Please see page 248 of the Edge of the Empire Core Rulebook, or page 254 of the Force and Destiny Core Rulebook, for details.
-    </Description>
+
+Small civilian airspeeders are commonly used for pleasure or sport, or transporting cargo and passengers. Civilian models such as these are rarely armed or armored. This profile represents a generic airspeeder.</Description>
   <Sources>
     <Source Page="248">Edge of the Empire Core Rulebook</Source>
     <Source Page="254">Force and Destiny Core Rulebook</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <MaxAltitude>300 kilometers</MaxAltitude>
   <SensorRangeValue>srShort</SensorRangeValue>
   <Crew>One Pilot</Crew>

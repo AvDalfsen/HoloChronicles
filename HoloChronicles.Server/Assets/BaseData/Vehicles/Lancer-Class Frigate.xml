@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>LANCERFRIG</Key>
   <Name>Lancer-Class Frigate</Name>
   <Description>
     [H3]Lancer-Class Frigate[h3]
-    Please see page 278 of the Age of Rebellion Core Rulebook for details.
-  </Description>
+
+The Imperial Navy's Lancer-class frigate, a dedicated anti-starfighter vessel with an impressive reputation for power and reliability, has been in service since the end of the Clone Wars. A rarity in the Imperial order of battle, Lancers are armed with a number of accurate and deadly quad laser cannons that can fill every centimeter of space around them with crackling energy. Although frightfully effective, Lancers are expensive and have inordinately large crews. They are also a bit of a failed experiment, as with their light armament they can't take on ships of equal class, and their slow speed and poor maneuverability means that most fighters can simply outrun them. This, combined with the fact that most Imperial captains are happy to throw their TIE fighters away screening enemy fighters instead of filling a slot in their formation with a dedicated anti-starfighter vessel, means that the majority of Lancers currently in service are only active in and around the Outer Rim, where they fill interdiction and anti-piracy roles.</Description>
   <Source Page="278">Age of Rebellion Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <Type>Frigate</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

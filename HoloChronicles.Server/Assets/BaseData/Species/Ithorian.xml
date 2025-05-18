@@ -1,33 +1,29 @@
-<?xml version="1.0"?>
-<Species xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Species>
   <Key>ITHORIAN</Key>
   <Name>Ithorian</Name>
   <Description>[H4]Ithorian[h4]
 
-Ithorians are a mammalian herbivorous sentient species from the planet Ithor. They are commonly called "Hammerheads" by less sensitive beings because of their long, curving neck and T-shaped head. They find this nickname offensive.
-    [P][B]Physiology:[b]
-Ithorians have two mouths and four throats, allowing them to speak in stereo. Female Ithorians have two humps on the back of their head, while males have only one. They have glossy, usually brown flesh. They stand roughly between 1.8 to 2.3 meters from eyestalk to toe. Their reflexes and coordination are somewhat slower than that of average humanoids.
-In addition to allowing them to speak their unique stereophonic language, the Ithorians' four throats also have the ability to violently expel air, resulting in a deafening and potentially concussive scream. Although even common Ithorians possess this strange talent, those with Force training can push enough power into their sonic bellow to shatter iron and shred plasteel. Despite this fact, most Ithorians go their entire lives without ever resorting to violence, and so the ability remained relatively ambiguous.
+In Basic, Ithorians are called Hammerheads (though the nickname is not to their liking), as they possess one of the most unique head structures of any known biped. Ithorians are often considered the caretakers of the galaxy, so profound is their love of natural environments of all kinds and their desire to repair the damage sentient beings do to their worlds.
 
-[P]Ithorian youths are known as "pupa," and are commonly glassy-eyed, appendageless and limber, until they metamorphosize. After the molt, Ithorians lose an aural flap and every locomotion tube, gain lumps, craters in their craniums and an appetite for ant-flies. An adult Ithorian can father several thousand offspring.
-    [P][B]Society:[b]
-Ithorians worship the "Mother Jungle," a spiritual entity embodying the lush, tropical ecology of their world, Ithor. They are generally devoted environmentalists, staunch herbivores, and complete pacifists, devoting much time to contemplating their ecology, studying plants and their uses and the overall respecting of all living things. Most Ithorians never set foot on their own planet, instead living in floating cities above their world called herdships. Only three of their continents have been explored and harvested, the other two never having been touched by Ithorian hands. This demonstrates their extreme belief in the protection and sustaining of their environment which is apparent through their "Law of Life."
-[P]The Ithorians practice a communal form of government. Each herdship is autonomous and self-supporting. However once every Ithorian season (about five standard years), the herds gather for "the Meet," a grand gathering above the surface of their world, where the herd ships would join each other in a festival and regal ceremony.
+[P][B]Physiology:[b] Ithorians have long, spindly bodies (ranging from 1.8 to 2.3 meters in height) and long fingers. At the top of an Ithorian's torso, the neck and head emerge as a continuous, curved structure that reaches forward and ends with a vaguely "T"-shaped protrusion. The Ithorian's eyes are large, inset orbs on either end of the structure's "T." Back near where the neck emerges from the torso, there is a mouth on either side. With four throats and these two mouths, Ithorians have the capacity to speak and sing in stereo. They possess powerful sonic abilities that can, with effort, be used offensively.
 
-[P]Ithorian’s curious and gregarious nature means that many find their way off-planet via their floating herdship’s space-worthy counterparts. Many become galactic traders, traveling the stars either independently or as part of their herdship. They will only resort to violence if threatened, and they are more likely to use their sonic bellow than a weapon. Because of their mild demeanor, most Ithorians avoid war in general, although the Rebel Alliance did boast a few among its ranks. Their pacifistic nature means that they refuse to touch things that come as a result of bloodshed.
-[P]When dealing with others, Ithorians are always supremely polite. They are very conversational and have profound respect for the views of others. Though often described as likable and friendly, many sentients find them altogether dull. Even when they have disagreements, Ithorians are unlikely to discuss their grievances with anyone unless the offending party is present. To do otherwise was considered rude.
+[P]Males and females are primarily distinguished by the humps on the backs of their heads; one for a male, two for a female. Their young, called "pupae," are spawned by the thousands from a single male. At this early stage, Ithorians have no limbs, moving around by use of locomotion tubes, All of this changes after their metamorphosis into young adults.
 
-[P]Despite their reputation, not all Ithorians are so peaceful. Rarely, violent and unruly Ithorians are born and subsequently banished from their homeworld or herdship. Such Ithorians often become drifters and bounty hunters.
+[P][B]Society:[b] Ithorian society is one based on a spiritual connection to "Mother Jungle," which is how they refer to the spirit of their lush, rainforest-covered planet of Ithor. The entire civilization is dedicated to never desecrating the planet; as soon as they had access to repulsorlift technology, the Ithorians built giant floating communities—called herdships—that allow them to float above and travel across their planet while minimizing their impact on its pristine beauty.
 
-[P]Within Ithorian society, there is a priestly group known as nature priests who commune with the "Mother Jungle" and have a deeper connection to the Ithorian homeworld. Within the trading guilds themselves, Merchantates are present who dealt with business matters.
-    [P][B]Homeworld:[b]
-Ithor is the fourth planet located in the Ottega system of the Mid Rim. One of the oldest members of the Galactic Republic, it is a planet full of lush life, and the planet's surface has not a touch of civilization on it. The Ithorians themselves, otherwise known as "Hammerheads," built great floating cities that do not harm the surface, which they consider to be sacred. Entry upon the surface is forbidden, unless one stays there permanently. Some Ithorians such as the Oracle are compelled to go down to the planet surface, however, as they "hear the call" of Mother Jungle, the Ithorian religion's personification of Ithor's world-spanning jungle. The surface of the planet of Ithor plays host to numerous plants, including the bafforr tree, which possess telepathic capabilities. The planet contained andurite stone, and every three Ithorian years was the center of the Time of Meeting. The planet has many moons in its night sky.
-    [P][B]Language:[b]
-Ithorese is the language of the Ithorians. Because the Ithorians have two mouths and four throats, the language has a peculiar stereophonic aspect to it. This stereo effect also appears when Ithorians speak Basic. The language is incredibly difficult to learn.</Description>
+[P]Ithorians have carried this collective mentality with them out into the stars, adapting their herdship concept to interstellar travel. Each such herd, as they refer to their social groupings and extended families, is led by a Force-sensitive priest. This makes them anathema to Emperor Palpatine and his Empire. The only reason the planet has remained relatively untouched is due to the Empire's extortion of agricultural technology and other secrets from the Ithorians in return for abstaining from destroying the planetary surface.
+
+[P]Ithorians are even more pacifistic than Gran, as a general rule; they intentionally weed out aggressive members of their species by exiling them from Ithor (which is why many people have their first encounter with atypically violent or ill-tempered Ithorians). Usually eschewing weapons, an Ithorian typically defends himself with his sonic bellow abilities. lthorians out among the stars seek roles as artists, traders, and environmentalists. In this latter role, many Ithorians have acted to help restore ecological devastation done to other planets, usually as the result of one war or another.
+
+[P][B]Homeworld:[b] Ithor is considered one of the most beautiful and life-filled worlds in the galaxy. It is covered in crystal blue oceans and emerald rainforests. All traces of civilization have been systematically removed from the planet's surface by the Ithorians, who live above it in their city-sized herdships. Individuals who choose to go to the surface are expected to reside there forever after, heeding the call of "Mother Jungle."
+
+[P][B]Language:[b] Considered one of the most complex and beautiful languages in the galaxy, Ithorese is a stereophonic melange of sounds that is a wonder to hear. Mastery of it by non-Ithorians is considered an incredible talent, as it is exceptionally difficult to manage without the unique qualities of Ithorian biology.</Description>
   <Sources>
     <Source Page="58">Age of Rebellion Core Rulebook</Source>
     <Source Page="20">Savage Spirits</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>2</Brawn>
     <Agility>1</Agility>
@@ -108,6 +104,3 @@ Ithorese is the language of the Ithorians. Because the Ithorians have two mouths
   </WeaponModifiers>
   <NoForceAbilities>false</NoForceAbilities>
 </Species>
-
-
-

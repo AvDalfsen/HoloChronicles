@@ -1,11 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>M12KIM</Key>
   <Name>M12-L Kimogila Heavy Starfighter</Name>
   <Description>[H3]M12-L Kimogila Heavy Starfighter[h3]
-Please see page 60 of the Keeping the Peace sourcebook for details.
+A long-range, multipurpose starfighter more durable than most craft used by the cartels, the Kimogila is the product of a contract between the Hutts and MandalMotors to design and build a ship to meet the kajidics' needs. The result was the M12-L Kimogila, a robust, heavily armed and armored starfighter able to fill the role of patrol ship, space superiority fighter, or attack craft. Though not as compact or nimble as earlier vessels built by MandalMotors for the Hutt kajidics, the Kimogila's strength, flexibility, and sheer firepower make it a match for virtually any other starfighter in the galaxy and a favorite of many freelance mercenaries, privateers, and wandering blades for hire.
 [P][I]Note: Proton torpedo can be swapped with a concussive missile launcher.[i]</Description>
   <Source Page="60">Keeping the Peace</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

@@ -1,35 +1,22 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Species>
   <Key>NIKTO</Key>
   <Name>Nikto</Name>
   <Description>[H4]Nikto[h4]
 
-The Nikto are a reptilian humanoid species from the planet Kintan in the Si'Klaata Cluster with many subspecies.
-    [P][B]Physiology:[b]
-Nikto are reptilian humanoids that are noted for their leathery skin, with an average adult standing 1.8 meters tall. Sometimes they are covered in spikes and horns.
-[P]The species hold a limited range of facial expressions because of a lack of the necessary muscular infrastructure. Most Nikto have coal-black obsidian eyes These are sometimes covered by a protective membrane that takes the form of a thin transparent pellicle that protects their eyes underwater and during windstorms. As a result, they are noted for their "staring" eyes and a seemingly blank expression which leads to many underestimating Nikto intelligence.
+Perhaps the most well-known slaves of the Hutts, the fierce and humorless Niktos of Kintan have served their masters for thousands of years, though not always with unwavering loyalty. Hardy and stoic, the five Nikto subspecies are a common sight throughout Hutt Space and the Outer Rim Territories.
 
-[P]The Nikto species features five distinct mutated sub-species due to the massive radiation from the dying nearby star M'dweshuu, which speeds up the rate of mutation so that traits that normally take millions of years to occur instead takes only thousands of years. The five sub-species inhabit different geographic areas of Kintan, developing unique adaptations to suit the different environments on the planet.
-    [P][B]Society:[b]
-Early in their development, tensions between the sub-species erupted into four bloody wars, although as their civilizations advanced, conquering the dangerous mutated flora and fauna of Kintan united them.
-Nikto civilization gradually developed to a pre-star travel level, when they gained an understanding of M'dweshuu's influence on their species and their world. Numerous cults and secret societies developed in praise of M'dweshuu, offering sacrifice through bloodshed. The most prominent of these was the Cult of M'dweshuu, which rose and fell several times through its history. Another secret society was the Morgukai.
+[P][B]Physiology:[b] Reptilian humanoids with tough, leathery skin and standing roughly the height of an average human, the Niktos are a product of their harsh environment. Bombarded for thousands of years by gamma radiation from a nearby magnetar star known as M'dweshuu, life on Kintan has had to adapt rapidly or face extinction. The frequency of mutation among the Niktos has sped up their evolution, altering their genome thousands of times faster than would otherwise be the case. The Niktos are capable of only very limited facial expression due to their lack of well-developed mimetic musculature, and their eyes are protected by a thin, transparent membrane. Their seemingly blank expressions and unblinking stares often cause others to underestimate their intelligence.
 
-[P]A harsh life on Kintan combined with casual Hutt brutality made Nikto cunning combatants. Whilst lacking free will, they made up for this with their single-mindedness and tenacity. They were also able to quickly adapt to their environment.
+[P][B]Society:[b] Nikto civilization grew from necessity. Banding together to survive against their homeworld's fearsome, mutated predators—vicious spine dragons, enormous trogwhales, and ferocious tuskbeasts among them—the Niktos learned the value of cooperation as they worked together to tame and conquer their harsh world. Though racial tensions between the various subspecies of Niktos resulted in several bloody, planetwide wars prior to the Treaty of Vontor, the Hutts imposed a unified peace on the Niktos. While there are certain long-standing taboos against interbreeding among the subspecies, children are occasionally born of mixed parentage. Most offspring of such couplings display only the characteristics of one parent or the other; relatively few genuine hybrids are born.
 
-Most Nikto are content with a life of servitude as in their eyes a life in slavery was preferable to the hardship and toil on their homeworld. Not all Nikto work for the Hutts though most free members of their kind came from an enslaved species. Whilst Nikto are known to escape from their master, most tend to fall into service of another Hutt who "inherit" them according to custom should their previous employer die. However, some escaped Nikto do instead use some opportunities to genuinely become free beings. Any such emancipated Nikto has to be constantly on guard as they risked capture by Hutt-employed slavers who return their prey to their "rightful owners". In addition, they lack charisma and prefer to follow orders instead of giving them.
+[P]Life for most Niktos is harsh, in spite of the "beneficence" of the Hutts, and they toil hard in the service of their callous and cruel masters. Few Niktos are natural leaders, and servitude is simply a way of life—relatively few aspire to anything more than bondage to a Hutt who has fewer sadistic tendencies than a Dark Lord of the Sith. Even so, there is an undercurrent of yearning for freedom among the Niktos that has not been entirely extinguished by millennia of slavery. Occasion-ally a Nikto will escape his master or purchase his freedom, but such an emancipated slave must remain ever-vigilant lest he fall into the clutches of another Hutt.
 
-[P]Far-flung groups of Nikto rarely interbreed and has been the case ever since the species gained hyperdrive technology. Many taboos on racial divides were formed by the Nikto that was further supported by genetic diversity that was forced on them by their Hutt overlords.
+[P][B]Homeworld:[b] The Niktos evolved on Kintan, a planet in the Si'klaata Cluster. It is a world of varied climates and environments, from vast deserts and dry tundra to forested mountains and tropical archipelagoes. The unifying factor on Kintan is M'dweshuu and its radiation, which permeates the whole planet, causing strange mutations among the ecosystems. While the radiation levels are not lethal (at least not immediately), Kintan is still a dangerous, violent world.
 
-[P]As the Hutts do not trust their servants, the Nikto have no real government of their own. Instead, an attache of the Hutt Clans of the Ancients rule them who speak for the Nikto on every political level. No planetary government is allowed on Kintan also due to the lingering presence of the Cult of M'dweeshu. However, individual Nikto are capable of becoming a clan chieftain. Despite this being the case, the Hutts speak for the Nikto in dealings with the rest of the galaxy.
-    [P][B]Homeworld:[b]
-Kintan is the home world of the Nikto. After a supernova explosion near the system, evolution of the Nikto divided into five subspecies. Kintan is located within the Si'Klaata Cluster, on the Ac'fren Spur.
-[P]Kintan striders, also found around the galaxy as pets of Hutts, are originally from Kintan. However, they were driven to extinction on the planet itself.
-    [P][B]Language:[b]
-The Nikto language is the native language of the Nikto species from Kintan.
-[P]Contrarily to Klatooinians, Niktos do not forfeit their own language to replace it with Huttese, although most of them learn Huttese as a second language. Some Hutts learn to speak Nikto to deal with their Nikto servants.
-
-[P]Most Nikto who leave their world are also fluent in Basic, although they are rarely literate in that language.</Description>
+[P][B]Language:[b] Unlike the Klatooinians and Vodrans, the Niktos have not abandoned their own language. Most Niktos are able to speak their native tongue, as well as Huttese. Many Niktos are also able to speak at least some Basic, though the limited articulation of their mouths can make them somewhat difficult to understand.</Description>
   <Source Page="96">Lords of Nal Hutta</Source>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>3</Brawn>
     <Agility>2</Agility>

@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>RUFCARGO</Key>
   <Name>Rufescent Cargo Hauler</Name>
   <Description>[H3][I]Rufescent[i] Cargo Hauler[h3]
-Please see page 59 of the Keeping the Peace sourcebook for details.</Description>
+A widely produced bipedal heavy loader, TaggeCo's [I]Rufescent[i]-class cargo hauler has achieved popularity due to its modular nature and ease of modification. Uts large number of anchor points and sturdy construction have made it a particular favorite of certain criminal groups and desperate vigilantes, who employ it as a mobile heavy weapons platform by attaching ranged armaments to the cargo arms. Though offering minimal protection to the rider, the [I]Rufescent[i] has proven an effective makeshift support vehicle in urban combat, especially for those who cannot afford military-grade walkers. While it is no match for Imperial armor on the battlefield, its small profile makes it extremely useful in environments where heavier walkers cannot easily operate.</Description>
   <Source Page="59">Keeping the Peace</Source>
+  <Custom>DescOnly</Custom>
   <Type>Heavy Cargo Loader</Type>
   <Categories>
     <Category>Land Vehicle</Category>

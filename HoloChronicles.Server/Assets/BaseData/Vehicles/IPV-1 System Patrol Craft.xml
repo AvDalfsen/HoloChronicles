@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>IPV1</Key>
   <Name>IPV-1 System Patrol Craft</Name>
   <Description>
     [H3]IPV-1 System Patrol Craft[h3]
-    Please see page 93 of the Beyond the Rim Adventure Module for details.
-</Description>
+
+Systems Patrol Craft are defined as capital ships without hyperdrives, measuring between 100 and 250 meters in length and with a crew of between four and twenty: a typical example is the IPV-1 produced by Sienar Fleet Systems. Fast and maneuverable, these ships are designed primarily to catch and overpower fleeing ships—especially smugglers—before they can make the jump to lightspeed, but their impressive sublight speed also enables them to intercept attacking forces as they arrive in the star system they are guarding. In such situations, they are capable of skirmishing with small capital ships up to the size of frigates and corvettes, although they are not agile enough to dogfight with starfighters, or powerful enough to take on cruisers. </Description>
   <Source Page="93">Beyond the Rim</Source>
+  <Custom>DescOnly</Custom>
   <Type>Frigate</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

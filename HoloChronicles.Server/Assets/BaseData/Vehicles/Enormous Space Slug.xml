@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SPACESLUG</Key>
   <Name>Enormous Space Slug</Name>
   <Description>[H3]Enormous Space Slug[h3]
-Please see page 51 of the Strongholds of Resistance sourcebook for details.</Description>
+[P]Space slugs, also known as exogorths, are one of the largest silicon-based life forms in the galaxy. Space slugs dwell in asteroid fields and radiation zones, living on a steady diet of rocks, stellar radiation, mynocks, and the occasional starship. These snakelike creatures are truly enormous. They hide in chewed-out burrows, waiting for unsuspecting prey to fly into their wide-open mouths before swallowing them whole.
+[P]The enormous space slug is presented as a starship profile, but is an independent creature. When rolling for initiative or attacking with its insatiable maw, it rolls a Coordination skill check, counting as having Coordination 3 and Agility 1.</Description>
   <Source Page="51">Strongholds of Resistance</Source>
+  <Custom>DescOnly</Custom>
   <Type>Space-dwelling Creature</Type>
   <Categories />
   <Encumbrance>0</Encumbrance>

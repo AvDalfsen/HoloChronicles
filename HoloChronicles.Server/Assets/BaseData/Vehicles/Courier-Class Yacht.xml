@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>COURYACHT</Key>
   <Name>Courier-Class Yacht</Name>
   <Description>
     [H3]Courier-Class Yacht[h3]
-    Please see page 91 of The Jewel of Yavin Adventure Module for details.
-  </Description>
+
+Courier ships can range in size from small, one- or two-man ships like, all the way up to larger ships like the YKL-37R Nova and BR-23 that could transport troops and bulk cargo. In addition, courier ships were often well-armed to provide security for their important shipments.</Description>
   <Source Page="91">Jewel of Yavin</Source>
+  <Custom>DescOnly</Custom>
   <Type>Yacht</Type>
   <Categories>
     <Category>Starship</Category>

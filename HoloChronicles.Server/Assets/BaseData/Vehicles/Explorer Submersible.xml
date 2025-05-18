@@ -1,11 +1,14 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>EXSUBM</Key>
   <Name>Explorer Submersible</Name>
   <Description>[H3]Hydrospeare Corp Explorer Submersible[h3]
-Please see page 116 of the Strongholds of Resistance Sourcebook for details.</Description>
+[P]Designed for underwater exploration and combat, Hydrospeare Corporation’s Explorer is a durable submersible walker. Standing six meters tall and over nine meters in diameter, with four legs ending in sconcelike grips, the Explorer is capable of navigating nearly any underwater terrain with ease at relatively high speeds.
+[P]Fielded by the Empire for underwater operations, the Explorer saw extensive use during the Imperial subjugation of Mon Cala. Following the expulsion of Imperial forces from the Mon Calamari homeworld, scores of these powerful vehicles were left behind, subsequently captured, and eventually given over to the Rebel Alliance.
+[P]The biggest drawback of the Explorer is the cramped nature of its interior. With the exception of the turret gunner, all crew members must lie flat on their bellies during the walker’s operation. To make matters worse, the passenger space amounts to little more than a tiny area more akin to a trunk than a passenger compartment.</Description>
   <Source Page="116">Strongholds of Resistance</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Submersible</Type>
   <Categories>
     <Category>Walker</Category>

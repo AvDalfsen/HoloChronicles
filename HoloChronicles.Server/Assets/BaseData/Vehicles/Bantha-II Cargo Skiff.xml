@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>BANTHAII</Key>
   <Name>Bantha-II Cargo Skiff</Name>
   <Description>[H3]Ubrikkian Industries Bantha-II Cargo Skiff[h3]
-Please see page 112 of the Lords of Nal Hutta Sourcebook for details.
-</Description>
+
+Among the most ubiquitous cargo vehicles in Hutt Space and the Outer Rim, Bantha-II cargo skiffs are efficient and practical repulsorcraft used to transport passengers and goods. A long and narrow open-decked skiff, the Bantha-II is simple to use and capable of hauling a significant amount of cargo, making it a common sight at warehouses and spaceports. Though relatively fast and maneuverable, skiffs are not well suited for combat roles. Nevertheless, some pirates and marauders fit them with armor and weapons in order to raid isolated settlements.</Description>
   <Source Page="112">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Cargo Skiff</Type>
   <Categories>
     <Category>Land Vehicle</Category>

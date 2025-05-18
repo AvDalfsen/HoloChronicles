@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>IMMOB418</Key>
   <Name>Immobilizer 418 Cruiser</Name>
   <Description>
     [H3]Immobilizer 418 Cruiser[h3]
-    Please see page 186 of the Age of Rebellion Beta Rulebook for details.
-</Description>
+
+The Immobilizer 418—commonly known as the Interdictor cruiser—is one of the most feared vessels currently in service with the Imperial Navy. It is infamous not for its weaponry (which is only useful in self defence) but for its gravity well projectors. Using these powerful gravity generation systems, an Interdictor can prevent fleeing starships from entering hyperspace in a certain region of space. When combined with more powerful warships such as Imperial Star Destroyers, the Interdictor cruiser can pin enemy fleets in place long enough for them to be destroyed.</Description>
   <Source Page="186">Age of Rebellion Beta Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <Type>Heavy Cruiser</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

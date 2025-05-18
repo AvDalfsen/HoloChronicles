@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SELTISS2</Key>
   <Name>Seltiss-2 Caravel</Name>
   <Description>[H3]Ubrikkian Industries Seltiss-2 Caravel[h3]
-Please see page 115 of the Lords of Nal Hutta Sourcebook for details.</Description>
+
+A high-end pleasure yacht with an equally high pricetag, the Seltiss-2 Caravel has enjoyed such success among the Hutts that it is unofficially known as the Hutt Caravel. Designed to look like a space-going sail barge, this craft is opulently appointed, finished in greel wood, chall-crystal, and aurodium. Usually not equipped with a hyperdrive, most of these vessels shuttle their owners and their courtiers between Nal Hutta and Nar Shaddaa, though some Hutts add hyperdrives to convert the caravel into an interstellar pleasure yacht. These ships come with discreet laser cannons that retract behind concealed armored plates when not in use, and many Hutts add custom defenses and hidden weapons within the corridors. In the event of an emergency, the main cabin can actually eject from the body of the ship, acting as a life boat for the owner and his closest hangers-on, though there are no additional life pods aboard (after all, a Hutt can always find new servants).</Description>
   <Source Page="115">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Starship</Category>

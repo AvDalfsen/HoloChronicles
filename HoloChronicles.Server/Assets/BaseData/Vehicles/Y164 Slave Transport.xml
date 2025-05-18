@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>Y164SLAVE</Key>
   <Name>Y164 Slave Transport</Name>
   <Description>[H3]Y164 Slave Transport[h3]
-Please see page 115 of the Lords of Nal Hutta Sourcebook for details.</Description>
+
+A common sight in the skies above Nar Shaddaa and Sleheyron, these ominous vessels are used to transport slaves to and from planets throughout the galaxy. These bulky vessels are fitted with large holding pens and cells to keep their cargo alive and relatively healthy, though amenities are kept to the bare minimum. While designed to transport a maximum of 1,200 slaves, particularly vicious and reprehensible slavers have been known to pack in nearly double that, counting on their increased profits to offset any losses incurred during transport due to overcrowding. Though armed with quad laser cannons for self-defense, these sturdy but cumbersome vessels are not intended to be used in combat and are generally escorted by more battle-capable starships to protect the transports and their valuable cargo.</Description>
   <Source Page="115">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Starship</Category>

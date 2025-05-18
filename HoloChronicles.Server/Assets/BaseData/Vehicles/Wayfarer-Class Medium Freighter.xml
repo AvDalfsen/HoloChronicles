@@ -1,11 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
 <Vehicle>
   <Key>WAYFARER</Key>
   <Name>Wayfarer-Class Medium Freighter</Name>
   <Description>
     [H3]Wayfarer-Class Medium Freighter[h3]
-    Please see page 263 of the Edge of the Empire Core Rulebook for details.
-  </Description>
+
+Kuat Systems Engineering's Wayfarer class, is a relatively new entry to the medium transport market. Designed accommodate unique modular shipping containers built specifically for the ship, the Wayfarer was designed to revolutionize galactic shipping. In reality these ships had a rocky development process. By the time the first Wayfarers came off the stocks for their shakedown cruise's, the project was terribly over budget and behind schedule. Only one of the many types of shipping container was actually built, the bulk cargo container. This, combined with the fact that the Wayfarer's cargo containers are bespoke and the ship can't carry standard shipping containers, limited its usefulness. Although they never revolutionized shipping, they have found a niche among wealthy shipping conglomerates in the developed parts of the galaxy where their owners have custom containers fabricated.
+
+[P]The vessel itself has a strange, ungainly design, with the modular cargo container hung from an armature that extends from the port side of the ship's hull. The ship is slightly unbalanced and requires a talented and even-handed pilot to make the most of it.</Description>
   <Source Page="263">Edge of the Empire Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <HyperdrivePrimary>2</HyperdrivePrimary>
   <HyperdriveBackup>14</HyperdriveBackup>
   <NaviComputer>true</NaviComputer>

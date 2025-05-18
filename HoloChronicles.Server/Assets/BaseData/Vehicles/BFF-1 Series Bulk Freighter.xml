@@ -1,11 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
 <Vehicle>
   <Key>BFF1</Key>
   <Name>BFF-1 Series Bulk Freighter</Name>
   <Description>
       [H3]BFF-1 Series Bulk Freighter[h3]
-      Please see page 96 of the Beyond the Rim Adventure Module for details.
-    </Description>
+
+At 120 meters in length, this craft was a standard medium-sized freighter that was common throughout the entire galaxy. It was low-cost, partly due to its lack of defensive armament, effective and capable of extremely long range bulk transport duties. The BFF-1 was designed to haul four Xizor Transport Systems Class-A Cargo Containers, attached in arrays of two on either side of the vessel's main hull, and modified into cheap yet capacious storage holds. </Description>
   <Source Page="96">Beyond the Rim</Source>
+  <Custom>DescOnly</Custom>
   <HyperdrivePrimary>3</HyperdrivePrimary>
   <HyperdriveBackup>12</HyperdriveBackup>
   <NaviComputer>true</NaviComputer>

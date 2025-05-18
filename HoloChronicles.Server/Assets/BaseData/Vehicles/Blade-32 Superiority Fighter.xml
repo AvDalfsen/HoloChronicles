@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>BLADE32</Key>
   <Name>Blade-32 Superiority Fighter</Name>
   <Description>[H3]Blade-32 Superiority Fighter[h3]
-Please see page 60 of the Keeping the Peace sourcebook for details.</Description>
+[P]The latest version of the most common starfighter producted on the little-known planet of Adumar, the Blade-32 is known to a few pilots in the Outer Rim as one of the most demanding machines in production. Featuring an impressively large missile capacity for its size and an unusual configuration of two laser cannons fore and aft, this craft often carries a dedicated aft gunner to take full advantage of its armaments. While the local version lacks a hyperdrive and functions best in an atmosphere, models sold offworld always contain this feature. Some have suggested using the base model as a startin gpoint for a mass-production fighter-bomber, but no major corporations have made serious efforts in this regard.</Description>
   <Source Page="60">Keeping the Peace</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

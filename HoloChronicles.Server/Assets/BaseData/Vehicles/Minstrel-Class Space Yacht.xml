@@ -1,11 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>MINSTRELYACHT</Key>
   <Name>Minstrel-Class Space Yacht</Name>
   <Description>[H3]Ubrikkian Industries Modified Minstrel-Class Space Yacht[h3]
-Please see page 116 of the Lords of Nal Hutta Sourcebook for details.</Description>
+Custom-made by Ubrikkian Industries for the Hutts, these large luxury space yachts rival many corvettes and smaller warships for size and power. Built to the specifications of the buyer, these vessels are often opulently appointed, no expense having been spared to ensure the comfort of their passengers. Heavily armored and shielded, equipped with batteries of light turbolasers and ion cannons discreetly mounted beneath the vessel's superstructure ridge, and able to carry a half-dozen starfighters in its small but functional hangar bay, the Minstrel-class space yacht is able to transport influential Hutts and their courts in safety and sumptuous ease.</Description>
   <Source Page="116">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Yacht</Type>
   <Categories>
     <Category>Capital Ship</Category>

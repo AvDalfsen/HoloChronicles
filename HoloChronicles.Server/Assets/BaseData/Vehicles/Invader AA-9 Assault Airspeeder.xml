@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>AA9ASSAULT</Key>
   <Name>Invader AA-9 Assault Airspeeder</Name>
   <Description>
     [H3]Invader AA-9 Assault Airspeeder[h3]
-    Please see page 63 of the Dangerous Covenants Sourcebook for details.
-  </Description>
+
+The Invader is Mekuun's compact assault speeder, designed for battlefield close air supporr and squad insertion missions. The speeder's small size and low, wide profile make it more difficult to hit, but also limit the power of its weapons systems. The pilot and gunner sit one behind the other in the bow of the craft, while any troops aboard for deployment sit in a tight compartment behind them. Troops deploy out both sides, as the side hatches slide open. A variation of the Invader is the AA-9s, a stealth-enabled model with quieter repulsorlifts and custom camouflage. Both models are often used to deploy squads quickly behind enemy lines.</Description>
   <Source Page="63">Dangerous Covenants</Source>
+  <Custom>DescOnly</Custom>
   <Type>Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SHEATHIPEDESPY</Key>
   <Name>Sheathipede-Class Spy Shuttle</Name>
   <Description>[H3][I]Sheathipede[i] - Class Spy Shuttle[h3]
@@ -7,6 +7,7 @@ Please see sidebar on page 74 of the Rise of the Separatists Sourcebook for deta
   <Sources>
     <Source Page="74">Rise of the Separatists</Source>
   </Sources>
+  <Custom>AddedItem</Custom>
   <BuiltInAttachments>
     <Key>SPYBRAIN</Key>
   </BuiltInAttachments>

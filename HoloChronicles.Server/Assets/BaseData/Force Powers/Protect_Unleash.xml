@@ -1,12 +1,14 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>PROTUNL</Key>
   <Name>Protect/Unleash</Name>
-  <Description> 
+  <Description>
     [H4]Force Power: Protect/Unleash[h4]
-    Please see page 300 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+Force users can harness the innate abilities of the Force to protect themselves and others from harm. However, that same power can be turned to terrible ends when the user infuses himself with the dark side. Dark siders can shoot lightning from their fingertips
+or envelop their targets in withering, murderous cold.</Description>
   <Source Page="300">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>

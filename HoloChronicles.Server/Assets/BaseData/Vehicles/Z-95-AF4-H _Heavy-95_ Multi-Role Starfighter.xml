@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>Z95AF4H</Key>
   <Name>Z-95-AF4-H "Heavy-95" Multi-Role Starfighter</Name>
   <Description>[H3]Z-95-AF4-H "Heavy-95" Multi-Role Starfighter[h3]
-Please see page 56 of the Stay on Target Sourcebook for details.</Description>
+
+A variant of the old, reliable Z-95 Headhunter, the Heavy-95 is the result of a recent service life extension program for Headhunters serving in the Rebel Alliance. The Heavy-95 project sought to extend the service life of existing Z-95s by performing numerous upgrades and overhauls to bring the elderly fighters up to the standard of modern lightweight starfighters. Each Heavy-95 was stripped of all its systems and rebuilt from the ground up using upgraded systems where they were needed and new original production parts where available. The four low-output Incom 2a ion fission engines were replaced with a pair of 4L4 fusial thrust engines typically found on the T-65 X-wing, an astromech socket and hyperdrive were fitted, and the wingtip-mounted light laser cannons were replaced with T&amp;B Kx5 medium laser cannons. The fighter also houses an alternating-fire concussion missile launcher system that allows the pilot to fire off a steady stream of concussion missiles. The resulting fighter is a capable, easy-to-fly, lightweight multi-role fighter that features a good mix of speed, protection, and firepower.</Description>
   <Source Page="56">Stay on Target</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

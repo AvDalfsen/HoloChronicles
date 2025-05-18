@@ -1,16 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <ForcePower>
   <Key>ENHANCE</Key>
   <Name>Enhance</Name>
   <Description>
     [H4]Force Power: Enhance[h4]
-    Please see page 298 of the Age of Rebellion Core Rulebook, page 288 of the Force and Destiny Core Rulebook, or page 46 of the Rise of the Separatists Sourcebook, for details.
-  </Description>
+
+One of the most straightforward ways in which Force users utilize the power of the Force is to imbue their own bodies with energy and strength. Making leaps that might otherwise be deemed impossible, moving at high speeds, and harnessing physical strength
+well beyond the capacity of most sentient beings are all equally viable. In this way, the Force becomes an almost literal fuel for feats of endurance and power. Most Force users find it a relatively simple thing to use the Force in order to overcome their own physical limitations and shrug off the effects of fatigue. With a little practice, most Force users are able to expand the arenas in which they can use the Force beyond that of mere brute strength. They are able to concentrate the Force into assisting them with acts of dexterity and acrobatics.</Description>
   <Sources>
     <Source Page="298">Age of Rebellion Core Rulebook</Source>
     <Source Page="288">Force and Destiny Core Rulebook</Source>
     <Source Page="46">Rise of the Separatists</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <MinForceRating>1</MinForceRating>
   <AbilityRows>
     <AbilityRow>

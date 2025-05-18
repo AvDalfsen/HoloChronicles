@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>ARMOSMODULAR</Key>
   <Name>Armos Modular Transport</Name>
   <Description>[H3]Armos Modular Transport[h3]
-Please see page 59 of the Far Horizons Sourcebook for details.</Description>
+
+The Armos Modular Transport has made inroads in the Outer Rim transport market due to its wide array of customization options. Their blunt, wedged-shaped hulls stretch aft to connect to a vertical trio of powerful engines. The keels taper to a point, while expanding outwards on higher decks to provide room for cargo and passengers. SoroSuub designed each deck to be modular, allowing the ship's crew to retrofit it to transport cargo, move passengers, serve as a tanker vessel, or even carry livestock. In addition, SoroSuub equipped the Armos with reasonably powerful engines, a decent hyperdrive, and potent multi-band scanners. Combined with the modular layout, the company provided clients with a ship that can be retrofitted for almost any need.</Description>
   <Source Page="59">Far Horizons</Source>
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>IMPCUSTFRIG</Key>
   <Name>Imperial Customs Frigate</Name>
   <Description>[H3]Imperial Customs Frigate[h3]
-      Please see page 54 of the Fly Casual Sourcebook for details.</Description>
+
+Though designated as a frigate, Imperial Customs employs this ship as a large patrol boat to police the space lanes and starports of the Empire. Well-armored and -armed, the ship can contend with most pirates and smugglers it is likely to encounter, Imperial Customs frigates are typically captained by a customs inspector (see page 397 of the [B]Edge of the Empire[b] Core Rulebook), with a pilot, engineer, comms officer, and a squad of troopers. While customs frigates typically operate alone or in pairs, they sometimes provide support for the larger light corvettes operated by the Imperial Customs Office (see page 74 for more information). Pirates who manage to get their hands on a customs frigate will often use them to stop and capture freighters and transports without ever firing a shot.</Description>
   <Source Page="54">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Frigate</Type>
   <Categories>
     <Category>Starship</Category>

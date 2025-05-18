@@ -1,15 +1,16 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>GOZANTI</Key>
   <Name>Gozanti-Class Armed Transport</Name>
   <Description>
     [H3]Gozanti-Class Armed Transport[h3]
-    Please see page 277 of the Age of Rebellion Core Rulebook, or page 58 of the Fly Casual Sourcebook, for details.
-  </Description>
+
+Built for durability and firepower over speed and cargo capacity, the Gozanti-class cruiser is a peculiar transport intended to escort unarmed bulk container ships and provide and-piracy capabilities to freighter convoys. Introduced by Corellian Engineering Corporation nearly half a century ago, the company generally subcontracted out the actual construction of the Gozanti to smaller shipbuilders, notably Gallofree Yards, Inc. Intentionally designed to be too slow for use by pirates, the Gozanti cruiser is typically used by corporations and traders transporting valuable goods or individuals.</Description>
   <Sources>
     <Source Page="277">Age of Rebellion Core Rulebook</Source>
     <Source Page="58">Fly Casual</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

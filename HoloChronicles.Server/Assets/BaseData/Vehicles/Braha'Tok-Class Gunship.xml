@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>BRAHATOK</Key>
   <Name>Braha'Tok-Class Gunship</Name>
   <Description>[H3][I]Braha'Tok[i] -Class Gunship[h3]
 Please see page 61 of the Knights of Fate Sourcebook for details.</Description>
   <Source Page="61">Knights of Fate</Source>
+  <Custom>DescOnly</Custom>
   <Type>Corvette</Type>
   <Categories>
     <Category>Starship</Category>

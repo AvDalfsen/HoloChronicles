@@ -1,11 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>ASCENDFLY</Key>
   <Name>Ascendant Personal Stealth Flyer</Name>
   <Description>[H3]Ascendant Personal Stealth Flyer[h3]
-Please see page 57 of the Disciples of Harmony Sourcebook for details.
-  </Description>
+First produced by Sienar Design Systems as a proof of concept model, the Ascendant personl flyer was the predecessor to an experimental starship designed to defy blockades during the Clone Wars. The project was eventually scrapped when the prototype of the corvette-sized full version was destroyed over the planet Christophsis. However, a limited number of the smaller flyers still exist for those lucky enough to finde one.
+[P]Equipped with an advanced cloaking device that renders the craft nearly invisible, the Ascendant model is perfect for espionage and infiltration but has also seen use in various theaters of operation when an important ambassador or trade envoy needed to be inserted into a volatile situation without drawing undue attention from other parties. Many a negotiator owers it successful conclusion to the timely use of an Ascendant flyer in a moment of extreme tension.</Description>
   <Source Page="57">Disciples of Harmony</Source>
+  <Custom>DescOnly</Custom>
   <Type>Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

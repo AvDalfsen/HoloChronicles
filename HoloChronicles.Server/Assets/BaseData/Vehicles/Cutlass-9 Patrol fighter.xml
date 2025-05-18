@@ -1,10 +1,15 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>CUTLASS9</Key>
   <Name>Cutlass-9 Patrol fighter</Name>
   <Description>[H3][I]Cutlass-9[i] Patrol fighter[h3]
-Please see page 78 of the Mask of the Pirate Queen adventure module for details.</Description>
+Produced in vast quantities by the SoroSuub Corporation prior to the rise of the Empire, these fighters were intended for use by SoroSuub alone. During
+the Clone Wars, however, SoroSuub supplied them to
+the Confederacy of Independent Systems. Following
+the defeat of the Separatists, SoroSuub ceased production. However, thousands of Cutlass-9s remain in
+planetary arsenals and pirate fleets across the galaxy.</Description>
   <Source Page="78">Mask of the Pirate Queen</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

@@ -51,15 +51,15 @@ export interface AddlCareerSkills {
 }
 
 export interface Specialization {
-    key?: string;
-    name?: string;
-    description?: string;
-    sources?: string[];
+    key: string;
+    name: string;
+    description: string;
+    sources: string[];
     custom?: string;
-    careerSkills?: string[];
-    talentRows?: TalentRow[];
+    careerSkills: string[];
+    talentRows: TalentRow[];
     universal?: boolean;
-    attributes?: SpecializationAttributes;
+    attributes: SpecializationAttributes;
     requirements?: Requirements;
     addlCareerSkills?: AddlCareerSkills[];
 }

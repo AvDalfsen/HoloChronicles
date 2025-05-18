@@ -1,10 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>ARQUITENS</Key>
   <Name>Arquitens-Class Light Cruiser</Name>
-  <Description>[H3][I]Arquitens[i] - Class Light Cruiser[h3]
-Please see page 75 of the Rise of the Separatists Sourcebook for details.</Description>
+  <Description>[H3][I]Arquitens[i]-class Light Cruiser[h3]
+Known colloquially as the Imperial light cruiser, the [I]Arquitens[i]-class is the Imperial Navy’s premier light multipurpose cruiser. Descended from the Republic Navy’s [I]Arquitens[i] class, which served so well during the Clone Wars, this new ship shares little aside from a class name and basic hull shape with its predecessors. Years ago, as part of a service-life extension program, the newly created Imperial Navy recalled all of the old [I]Arquitens[i]-class ships still on duty to the dry docks at Kuat Drive Yards. These, the ships were given an extensive overhaul, increasing their speed, agility, combat ability, power output, and other systems to bring them more in line with the Imperial Navy’s order of battle. When the new [I]Arquitens[i]-class ships were brought into the Navy officially, they were faster, tougher, and sleeker; hit harder; and could withstand more punishments. Most of this first generation of [I]Arquitens[i]-class ships was scrapped some time ago, victims of attrition, age, and the march of technology. The ships currently in service with the Imperial Navy are all newly built vessels with cutting-edge systems; they are considered a variant of the old [I]Arquitens[i] starship.
+[P]In the Imperial Navy’s order of battle, [I]Arquitens[i] vessels fill a number of roles. Typically, they are stationed at out-of-the-way Imperial worlds to keep the peace and protect Imperial assets. They are also often sent of detached service throughout the Outer Rim, given to trustworthy captains to cruise Imperial space for pirates, resistance vessels, and other dangerous malcontents. These fast and useful cruisers are also found as support ships in larger battlegroups headed by Star Destroyers, battle cruisers, or dreadnoughts. A handful of these useful vessels have even been fitted for electronic warfare, reconnaissance, and armed transport.
+[P][I]Arquitens[i]-class cruisers have a broad, flat, kite-shaped hull with three powerful main engine mounted aft in a horizontal housing. They have a ship docking ring at the port and starboard points of the hull, and a squat, rectangular bridge tower mounted just forward of the engines. The forward third of the ship’s hull is split into two spars, between which lies the small craft launch and recovery systems that house the vessel’s small supply of fighters and shuttles. Two large turbolaser batteries dominate the dorsal side of the hull, and they are matched by another pair on the ventral side. These batteries give the [I]Arquitens[i]-class excellent offensive and defensive capabilities.</Description>
   <Source Page="75">Rise of the Separatists</Source>
+  <Custom>DescOnly</Custom>
   <Type>Light Cruiser</Type>
   <Categories>
     <Category>Starship</Category>

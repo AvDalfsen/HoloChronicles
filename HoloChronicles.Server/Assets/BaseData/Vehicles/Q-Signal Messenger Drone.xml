@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>QSIGNAL</Key>
   <Name>Q-Signal Messenger Drone</Name>
   <Description>[H3]Q-Signal Messenger Drone[h3]
 Please see page 53 of the Cyphers and Masks Sourcebook for details.</Description>
   <Source Page="53">Cyphers and Masks</Source>
+  <Custom>AddedItem</Custom>
   <Type>Drone</Type>
   <Categories>
     <Category>Starship</Category>

@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>MOBQUETTRANSPORTLTL</Key>
   <Name>Mobquet Medium Transport (Light Turbolaser)</Name>
   <Description>[H3]Mobquet Medium Transport (Light Turbolaser)[h3]
-      Please see page 57 of the Fly Casual Sourcebook for details.</Description>
+
+Manufactured by Mobquet Swoops and Speeders, a company that, as its name suggests, is more known for personal repulsorlift vehicles like the Flare-S, their medium transport is a popular cargo hauler. TaggeCo. does significant business with the Galactic Empire, and so its subsidiary Mobquet managed to get this vessel designated as a medium transport rather than a bulk freighter or heavy cargo hauler, thereby avoiding many of the restrictions normally imposed on a vessel of its size.</Description>
   <Source Page="57">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Starship</Category>

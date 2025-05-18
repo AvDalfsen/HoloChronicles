@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>M22KRAYT</Key>
   <Name>M22-T Krayt Gunship</Name>
   <Description>[H3]MandalMotors M22-T Krayt Gunship[h3]
-Please see page 114 of the Lords of Nal Hutta Sourcebook for details.</Description>
+
+Commissioned by the notorious crime lord Jabba Desilijic Tiure, these impressively armed gunships were parceled out to his favored lieutenants as rewards for loyal service and to help them keep any wayward elements of his organization in line. Since the M22-7 Krayt's debut, other kajidics have recognized the ship's utility—particularly its firepower—and have placed large orders for the craft with MandalMotors.</Description>
   <Source Page="114">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Patrol Boat</Type>
   <Categories>
     <Category>Starship</Category>

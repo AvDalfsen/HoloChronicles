@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>LM002BLOOD</Key>
   <Name>LM002 Bloodhound Survey Vehicle</Name>
   <Description>[H3]LM002 Bloodhound Survey Vehicle[h3]
-Please see page 55 of the Savage Spirits Sourcebook for details.
-    </Description>
+The Bloodhound models by SoroSuub are medium-sized landspeeders built for professional planetary survey teams. Rugged and boxy, these speeders are designed to be dropped into hostile environments with a crew of four and endure with little to no support. They have a reputation for being nearly indestructable and for being able to withstand extremes of temperature, weather, and most other atmospheric conditions that would cripple or destroy lesser vehicles. While designed for the civilian market, many of these hardy vehicle have found their way into various militaries around the galaxy, including the Imperial Army's Long Range Reconnaissance units and the Imperial Survey Corps.  </Description>
   <Source Page="55">Savage Spirits</Source>
+  <Custom>DescOnly</Custom>
   <Type>Landspeeder</Type>
   <Categories>
     <Category>Land Vehicle</Category>

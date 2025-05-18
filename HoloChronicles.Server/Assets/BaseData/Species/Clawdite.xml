@@ -1,83 +1,34 @@
-﻿<?xml version="1.0"?>
-<Species xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Species>
   <Key>CLAWDITE</Key>
   <Name>Clawdite</Name>
   <Description>
     [H4]Clawdite[h4]
-    Clawdites are a humanoid sentient species native to the planet of Zolan.
-    They are one of the few shape-shifting species in the galaxy, and are sometimes
-    referred to as Changelings.
-    [P][B]Physiology:[b]
-    In their natural form, Clawdites have the appearance of reptilian humanoids, and in fact have
-    evolved from reptomammals. They have sunken cheeks with a narrow nose and a small mouth.
-    A thin line runs down their foreheads and creases the center of their noses. They possess
-    large eyes with slit-like pupils, and their irises can be yellow, gold, or blue.
-    Their skin is considered to be rough, and ranges in color from green to yellow. Overall,
-    their appearance is identical to that of their genetic forebears, the Zolanders.
-    [P]Due to genetic manipulation, Clawdites possess the extremely rare ability to change
-    their appearance. When using this ability, they can change the color and texture of their
-    skin and eyes, mimicking the appearance of other similarly-shaped beings, such as Humans.
-    Shifting into a Weequay, a species with similar facial features, is considered to be an
-    easy task. Though they can not add physical mass to their bodies, they are able to
-    form hair, and can actually make it quite long. Clawdites are also able to mimic the
-    appearance of clothing or jewelry, provided that the item lays directly on their skin, as
-    it is merely a manipulation of their skin's texture. They can not change the appearance
-    of their actual clothing, and have to rely on holographic technology in order to change such items.
-    [P]The growth of their abilities mainly relies upon a Clawdite's age. Younglings are only
-    able to change color, a talent that begins at infancy, and baby Clawdites use different hues
-    and colors to indicate their needs to their parents.
-
-    [P]Unlike most shape-changing species, the Clawdite's shifting abilities actually cause them
-    great physical discomfort. While the range of their abilities vary in individuals, with
-    both age and practice, they can work through the pain of changing in order to alter their
-    appearance in more and more extreme ways. Even the most talented Clawdite, however,
-    lacks the fine coordination it would take to mimic a specific individual's appearance precisely.
-    Only a very talented Clawdite is able to sleep and retain their altered form. If a Clawdite
-    is suitably distracted or hurt, and certainly if they are killed, they will revert to their
-    true form.
-
-    [P]It is thought to be impossible for a Clawdite to actually change their body structure or
-    body mass, though it appears that some individual Clawdites managed this feat through unknown
-    means. As most sentient beings' bodies
-    are composed mostly of water, xenobiologists speculated that the Clawdites ability to change
-    may lie in the manipulation of water.
-
-    [P][B]Society:[b]
-    By nature, Clawdites are quiet and solitary beings, often shunning the company of others
-    unless it benefited them. They view the rest of the galaxy pragmatically, and are
-    often harsh realists who are  mistrustful and suspicious of others.
-    [P]Not all Clawdites use their shape-shifting abilities, but those who do are forced to
-    undertake great physical pain and effort in order to do so. They often learn meditation
-    and concentration techniques, over long periods of time, in order to maximize their capabilities.
-    It is also necessary for Clawdites to treat their skin with specialized oils in order to prevent
-    cracking or tearing, due to the difficulty in physically maintaining their disguises.
-    [P]While in their natural form, they are considered to be indistinguishable from their Zolander
-    brethren, but it is possible to distinguish the two via genetic examination.
-
-    [P]On their homeworld of Zolan, Clawdites are feared and shunned by the Zolanders, who are a deeply
-    religious people. Among their many strong convictions, the Zolanders believe the Clawdites to be impure
-    and sinful. Because of their prejudice, the Zolanders forced the Clawdites to live in slums all
-    across the planet. These ghettos are secured, so that the Zolanders could prevent the Clawdites from
-    spreading. This subjugation continued for centuries on end, and it wasn't until after 4 ABY that they
-    were able to change their situation. After the rise of their new government, the Clawdites began
-    to hold classes for schoolchildren, in order to teach them greater control and efficiency with their
-    abilities.
-
-    [P]The few Clawdites who leave their world most often took advantage of their natural abilities to
-    join militaristic professions, such as spying, assassination, and bounty hunting. Joining groups
-    such as these are the rare occasions where Clawdites afford their loyalty to others, and they
-    see it as a positive contribution to the galaxy. They often seek to protect the liberties of
-    other species, sensing in their pain the disparity their own people suffered.
-    [P][B]Homeworld:[b]
-    Zolan was the homeworld of the Zolander species and its Clawdite offshoot. The Zolanders were
-    loyal to the Galactic Republic, but the Clawdites were loyal to the Confederacy of Independent
-    Systems, with the false hope the Confederacy would liberate them from Zolander oppression.
-    [P][B]Language:[b]
-    Clawdite is the language of Clawdites, from planet Zolan. It is a modified version of Zolanese.
-    Spoken Clawdite is basically formed by hissing sibilants. Guttural croaks are used in some
-    parts of the sentence.
-  </Description>
+Native to the planet Zolan in the Mid Rim, Clawdites are primarily known across the rest of the galaxy for their innate ability to transform their appearance. This knack grants the species a value to the larger galaxy that far exceeds any of their homeworld's other exports—to the chagrin of many Clawdites, some of whome feel that their species' cultural and technological contributions to galactic culture are ignored because of the fixation on their very peculiar genetic ability. Because of their shape-changing talents, Clawdites remain in high demand for careers focused upon deception, including espionage and other, even less savory pursuits. Their natural abilites and scarcity give members of the species legendary status as spies and informants. Rumors of Clawdite's presence naturally alert guity parties to be more vigilant, while a crime lord who retains a Clawdite's services gains prestige throug the hire.
+[P][B]Physiology:[b] Clawdites are humanoid species with reptilian traits. In their default forms, their skin has a rough texture that typically ranges in colr from pale yellow to dark green. The pupils of their large eyse are slitted, with irises that range in color from yellow to deep blue. However, many galactic citizens who interact with Clawdites never actually see this form, or even know that they are dealing with a Clawdite. Some Clawdites create a single preferred guise that they use for their public dealings, never showing their true form. This has various advantages, from throwing potential enemies off guard when they reveal themselves to keeping suspicion that they might be an infiltrator to a minimum. After all, when people know there is a Clawdite around, they tend to be more cautious. On the other hand, some Clawdites use this to their advantage by openly displaying their true forms to remind everyone of their unique ability—especially when that ability is an asset to the job at hand. Those Clawdites who do not rely upon their shapeshifting for professional reasons tend to remain in their default state around others to help reassure them that they are acting in good faith. These practices vary by individual and the expectations of the company that they currently keep.
+[P]Clawdites have two inherent physiological traits that enable their shape-changing. The first is the particularly sophisticated chromatophores that exist within their skin cells. These enable them to change their skin tone at will, and Clawdites with sufficent practice  can match nearly any color that their eyes can perceive. The second is the capacity to control aspects of their lymphatic system consciously and with great prescision. Using this control, a trained Clawdite can physically shrink and grow parts of their body, stretching their skin to take on different shapes. Replicating a specific appearance in this way requires practice.
+[P]Because Clawdites depend upon their body's internal abilites to shape-change, they cannot alter their mass in the process. This means that they can make minor alterations to their size based on their density but they cannot substantially grow or shrink. Their humanoid anatomy also prevents them from relocating organs, except in superficial ways. To help offset this limitation, some Clawdites wear an automated saline pump. This enables them to adjust the amount of fluid withing their bodies, increasing their ability to change their size within a limited range.
+[P][B]Society:[b] Clawdites have a particulary strong inclination toward individualism, and many have a difficult time forming close bonds, even—or especially—with members of their own species. This is in part becuase of the mutability of their appearance. A trusted contact could vanish with a shared resource, or a deceitful individual could easily assume another's identity. As a consequence, their society on Zolan has developed various measures to verify identities. Political and social organizations depend upon high levels of redundancy, and records are maintained in the open os that individuals can freely validate on another's work. Nevertheless, personal responsiblity and accountability have remained challenging princples to enforce across Clawdite history. Most Clawdltes are
+guarded even when greeting familiar individuals, and
+rely on conversational cues and personality traits far
+more than physical appearance to verify identity.
+[P]Clawdites’ entrance onto the galactic stage an large
+had a substantial impact on their culture and how
+they viewed their ability. Their unique shapeshifting
+trait made Clawdites the perfect spies, and many
+were hired to work offworld by governmemts, criminal syndicates, and military organizations. Now, Ciawdites are found all across the Outer Rim—though some
+Clawdites live in secret, preferring that their acquaintances not know their true species, lest they didtrust
+them for it or worse, try to exploit it.
+[P][B]Homeworld:[b] Zolan is a warm and arid world, located
+near the Corellian Run. During the developmemt of the Clawdite species, a spike in solar activity bathed the world in radiation. The Clawdite’s ability to modify their skin color and body shape was one of many adaptations that resulted from this massive change in Zolan’s Climate. The predatory monzu and numerous other species from Zolan share this traiL, though many species developed different means of surviving despite the ongoing radiation bombardment. As with any event that disrupts a period of evolutiononary stasis, most of Zolan’s lifeforms were unable to cope with the heightenedd radiation and died off precipitously, and those that remained dramatically shaped by it.
+[P]Zolan’s radiation levels evanually reverted to a more survivable level, as its star completed its extreme radiation emission cycle. Traits developed to survive this catastrophe were turned to new ends, resulting in a number of species that could change their physiology as well as others with thick bony plating to protect against radiatiom. Beyond that, the extinction event reshaped
+Zolan. Large portions of the planet became desolate wastelands. Most of the plants and animals that had once dwelt there were eliminated, and new life forms only slowly encroached on the most devastated regions.
+[P]This pianetary transformation had serious repercussions on the world's environment, as well as its ability to provide for the Ciawdite population. In fact, the resultant scarcity of resources very likely contributed to the cautious and self-rellanl nature of Clawdite society as it developed.
+[P][B]Language:[b] Virtually all Clawdites are fluent in Basic. Zolanese is their native tongue, though it is rarely hear off the planet. Clawdites generally refuse to teach Zolanese to offworlders, and it is used as a primary language only in the rural regions of their world. During rare offworld encounters between Clawdites, they often use Zolanese as a secret language to identify themselves without breaking their cover.
+[P][B]Life on the Fringe:[b] Clawdites excel in careers that
+prioritize independent competency. Though many rely upon more nefarious (or at least self-serving) applications of their shapeshffting abilities to work as Smugglers or Bounty Hunters, many other Clawdites work as Explorers, Technicians, or in specialized Colonist roles. Many Clawdites who originally hail from Zolan prefer self-reliant professions over which they have a high degree of control, rather than having to trust that others will act in their best interests.</Description>
   <Source Page="20">No Disintegrations</Source>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>2</Brawn>
     <Agility>2</Agility>

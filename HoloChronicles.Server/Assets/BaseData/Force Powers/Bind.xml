@@ -1,15 +1,17 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>BIND</Key>
   <Name>Bind</Name>
   <Description>
     [H4]Force Power: Bind[h4]
-    Please see page 286 of the Force and Destiny Core Rulebook, or page 44 of the Rise of the Separatists Sourcebook, for details.
-  </Description>
+
+Force users skilled in telekinetic powers can seize others from afar, preventing them from moving or attacking. When used with a calm heart, this power can be an extremely useful defensive tool, letting the Force user stop an enemy in his tracks without hurting him.
+Of course, once a foe is in the Force user's grip, it can be extremely tempting to simply crush him.</Description>
   <Sources>
     <Source Page="286">Force and Destiny Core Rulebook</Source>
     <Source Page="44">Rise of the Separatists</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>

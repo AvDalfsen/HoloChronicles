@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>CONESHIP</Key>
   <Name>Coneship</Name>
   <Description>
     [H3]Coneship[h3]
-    Please see page 107 of the Suns of Fortune Sourcebook for details.
-  </Description>
+
+Coneships are small, inefficient, and utterly unsafe vessels indigenous to Selonia. These primitive vessels are nothing more than truncated cones with bell-shaped reaction drives on the wide end. The prow contains the cockpit, and room for two pilots and possibly a couple of passengers. Nobody flies coneships anymore if they can help it, though some dens maintain these vessels for dire emergencies.</Description>
   <Source Page="107">Suns of Fortune</Source>
+  <Custom>DescOnly</Custom>
   <Type>Transport</Type>
   <Categories>
     <Category>Starship</Category>

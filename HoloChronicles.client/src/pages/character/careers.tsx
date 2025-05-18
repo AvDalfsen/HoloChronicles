@@ -7,8 +7,8 @@ import { SKILLS_CACHE_KEY, SKILLS_API_KEY } from '@/pages/character/skills';
 import { PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
 
-const CAREERS_CACHE_KEY = 'careersCache';
-const CAREERS_API_KEY = '/api/career';
+export const CAREERS_CACHE_KEY = 'careersCache';
+export const CAREERS_API_KEY = '/api/careers';
 
 function Careers() {
     const [careers, setCareers] = useState<Career[]>([]);
@@ -16,11 +16,10 @@ function Careers() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
-    const numberOfChosenCareerSkills = useCharacterStore(
-        (state) => state.character.skills.filter(s => s.rank.careerRanks === 1).length
+    const remainingCareerSkills = useCharacterStore(
+        (state) => state.character.careerRanksRemaining
     );
     const { character, updateCharacter } = useCharacterStore();
-    const remaining = (selectedCareer?.freeRanks ?? 4) - numberOfChosenCareerSkills;
 
     useEffect(() => {
         async function loadCareers() {
@@ -66,10 +65,26 @@ function Careers() {
     };
 
     const selectCareerClick = () => {
-        selectedCareer?.careerSkills
+        let forceRating = 0;
+        const selectedCareerForceRating = selectedCareer?.attributes?.forceRating ?? 0;
+        if (selectedCareerForceRating > 0) {
+            forceRating = selectedCareerForceRating;
+        }
+
+        //When choosing a new career, ensure that all previously set (if any) careerskills (including specialization) are set to 0.
+        const updatedSkills = character.skills.map(skill => ({
+            ...skill,
+            rank: {
+                ...skill.rank,
+                careerRanks: skill.rank.careerRanks === 1 ? 0 : skill.rank.careerRanks,
+            },
+        }));
 
         updateCharacter({
             career: selectedCareer?.key,
+            careerRanksRemaining: selectedCareer?.freeRanks ?? 4,
+            skills: updatedSkills,
+            forceRating: forceRating,
         });
     };
 
@@ -101,6 +116,7 @@ function Careers() {
 
         updateCharacter({
             ...character,
+            careerRanksRemaining: character.careerRanksRemaining - (newValue === 1 ? 1 : -1),
             skills: updatedSkills,
         });
     }
@@ -122,13 +138,15 @@ function Careers() {
     }
 
     return (
-        <div className="z-20 p-5 w-full flex space-x-6">
+        <div className="z-20 p-5 w-full flex items-start space-x-6">
             {/* Career Table */}
             <div className="sticky top-0 left-0 bg-white border rounded-lg shadow-md overflow-auto max-w-2xl">
                 <table className="w-full table-fixed text-sm text-left border-collapse">
                     <thead className="table-header">
                         <tr>
-                            <th className="table-cell w-[30%] min-w-[150px]"> Name </th>
+                            <th className="table-cell w-[25%] min-w-[150px]"> Name </th>
+                            <th className="table-cell w-[18%]"> Free skills </th>
+                            <th className="table-cell w-[25%]"> Force rating </th>
                             <th className="table-cell"> Source </th>
                             <th className="table-cell w-10 text-right"> </th>
                         </tr>
@@ -147,7 +165,13 @@ function Careers() {
                                 onClick={() => onCareerClick(c)}
                             >
                                 <td className="border-t px-4 py-2 w-[20%] font-medium">{c.name ?? 'Unnamed'}</td>
-                                <td className="border-t px-4 py-2 w-[20px]">{c.sources ?? '-'}</td>
+                                <td className="border-t px-4 py-2 w-[20px]">{c.freeRanks ?? '4'}</td>
+                                <td className="border-t px-4 py-2 w-[20px]">{c.attributes?.forceRating ?? '-'}</td>
+                                <td className="border-t px-4 py-2 w-[20px]"> 
+                                    {c.sources
+                                        ? (c.sources[0].match(/^(.*?)(?=\sCore|\s-\s)/)?.[1] ?? c.sources[0])
+                                        : '-'}
+                                </td>
                                 <td className="border-t px-4 py-2 text-right">
                                     {selectedCareer?.key === c.key && (
                                         <button
@@ -169,7 +193,7 @@ function Careers() {
             </div>
             {/* Selected Career Info Card */}
             {selectedCareer && (
-                <div className="card w-1/3 h-[calc(100vh-130px)] overflow-auto">
+                <div className="card w-1/3 max-h-[calc(100vh-130px)] overflow-auto">
                     <h2 className="text-lg font-semibold mb-4">{selectedCareer.name}</h2>
                     <div>
                         <div>
@@ -179,43 +203,49 @@ function Careers() {
                     </div>
                 </div>
             )}
-            {/* Selected Career Info Card */}
+            {/* Selected Career Skills Card */}
             {selectedCareer && (
-                <div className="card w-1/3 overflow-auto">
+                <div className="card w-1/3 max-h-[calc(100vh-130px)] overflow-auto">
                     <h2 className="text-lg font-semibold mb-4">Career skills</h2>
                     <ul>
-                        {selectedCareer.careerSkills
-                            ?.map(sk => {
-                                const isChecked = character.skills.find(s => s.key === sk)?.rank.careerRanks === 1;
-                                return { key: sk, isChecked };
+                        {(selectedCareer.careerSkills ?? [])
+                            .map((sk) => {
+                                const skill = skills.find((s) => s.key === sk);
+                                return {
+                                    key: sk,
+                                    name: skill?.name ?? sk,
+                                    isChecked:
+                                        character.skills.find((s) => s.key === sk)?.rank
+                                            .careerRanks === 1,
+                                };
                             })
-                            .sort((a, b) => a.key.localeCompare(b.key))
-                            .filter(({ isChecked }) => remaining > 0 || isChecked)  // show unchecked only if you still have picks
-                            .map(({ key: skillKey, isChecked }, idx) => {
-                                const skill = skills.find(s => s.key === skillKey);
-                                return (
-                                    <li key={idx} className="flex items-center justify-between border-t px-4 py-2">
-                                        <span>{skill?.name ?? skillKey}</span>
-                                        {selectedCareer.key === character.career && (
-                                        <input
-                                            type="checkbox"
-                                            checked={isChecked}
-                                            onChange={e => {
-                                                const newValue = e.target.checked ? 1 : 0;
-                                                updateCharacterCareerSkillValues(skillKey, newValue);
-                                            }}
-                                        />
+                            .sort((a, b) => a.name.localeCompare(b.name))
+                            .map(({ key: skillKey, name, isChecked }, idx) => (
+                                <li
+                                    key={idx}
+                                    className="flex items-center justify-between border-t px-4 py-2"
+                                >
+                                    <span>{name}</span>
+                                    {selectedCareer.key === character.career &&
+                                        (remainingCareerSkills > 0 || isChecked) && (
+                                            <input
+                                                type="checkbox"
+                                                checked={isChecked}
+                                                onChange={(e) => {
+                                                    const newValue = e.target.checked ? 1 : 0;
+                                                    updateCharacterCareerSkillValues(skillKey, newValue);
+                                                }}
+                                            />
                                         )}
-                                    </li>
-                                );
-                            })}
-
+                                </li>
+                            ))}
                         <li className="mt-2 font-medium">
-                            Remaining career skill picks: {remaining}
+                            Remaining free career skills: {remainingCareerSkills}
                         </li>
                     </ul>
                 </div>
             )}
+
         </div>
     );
 }

@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>AA3DRAY</Key>
   <Name>A-A3 Dray Light Speeder Truck</Name>
   <Description>
     [H3]A-A3 Dray Light Speeder Truck[h3]
-    Please see page 255 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+Smaller and lighter than the heavy A-A5 speeder truck, the A-A3 Dray by Trast Heavy Transports is a common sight throughout the galaxy. Designed as a light duty speeder truck and marketed to craftsmen and contractors as work vehicles and light cargo haulers, Drays feature an enclosed cab that seats three abreast and a long, open bed that can carry cargo or passengers. Numerous aftermarket accessories for the Dray, such as soft and hard-top covers for the bed, cargo-handling systems, and reinforced structures, and the ease with which the speeder can be repaired and modified make the Dray a popular exploration and backcountry sporting vehicle as well as a reliable workhorse.</Description>
   <Source Page="255">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <Type>Speeder Truck</Type>
   <Categories>
     <Category>Land Vehicle</Category>

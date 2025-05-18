@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>VT49DECIMATOR</Key>
   <Name>VT-49 Decimator</Name>
   <Description>[H3]VT-49 Decimator[h3]
-      Please see page 55 of the Fly Casual Sourcebook for details.</Description>
+
+A heavily armed transport and assault ship used primarily by the Imperial Navy, the VT-49 Decimator is a fearsome foe for smugglers and pirates who come under its guns. Used for long-range reconnaissance, picket duty, and ground and shipboard assaults, the VT-49 is a versatile vessel. Though used principally by the Imperial Navy; these fast, wedge-winged attack ships have also been adopted by other quasi-military arms of the Galactic Empire, from Imperial Customs to the dreaded Imperial Security Bureau.</Description>
   <Source Page="55">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Assault Ship</Type>
   <Categories>
     <Category>Starship</Category>

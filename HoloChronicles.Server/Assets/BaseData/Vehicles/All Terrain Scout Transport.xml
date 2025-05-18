@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>ATST</Key>
   <Name>All Terrain Scout Transport</Name>
   <Description>
     [H3]All Terrain Scout Transport[h3]
-    Please see page 265 of the Age of Rebellion Core Rulebook for details.
-  </Description>
+
+The Imperial Army's AT-ST is a medium-sized bipedal walker designed as a fast force reconnaissance vehicle. Unlike their larger, heavier AT-AT siblings, AT-STs are quite fast and agile. Deployed either in tandem for long range reconnaissance or in squadrons when supporting troops or armor, the AT-ST consists of a lightly armored, slab-sided command pod set atop a pair of thin reverse-articulated legs. The command pod can rotate through 180 degrees, allowing the walker to bring its weapons quickly to bear without having to change the position of its legs, an extremely useful feature when fighting in rough or broken terrain. They are armed with a versatile mix of blasters and ordnance, and can fill both antipersonnel and light anti-armor roles with ease. While certainly capable, AT-STs have a reputation as relatively fragile, high-maintenance vehicles. Their drive systems are especially finicky, requiring many, many hours of maintenance, and an inattentive pilot can easily become entangled in obstacles or heavy ground cover.</Description>
   <Source Page="265">Age of Rebellion Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <Type>Walker</Type>
   <Categories>
     <Category>Walker</Category>

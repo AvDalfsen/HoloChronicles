@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>HSP10PURSUIT</Key>
   <Name>HSP-10 Pursuit Airspeeder</Name>
   <Description>[H3]HSP-10 Pursuit Airspeeder[h3]
-      Please see page 52 of the Fly Casual Sourcebook for details.</Description>
+
+Once a common sight in the skies of Coruscant and other Core Worlds, the HSP-10 pursuit airspeeder is being phased out in favor of newer models, though it is still widely used by Imperial and local planetary security forces beyond the Inner Rim. A relatively fast airspeeder, the HSP-10 carries adequate firepower to deal with most lawbreakers, including a forward-mounted ion cannon to disable the vehicles of any fleeing suspects. Security agencies often patrol the airspace around spaceports with these airspeeders, as well as respond to incidents requiring close air support.</Description>
   <Source Page="52">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Airspeeder</Type>
   <Categories>
     <Category>Air Vehicle</Category>

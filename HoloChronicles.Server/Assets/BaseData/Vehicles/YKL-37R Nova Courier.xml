@@ -1,10 +1,28 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>YKL37RNOVA</Key>
   <Name>YKL-37R Nova Courier</Name>
   <Description>[H3]YKL-37R Nova Courier[h3]
-      Please see page 56 of the Fly Casual Sourcebook for details.</Description>
+
+The last ship produced by Gallofree Yards before its
+bankruptcy, the YKL-37R Nova Courier was a last ditch
+effort to save the struggling starship manufacturer.
+Intended to compete with Corellian Engineering’s
+series of light freighters, few Nova Couriers were sold
+prior to Gallofree Yards’ closure. Bankers overseeing
+the company’s liquidation auctioned off its vast stock
+of YKL-37Rs for bargain prices, many ending up in the
+hands of free traders, smugglers, and pirates. Unlike
+several of Gallofree’s previous freighters, which were
+plagued by problems, the Nova Courier is a reliable
+and well-armed vessel, something appreciated too
+late to save the troubled shipmaker. Though lacking
+the cargo capacity of other light freighters, the Nova
+Courier’s speed, handling, excellent stock armaments,
+and ease of maintenance and modification more than
+make up for that shortcoming.</Description>
   <Source Page="56">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Light Freighter</Type>
   <Categories>
     <Category>Starship</Category>

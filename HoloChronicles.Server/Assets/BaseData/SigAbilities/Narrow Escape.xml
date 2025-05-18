@@ -1,14 +1,11 @@
-<?xml version="1.0"?>
-<SigAbility xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<SigAbility>
   <Key>NARROWESCAPE</Key>
   <Name>Narrow Escape</Name>
-  <Description>
-    [H4]Smuggler Signature Ability: Narrow Escape[h4]
-    Please see page 37 of the Fly Casual Sourcebook for details.
-
-  </Description>
+  <Description>Whether a smuggling deal has gone south or the authorities see through the ship's fake transponder code, Smugglers frequently find themselves in a position where they need to make a getaway—and fast. Besides, what good is a reward if nobody gets to spend it?</Description>
   <Source Page="37">Fly Casual</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>

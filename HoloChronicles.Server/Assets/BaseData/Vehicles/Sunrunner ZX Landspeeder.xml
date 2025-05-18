@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>SUNRUNZX</Key>
   <Name>Sunrunner ZX Landspeeder</Name>
   <Description>[H3]Sunrunner ZX Landspeeder[h3]
-      Please see page 53 of the Fly Casual Sourcebook for details.</Description>
+
+An armored variant of the civilian Sunrunner landspeeder produced by Ikas-Adno, the Sunrunner zX has seen limited success among militias and planetary security forces in the Mid and Outer Rim Territories. Compact and maneuverable, the Sunrunner zX works well as an urban combat vehicle. However, it lacks the heavy armor and armament needed to fulfill any role on the battlefield besides reconnaissance, resulting in very few examples in military service. While shunned by the Imperial armed forces, the low price tag of the speeder makes it popular among small police forces, as well as smugglers and other criminals looking for extra firepower.</Description>
   <Source Page="53">Fly Casual</Source>
+  <Custom>DescOnly</Custom>
   <Type>Landspeeder</Type>
   <Categories>
     <Category>Land Vehicle</Category>

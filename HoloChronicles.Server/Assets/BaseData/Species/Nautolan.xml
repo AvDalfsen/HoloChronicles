@@ -1,20 +1,26 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Species>
   <Key>NAUTOLAN</Key>
   <Name>Nautolan</Name>
   <Description>[H4]Nautolan[h4]
 
-The Nautolans, sometimes referred to as the Nautiloids, are an amphibious humanoid species from the planet Glee Anselm. Although they established settlements across their aquatic homeworld, most Nautolan civilization is found in the Sabilon region.
-    [P][B]Physiology:[b]
-Nautolans possess a physiology common to amphibious species, including low light vision and excellent swimming skills. They stand an average of 1.8 meters, have smooth green, blue, or brown skin, and large black or dark maroon eyes with lids that are seldom used. They are capable of breathing underwater; however, unlike other water-based species, Nautolans do not experience difficulties out of water.
-[P]Nautolans possess exceptional olfactory and pheromone-sensing skills, enhanced by head-tresses. These tendrils are used to detect the emotional state of another being, but are most effective underwater. Within Nautolan culture, the ability to sense pheromone changes is an essential part of the communication process. All Nautolans have fourteen sensory tentacles and multiple hearts, which are capable of beating separately.
-    [P][B]Society:[b]
-Little is known about Nautolan culture, as few Nautolans leave Glee Anselm, but their music is occasionally found amongst savvy music collectors. Nautolan music is composed of sustained notes held in irregular patterns with occasional pauses. These pauses are considered the most important part of the music to the Nautolans, causing non-Nautolan listeners to misunderstand their artistic intent.
-    [P][B]Homeworld:[b]
-Glee Anselm is a peaceful water planet in the Mid Rim. The planet's surface is largely covered in water or swamps, with only a few clear landmasses spotting the surface. The planet has very frequent seasonal changes, causing it to be ravaged by intense storms and hurricanes. The climate is moderate most of the standard year round.
-    [P][B]Language:[b]
-Like their sense of smell, Nautolan language is also maximized for use underwater and not fully pronounceable in a gaseous atmosphere. Because of the loss in linguistic detail, most Nautolans choose to speak Anselmian or Galactic Basic when traveling off-world. In addition, Nautolans use other communicative cues when submerged, such as reading the swirls in other Nautolans' large eyes.</Description>
+Nautolans are an amphibious species native to Glee Anselm. They are renowned for empathetic and cheerful natures and for enjoying everyday activities. Though generally peaceful, they are also tough and strong.
+
+[P][B]Physiology:[b] Nautolans are a natively aquatic humanoid species capable of breathing underwater. Webbed toes and fingers aid them in swimming through the depths. A dense cartilaginous support network combines with a bony endoskeleton to make them exceptionally tough. Lengthy green tendrils emerge from their heads, serving as sensory organs that detect the pheromones of nearby sentients. Their large black eyes are adapted to pierce the murkiest underwater environments. However, Nautolans are capable of surviving for extended periods on dry land.
+
+[P]Nautolans are an egg-laying species. When hatching, they emerge from the eggs as tadpoles. Arms, legs, and head-tails begin to emerge during the second year of life, at which point they are roughly the same size as a human infant. Initially, these limbs are not strong enough to support their weight on land, so most spend their early years in aquatic environments.
+
+[P][B]Society:[b] An elected Council of Elders forms the centralized government for Nautolan settlements. On Glee Anselm, representatives from each settlement cooperate to form an overarching centralized government. Notably, ''elder" is a title of respect, as representatives are elected based upon merit rather than age.
+
+[P]Nautolans mate for life and are extremely loyal to their families. Both parents contribute equally to raising their young. Historically, Nautolan parents arranged marriages for their children, but in modern times this has become much less common.
+
+[P]Nautolan moods often reflect those of nearby sentients due to the pheromone sensitivity of their tendrils. As a broad generalization. Nautolans are happy and free-spirited, particularly when given an opportunity to pursue their interests. However, when confronted with anger or despair, members of this empathetic species are prone to respond in kind.
+
+[P][B]Homeworld:[b] Glee Anselm is a Mid Rim world filled with a broad range of aquatic environments. Its few landmasses are largely archipelagos. While Nautolans evolved in Glee Anselm's oceans, another unrelated species—the Anselmi—arose to dwell upon its landmasses. Constant fighting over the land turned the Anselmi into a warlike people. This has led to many conflicts throughout the world's history.
+
+[P][B]Language:[b] Nautolans' native language is Nautila, which was originally created for underwater use. In atmosphere, the language is largely unpronounceable, as it is dependent upon pheromones that are dispersed through the water in conjunction with spoken sounds. Consequently, Nautolans invariably learn to speak another language, most commonly Basic or Anselmian.</Description>
   <Source Page="59">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <StartingChars>
     <Brawn>3</Brawn>
     <Agility>2</Agility>

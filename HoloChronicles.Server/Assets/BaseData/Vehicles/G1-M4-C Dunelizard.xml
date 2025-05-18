@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>DUNELIZARD</Key>
   <Name>G1-M4-C Dunelizard</Name>
   <Description>
     [H3]G1-M4-C Dunelizard[h3]
-    Please see page 12 of the Long Arm of the Hutt Bonus Adventure for details.
-  </Description>
+
+The G1-M4-C Dunelizard is a starfighter of medium weight developed by the Hutts and produced by MandalMotors. The style 2 saw some limited use among Naboo's RSF forces, alongside Kimogila, KSE Firespray class and Z-95 fighters. The Dunelizard's namesake is the dune lizard creature.</Description>
   <Source Page="12">Long Arm of the Hutt</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

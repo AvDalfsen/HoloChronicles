@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>TIEHUNT</Key>
   <Name>TIE/HU Hunter</Name>
-  <Description>[H3]TIE/HU Hunter[h3]
-See page 42 of the Onslaught at Arda I adventure book.</Description>
+  <Description>[H3]TIE Hunter[h3]
+
+The Hunter is a recently developed TIE unit designed to compete with the speed, mobility, and ordnance of the Alliance X-wing, featuring S-foils that close when the ship is flying at top speed as well as a hyperdrive.</Description>
   <Source Page="42">Onslaught at Arda I</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

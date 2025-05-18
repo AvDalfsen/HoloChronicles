@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>CL1CLANCET</Key>
   <Name>CL-1c Lancet Interceptor</Name>
   <Description>
     [H3]CL-1c Lancet Interceptor[h3]
-    Please see page 108 of the Suns of Fortune Sourcebook for details.
-  </Description>
+
+Sleek, fast, and agile, CL-1c Lancet fighters are designed to intercept and destroy enemy starfighters. A wingless, dart-shaped craft with a prominent vertical maneuvering fin, the Lancet has a powerful Girodyne Ter22 high-output ion engine that provides exceptional speed and acceleration, allowing it to overtake most other starcraft. Used extensively by the Judicial Department during the days of the Old Republic, the Lancet is still employed by the Corellian defense and CorSec forces.</Description>
   <Source Page="108">Suns of Fortune</Source>
+  <Custom>DescOnly</Custom>
   <Type>Starfighter</Type>
   <Categories>
     <Category>Starship</Category>

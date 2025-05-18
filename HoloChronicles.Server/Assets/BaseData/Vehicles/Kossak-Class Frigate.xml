@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>KOSSAKFRIG</Key>
   <Name>Kossak-Class Frigate</Name>
   <Description>[H3]Ubrikkian Industries Kossak-Class Frigate[h3]
-Please see page 117 of the Lords of Nal Hutta Sourcebook for details.</Description>
+
+Designed and constructed by Ubrikkian Industries specifically for the Hutts, the Kossok-class frigate allows the kajidics to protect their investments from rivals and pirates, as well as to project raw power when needed. The hulking frigate is well-armored and shielded. Its turbolaser batteries and ion cannons provide significant firepower, while smaller laser cannons along its hull allow for point defense against starfighters. Though the Kossak-class frigate has a relatively small landing bay, it is able to accommodate a dozen starfighters and several shuttles and small transports.</Description>
   <Source Page="117">Lords of Nal Hutta</Source>
   <Sources />
+  <Custom>DescOnly</Custom>
   <Type>Frigate</Type>
   <Categories>
     <Category>Capital Ship</Category>

@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>NEBQSWOOP</Key>
   <Name>Nebulon-Q Racing Swoop</Name>
   <Description>[H3]Nebulon-Q Racing Swoop[h3]
-Please see page 51 of the Stay on Target Sourcebook for details.</Description>
+
+Favored by hooligans, swoop gangers, and professional racers, Mobquet's Nebulon-Q is one of the fastest, most powerful swoops on the galactic market. Considered a "muscle swoop" by those who appreciate such things, the Nebulon-Q is the middle sibling in the Nebulon-series swoops. Bigger than the Nebulon-R and more sophisticated than the Nebulon-S, like its siblings the Nebulon-Q is marketed mainly to thrill seekers and professional swoop racing teams. Little more than an engine with a saddle attached, the Nebulon-Q is powered by a high-output version of Mobquet's AE318 swoop engine delivering thrust through a pair of overcharged ion turbofans. Combined with a precision avionics package and fine-tuned control surfaces, the Nebulon-Q provides both blistering straight-line speed and incredible agility in one small package.</Description>
   <Source Page="51">Stay on Target</Source>
+  <Custom>DescOnly</Custom>
   <Type>Swoop</Type>
   <Categories>
     <Category>Air Vehicle</Category>

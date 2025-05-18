@@ -1,15 +1,16 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>INTERCRUISER</Key>
   <Name>Interdictor-Class Heavy Cruiser</Name>
   <Description>
     [H3]Interdictor-Class Heavy Cruiser[h3]
-    Please see page 60 of the Fly Casual Sourcebook, or page 280 of the Age of Rebellion Core Rulebook, for details.
-  </Description>
+
+Perhaps nothing in the galaxy inspires more dread in a smuggler than the sight of an Interdictor-class cruiser. Based on the Vindicator-class heavy cruiser, these large, wedge-shaped cruisers superficially resemble mighty Imperial Star Destroyers, though they perform a very specific role. By projecting a gravity shadow, known as a gravity well or interdiction field, across local space, Interdictor cruisers simulate the presence of a massive celestial body, keeping ships within the field from entering hyperspace and pulling ships in hyperspace back into realspace. Though an Imperial Naval asset, Interdictor-class cruisers frequently patrol trade routes, thwarting smugglers inclined to try outrunning Imperial authorities.</Description>
   <Sources>
     <Source Page="60">Fly Casual</Source>
     <Source Page="280">Age of Rebellion Core Rulebook</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <Type>Heavy Cruiser</Type>
   <Categories>
     <Category>Non-Fighter Starship</Category>

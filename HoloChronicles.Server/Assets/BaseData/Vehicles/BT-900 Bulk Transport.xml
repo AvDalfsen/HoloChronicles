@@ -1,10 +1,13 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>BT900</Key>
   <Name>BT-900 Bulk Transport</Name>
   <Description>[H3]Corellian Engineering BT-900 Bulk Transport[h3]
-Please see page 16 of the Friends Like These Adventure Module for details.</Description>
+The [I]Icarii-7 [i] is a Corellian Engineering Corporation BT-900 bulk transport, a popular ship that major corporations use to move vast loads of cargo across the galaxy. The 500-meter-long angular hull has a vertical bridge fin on its starboard side, and the Ferrra Sector Shipyard is currently converting its main cargo hold into hanger space. Yard droids have been mounting additional banks of turbolasers, quad laser turrets, and ion cannons to Captain Skahvi Renlow's specifications. The Togruta leads a misfit crew of former slaves and convicts.
+[P]
+The [I]Icarii-7 [i] has made the newsnets for a number of flashy raids targeting Imperial prison barges headed for the Bundil system.</Description>
   <Source Page="16">Friends Like These</Source>
+  <Custom>DescOnly</Custom>
   <Type>Bulk Transport</Type>
   <Categories>
     <Category>Bulk Transport</Category>

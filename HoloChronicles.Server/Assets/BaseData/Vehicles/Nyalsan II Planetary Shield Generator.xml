@@ -1,11 +1,37 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>NYALPLANSH</Key>
   <Name>Nyalsan II Planetary Shield Generator</Name>
   <Description>[H3]Nyalsan II Planetary Shield Generator[h3]
-Please see page 47 of the Lead by Example Sourcebook for details.
+DefenStar Ltd. produces a number of planetary shield
+generators designed to protect everything from small,
+platoon-sized camps to huge forward garrisons that
+house thousands of troops, personnel, and weapons.
+The Nyalsan II is a medium-sized shield generator
+used by both the Empire and the Alliance (when they
+can get it) to protect roughly company-sized, vehiclereliant
+units like tank units or planetary fighter squadrons.
+Using DefenStar’s patented shutter shield
+technology, the Nyalsan II uses a number of smaller,
+high-output shield generators to produce a shifting,
+adjustable network of overlapping energy fields. This
+field network can be moved instantly around a position
+to reinforce one area, or to open another to allow for
+vehicle launch or counterattack by troops. The shield
+system comes complete with generators, a prefabricated
+control bunker, and all the necessary equipment
+to set the system up and activate it. It requires a crew
+of eighteen technicians and engineers to operate it.
+[P]The Nyalsan II provides a ranged defense of 2 to
+each quadrant (north, south, east, and west) of a base.
+Ranged defense points can be reassigned to different
+quadrants by the shield generator’s crew based
+on need, in a manner similar to the Angle Deflector
+Shields maneuver on page 246 of the [B]Age of Rebellion[b]
+Core Rulebook.
 [P][I]Disclaimer: This is a piece of field equipment found in the Lead by Example Sourcebook.  It is created as a stationary "vehicle" because it is the most appropriate format.  While any mods or benefits are per the official source, the actual vehicle stats are an interpretation only and are not official.  Feel free to modify them if you think any changes are required.[i]</Description>
   <Source Page="47">Lead by Example</Source>
+  <Custom>DescOnly</Custom>
   <Type>Field Equipment</Type>
   <Categories />
   <Encumbrance>0</Encumbrance>

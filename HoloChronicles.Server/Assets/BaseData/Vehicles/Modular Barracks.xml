@@ -1,11 +1,21 @@
-<?xml version="1.0"?>
-<Vehicle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
   <Key>F221MOD</Key>
   <Name>Modular Barracks</Name>
   <Description>[H3]MilBar F-221 Modular Barracks[h3]
-Please see page 48 of the Lead by Example Sourcebook for details.
+
+The F-221
+modular barracks construct provides enough
+room and support facilities to house an entire platoon
+of troopers and all of their attendant gear. It
+features a large common area, smaller rooms that
+can be made into heads, lounges, or offices, and
+a climate control system that keeps the internal
+temperature steady and comfortable. It is proof
+against chemical and biological attacks.
 [P][I]Disclaimer: This is a piece of field equipment found in the Lead by Example Sourcebook.  It is created as a stationary "vehicle" because it is the most appropriate format.  While any mods or benefits are per the official source, the actual vehicle stats are an interpretation only and are not official.  Feel free to modify them if you think any changes are required.[i]</Description>
   <Source Page="48">Lead by Example</Source>
+  <Custom>DescOnly</Custom>
   <Type>Field Equipment</Type>
   <Categories />
   <Encumbrance>0</Encumbrance>

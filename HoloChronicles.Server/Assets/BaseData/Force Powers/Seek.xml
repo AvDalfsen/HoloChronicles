@@ -1,12 +1,13 @@
-<?xml version="1.0"?>
-<ForcePower xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='utf-8'?>
+<ForcePower>
   <Key>SEEK</Key>
   <Name>Seek</Name>
-  <Description>    
+  <Description>
     [H4]Force Power: Seek[h4]
-    Please see page 302 of the Force and Destiny Core Rulebook for details.
-  </Description>
+
+The Force user casts out with his mind's eye, searching for something lost, concealed, or forgotten. While countless different Force traditions across the galaxy have attached different practices and techniques to this power, from tribal cultures that use it to hunt prey-beasts to orders of assassins who seek out any who defy their orthodoxy, the basic ability remains the same: those who follow pathways of the Force can track down anything or anyone, regardless of the distance or eons that separate them from their quarry.</Description>
   <Source Page="302">Force and Destiny Core Rulebook</Source>
+  <Custom>DescOnly</Custom>
   <AbilityRows>
     <AbilityRow>
       <Index>0</Index>

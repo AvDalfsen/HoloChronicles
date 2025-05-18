@@ -1,14 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
 <Vehicle>
   <Key>EF76</Key>
   <Name>EF76 Nebulon-B Escort Frigate</Name>
   <Description>
     [H3]EF76 Nebulon-B Escort Frigate[h3]
-    Please see page 268 of the Edge of the Empire Core Rulebook, or page 278 of the  Age of Rebellion Core Rulebook, for details.
-  </Description>
+
+Kuat Drive Yards' Nebulon-B frigates were designated escort frigates by the Imperial Navy, and typically assigned to roles such as convoy escort, scouting, and picket duties. Long and deceptively fragile-looking, these vessels consist of a multi-deck forward section mated to a bulky aft engineering section by a single thin spar, and carry a surprising amount of weaponry for their size including a dozen turbolasers, numerous light laser cannons, and even a trio of tractor beams. Along with the energy weapons, those frigates in Imperial service carry two squadrons of twelve TIE fighters. Along with their heavy armor and sturdy shields, this makes Nebulon-B frigates formidable opponents.</Description>
   <Sources>
     <Source Page="268">Edge of the Empire Core Rulebook</Source>
     <Source Page="278">Age of Rebellion Core Rulebook</Source>
   </Sources>
+  <Custom>DescOnly</Custom>
   <HyperdrivePrimary>2</HyperdrivePrimary>
   <HyperdriveBackup>12</HyperdriveBackup>
   <NaviComputer>true</NaviComputer>
