@@ -1,102 +1,66 @@
-﻿import React from 'react';
-import { useEffect, useState } from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
+﻿import React, { useEffect, useState } from 'react';
 import { useCharacterStore } from '@/stores/characterStore';
 import { Specialization } from '@/types/specialization';
 import { Career } from '@/types/career';
 import { Skill } from '@/types/skill';
-import { CAREERS_API_KEY, CAREERS_CACHE_KEY } from '@/pages/character/careers';
-import { SKILLS_API_KEY, SKILLS_CACHE_KEY } from '@/pages/character/skills';
+import {
+    useCachedData,
+    CAREERS_API_KEY, CAREERS_CACHE_KEY,
+    SKILLS_API_KEY, SKILLS_CACHE_KEY,
+    SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY
+} from '@/pages/utils/fetcher';
 import { MinusSquare, PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
 
-const SPECIALIZATIONS_CACHE_KEY = 'specializationsCache';
-const SPECIALIZATIONS_API_KEY = '/api/specializations';
-
-function Specializations() {
-    const [specializations, setSpecializations] = useState<Specialization[]>([]);
-    const [skills, setSkills] = useState<Skill[]>([]);
-    const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
-    const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
-    const [selectedSpecializationIsCareerOrUniversal, setSelectedSpecializationIsCareerOrUniversal] = useState(true)
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export default function Specializations() {
     const { character, updateCharacter } = useCharacterStore();
+
+    const numberOfSpecializations = character.specializations.length ?? 0;
+    const remainingSpecializationsSkills = character.specializationRanksRemaining;
+
+    const { data: specializations, loading: loadingSpecs, error: errorSpecs } =
+        useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
+
+    const { data: careers, loading: loadingCareers, error: errorCareers } =
+        useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
+
+    const { data: skills, loading: loadingSkills, error: errorSkills } =
+        useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
+
+    const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
+    const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
+    const [selectedSpecializationIsCareerOrUniversal, setSelectedSpecializationIsCareerOrUniversal] = useState(true);
+
+    useEffect(() => {
+        if (careers && character?.career) {
+            const currentCareer = careers.find(
+                (careerItem) => careerItem.key === character.career
+            );
+            setSelectedCareer(currentCareer ?? null);
+        }
+    }, [careers, character?.career]);
+
+    if (loadingSpecs || loadingCareers || loadingSkills) {
+        return <p>Loading…</p>;
+    }
+
+    if (errorSpecs || errorCareers || errorSkills) {
+        return (
+            <p className="text-red-500">
+                {errorSpecs || errorCareers || errorSkills}
+            </p>
+        );
+    }
+
+    if (!specializations || !skills || !careers) {
+        return <p className="text-red-500">Data missing.</p>;
+    }
+
     const startingSpecialization = character.specializations.length > 0
         ? specializations.find(s => s.key === character.specializations[0])
         : null;
+
     const activeSpecialization = startingSpecialization || selectedSpecialization;
-    const numberOfSpecializations = useCharacterStore(
-        (state) => (state.character.specializations.length ?? 0)
-    );
-    const remainingSpecializationsSkills = useCharacterStore(
-        (state) => (state.character.specializationRanksRemaining)
-    );
-
-    //TODO: refactor functions to one location; DRY.
-    useEffect(() => {
-        async function loadSpecializations() {
-            try {
-                const data = await fetchDataWithRetryAndCache<Specialization[]>(
-                    SPECIALIZATIONS_API_KEY,
-                    SPECIALIZATIONS_CACHE_KEY
-                );
-                if (data) {
-                    setSpecializations(data);
-                } else {
-                    setError('No specialization data returned');
-                }
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch specializations');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        async function loadSelectedCareer() {
-            try {
-                const data = await fetchDataWithRetryAndCache<Career[]>(
-                    CAREERS_API_KEY,
-                    CAREERS_CACHE_KEY
-                );
-                if (data) {
-                    const selectedCareer = data.find((careerItem) => careerItem.key === character.career)
-                    setSelectedCareer(selectedCareer ?? null);
-                } else {
-                    setError('No career data returned');
-                }
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch careers');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        async function loadSkills() {
-            try {
-                const data = await fetchDataWithRetryAndCache<Skill[]>(
-                SKILLS_API_KEY,
-                SKILLS_CACHE_KEY
-                );
-                if (data) {
-                    setSkills(data);
-                } else {
-                    setError('No career data returned');
-                }
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch careers');
-            } finally {
-                setLoading(false);
-        }
-    }
-
-        loadSpecializations();
-        loadSelectedCareer();
-        loadSkills()
-    }, []);
 
     const onSpecializationClick = (spec: Specialization) => {
         setSelectedSpecialization(spec);
@@ -220,22 +184,6 @@ function Specializations() {
             },
             specializations: updatedSpecializations,
         });
-    }
-
-    if (loading) {
-        return (
-            <div className="p-6">
-                <p><em>Loading Specializations...</em></p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="p-6">
-                <p className="text-red-500">Error: {error}</p>
-            </div>
-        );
     }
 
     //TODO: on purchasing Republic Representative, show window to allow user to pick knowledge skill (addlCareerSkill) as new career skill.
@@ -464,5 +412,3 @@ function Specializations() {
         </div>
     );
 }
-
-export default Specializations;

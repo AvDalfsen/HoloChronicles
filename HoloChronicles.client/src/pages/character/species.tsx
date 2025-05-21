@@ -1,11 +1,12 @@
 ﻿import { useEffect, useState } from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { Species, StartingChars } from '@/types/species';
 import { useCharacterStore } from '@/stores/characterStore';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
+import {
+    useCachedData,
+    SPECIES_API_KEY, SPECIES_CACHE_KEY,
+} from '@/pages/utils/fetcher';
 
-export const SPECIES_CACHE_KEY = 'speciesCache';
-export const SPECIES_API = '/api/species';
 export const CHAR_ORDER: [keyof StartingChars, string][] = [
     ['brawn', 'Br'],
     ['agility', 'Ag'],
@@ -17,39 +18,33 @@ export const CHAR_ORDER: [keyof StartingChars, string][] = [
 
 type SortKey = 'name' | 'experience' | keyof StartingChars;
 
-export default function SpeciesListPage() {
-    const [species, setSpecies] = useState<Species[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export default function SpeciesPage() {
+    const { data: species, loading: loadingSpecies, error: errorSpecies } =
+        useCachedData<Species[]>(SPECIES_API_KEY, SPECIES_CACHE_KEY);
+
     const [sortKey, setSortKey] = useState<SortKey>('name');
     const [sortAsc, setSortAsc] = useState(true);
     const [selectedSpecies, setSelectedSpecies] = useState<Species | null>(null);
     const { character, updateCharacter } = useCharacterStore();
 
     useEffect(() => {
-        async function loadSpecies() {
-            try {
-                const data = await fetchDataWithRetryAndCache<Species[]>(
-                    SPECIES_API,
-                    SPECIES_CACHE_KEY
-                );
-                if (data) {
-                    setSpecies(data);
-                    const currentSpecies = data.find((speciesItem) => speciesItem.key === character.species)
-                    setSelectedSpecies(currentSpecies ?? null);
-                } else {
-                    setError('No species data returned');
-                }
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch species');
-            } finally {
-                setLoading(false);
-            }
+        if (species && character.species) {
+            const current = species.find((s) => s.key === character.species) ?? null;
+            setSelectedSpecies(current);
         }
+    }, [species, character.species]);
 
-        loadSpecies();
-    }, []);
+    if (loadingSpecies) {
+        return <p>Loading…</p>;
+    }
+
+    if (errorSpecies) {
+        return <p className="text-red-500">{errorSpecies}</p>;
+    }
+
+    if (!species) {
+        return <p className="text-red-500">Data missing.</p>;
+    }
 
     const onSpeciesClick = (s: Species) => {
         setSelectedSpecies(s);
@@ -94,22 +89,6 @@ export default function SpeciesListPage() {
             ? String(aVal).localeCompare(String(bVal))
             : String(bVal).localeCompare(String(aVal));
     });
-
-    if (loading) {
-        return (
-            <div className="p-6">
-                <p><em>Loading species...</em></p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="p-6">
-                <p className="text-red-500">Error: {error}</p>
-            </div>
-        );
-    }
 
     //TODO: Add all of the extra details (options, modifiers, etc.) and choices (skills, talents, subspecies), as well as a picture.
     //TODO: Make the characteristics look better.

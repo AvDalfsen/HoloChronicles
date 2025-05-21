@@ -3,7 +3,7 @@ import { Species } from '@/types/species';
 import { CharacterState } from '@/stores/characterStore';
 import { deriveStatsFromCharacteristics } from '@/lib/derivedStatsFunctions/statsDerivedFromCharacteristics'
 import { deriveStatsFromSpecies } from '@/lib/derivedStatsFunctions/statsDerivedFromSpecies'
-import { SPECIES_CACHE_KEY } from '@/pages/character/species';
+import { SPECIES_CACHE_KEY } from '@/pages/utils/fetcher';
 
 export function applyDerivedStats(state: CharacterState, changes: Partial<Character>, changedBaseStat: String, character: Character): Character {
     const selectedSpecies = getSelectedSpeciesFromCache(character)

@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '@/stores/characterStore';
 import { defaultCharacter } from '@/types/defaultCharacter';
 import { Species } from '@/types/species';
-import { SPECIES_CACHE_KEY, SPECIES_API } from '@/pages/character/species'
-import { fetchDataWithRetryAndCache } from '@/api/dataFetcher'
+import {
+    useCachedData,
+    SPECIES_API_KEY, SPECIES_CACHE_KEY,
+} from '@/pages/utils/fetcher'
 
 export default function CharacterLanding() {
     const navigate = useNavigate();
@@ -14,22 +16,24 @@ export default function CharacterLanding() {
 
     const hasStoredCharacter = storedCharacter?.name?.trim() !== ''; // crude check for presence
 
-    useEffect(() => {
-        const ensureSpeciesCache = async () => {
-            const cached = localStorage.getItem(SPECIES_CACHE_KEY);
+    const { data: species, loading: loadingSpecies, error: errorSpecies } =
+        useCachedData<Species[]>(SPECIES_API_KEY, SPECIES_CACHE_KEY);
 
-            if (!cached) {
-                try {
-                    await fetchDataWithRetryAndCache<Species[]>(SPECIES_API, SPECIES_CACHE_KEY);
-                    console.log('Species data fetched and cached.');
-                } catch (err) {
-                    console.error('Failed to fetch species data:', err);
-                }
-            }
-        };
+    if (loadingSpecies) {
+        return <p>Loading…</p>;
+    }
 
-        ensureSpeciesCache();
-    }, []);
+    if (errorSpecies) {
+        return (
+            <p className="text-red-500">
+                {errorSpecies}
+            </p>
+        );
+    }
+
+    if (!species) {
+        return <p className="text-red-500">Data missing.</p>;
+    }
 
     const handleNewCharacter = () => {
         if (hasStoredCharacter) {

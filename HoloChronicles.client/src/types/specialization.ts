@@ -6,9 +6,9 @@ export interface Direction {
 }
 
 export interface TalentRow {
-    cost?: number;
-    talents?: string[];
-    directions?: Direction[];
+    cost: number;
+    talents: string[];
+    directions: Direction[];
 }
 
 export interface TalentRequirement {

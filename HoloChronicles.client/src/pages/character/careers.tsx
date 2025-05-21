@@ -1,63 +1,51 @@
 ﻿import { useEffect, useState } from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
-import { useCharacterStore } from '@/stores/characterStore';
 import { Career } from '@/types/career';
 import { Skill } from '@/types/skill';
-import { SKILLS_CACHE_KEY, SKILLS_API_KEY } from '@/pages/character/skills';
+import { useCharacterStore } from '@/stores/characterStore';
 import { PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
+import {
+    useCachedData,
+    CAREERS_API_KEY, CAREERS_CACHE_KEY,
+    SKILLS_API_KEY, SKILLS_CACHE_KEY
+} from '@/pages/utils/fetcher'
 
-export const CAREERS_CACHE_KEY = 'careersCache';
-export const CAREERS_API_KEY = '/api/careers';
-
-function Careers() {
-    const [careers, setCareers] = useState<Career[]>([]);
-    const [skills, setSkills] = useState<Skill[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export default function Careers() {
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
     const remainingCareerSkills = useCharacterStore(
         (state) => state.character.careerRanksRemaining
     );
     const { character, updateCharacter } = useCharacterStore();
 
+    const { data: careers, loading: loadingCareers, error: errorCareers } =
+        useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
+    const { data: skills, loading: loadingSkills, error: errorSkills } =
+        useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
+
     useEffect(() => {
-        async function loadCareers() {
-            try {
-                const data = await fetchDataWithRetryAndCache<Career[]>(
-                    CAREERS_API_KEY,
-                    CAREERS_CACHE_KEY
-                );
-                if (data) {
-                    setCareers(data);
-                    const currentCareer = data.find((careerItem) => careerItem.key === character.career)
-                    setSelectedCareer(currentCareer ?? null);
-                } else {
-                    setError('No career data returned');
-                }
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch careers');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        async function loadSkills() {
-            const data = await fetchDataWithRetryAndCache<Skill[]>(
-                SKILLS_API_KEY,
-                SKILLS_CACHE_KEY
+        if (careers && character && character.species) {
+            const currentCareer = careers.find(
+                (careerItem) => careerItem.key === character.species
             );
-            if (data) {
-                setSkills(data);
-            } else {
-                setError('Failed to fetch skills');
-            }
+            setSelectedCareer(currentCareer ?? null);
         }
+    }, [careers, character]);
 
-        loadCareers();
-        loadSkills();
-    }, []);
+    if (loadingCareers || loadingSkills) {
+        return <p>Loading…</p>;
+    }
+
+    if (errorCareers || errorSkills) {
+        return (
+            <p className="text-red-500">
+                {errorCareers || errorSkills}
+            </p>
+        );
+    }
+
+    if (!careers || !skills) {
+        return <p className="text-red-500">Data missing.</p>;
+    }
 
     const onCareerClick = (c: Career) => {
         setSelectedCareer(c);
@@ -119,22 +107,6 @@ function Careers() {
             careerRanksRemaining: character.careerRanksRemaining - (newValue === 1 ? 1 : -1),
             skills: updatedSkills,
         });
-    }
-
-    if (loading) {
-        return (
-            <div className="p-6">
-                <p><em>Loading careers...</em></p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="p-6">
-                <p className="text-red-500">Error: {error}</p>
-            </div>
-        );
     }
 
     return (
@@ -249,5 +221,3 @@ function Careers() {
         </div>
     );
 }
-
-export default Careers;

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { fetchDataWithRetryAndCache } from '@/api/dataFetcher';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { Skill } from '@/types/skill';
@@ -7,38 +5,32 @@ import * as diceIcons from '@/components/ui/diceIcons';
 import { JSX } from 'react/jsx-runtime';
 import { useCharacterStore } from '@/stores/characterStore';
 import { CHAR_ORDER } from '@/pages/character/species';
+import {
+    useCachedData,
+    SKILLS_API_KEY, SKILLS_CACHE_KEY
+} from '@/pages/utils/fetcher'
 
-export const SKILLS_CACHE_KEY = 'skillsCache';
-export const SKILLS_API_KEY = '/api/skills';
-
-function Skills() {
-    const [skills, setSkills] = useState<Skill[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
+export default function Skills() {
     const { character, updateCharacter } = useCharacterStore();
 
-    useEffect(() => {
-        async function loadSkills() {
-            try {
-                const data = await fetchDataWithRetryAndCache<Skill[]>(
-                    SKILLS_API_KEY,
-                    SKILLS_CACHE_KEY
-                );
-                if (data) {
-                    setSkills(data);
-                } else {
-                    setError('No skill data returned');
-                }
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch skills');
-            } finally {
-                setLoading(false);
-            }
-        }
+    const { data: skills, loading: loadingSkills, error: errorSkills } =
+        useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
 
-        loadSkills();
-    }, []);
+    if (loadingSkills) {
+        return <p>Loading…</p>;
+    }
+
+    if ( errorSkills) {
+        return (
+            <p className="text-red-500">
+                {errorSkills}
+            </p>
+        );
+    }
+
+    if (!skills) {
+        return <p className="text-red-500">Data missing.</p>;
+    }
 
     function deriveAndDisplaySkillIcons(skillKey: string, skillCharKey: string): JSX.Element {
         let proficiencyCount = 0;
@@ -150,22 +142,6 @@ function Skills() {
         });
     };
 
-    if (loading) {
-        return (
-            <div className="p-6">
-                <p><em>Loading careers...</em></p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="p-6">
-                <p className="text-red-500">Error: {error}</p>
-            </div>
-        );
-    }
-
     return (
         <div>
             <table className="table table-striped" aria-labelledby="tableLabel">
@@ -206,5 +182,3 @@ function Skills() {
         </div>
     );
 }
-
-export default Skills;
