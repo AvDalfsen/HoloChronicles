@@ -39,15 +39,18 @@ export default function Talents() {
         return (
             <table>
                 <tbody>
-                    {spec ? (
+                    {spec && talents ? (
                         <tr>
                             <td colSpan={100}>
-                                <TalentSheet specialization={spec} />
+                                <TalentSheet
+                                    specialization={spec}
+                                    talents={talents}
+                                />
                             </td>
                         </tr>
                     ) : (
                         <tr>
-                            <td>Specialization not found.</td>
+                            <td>Specialization or talents not found.</td>
                         </tr>
                     )}
                 </tbody>
@@ -57,14 +60,7 @@ export default function Talents() {
 
     return (
         <div>
-            <table className="table table-striped" aria-labelledby="tableLabel">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                {RenderTalentTree(specializations)}
-            </table>
+            {RenderTalentTree(specializations)}
         </div>
     );
 }

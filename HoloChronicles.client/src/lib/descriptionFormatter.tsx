@@ -1,11 +1,56 @@
 import React from 'react';
+import * as dI from '@/components/ui/diceIcons';
+import { JSX } from 'react/jsx-runtime';
 
 interface FormattedDescriptionProps {
     description: string;
 }
 
+//TODO: Add tooltips to icons.
 export function FormattedDescription({ description }: FormattedDescriptionProps) {
-    // Split into paragraphs on [P]
+    // Map token to icon component
+    const iconMap: Record<string, () => JSX.Element> = {
+        DI: dI.difficultyIcon,
+        AB: dI.abilityIcon,
+        PR: dI.proficiencyIcon,
+        SE: dI.setbackIcon,
+        BO: dI.boostIcon,
+        SU: dI.successIcon,
+        FA: dI.failureIcon,
+        AD: dI.advantageIcon,
+        TH: dI.threatIcon,
+        TR: dI.triumphIcon,
+        DE: dI.despairIcon,
+    };
+
+    // Split text into pieces interleaving icons
+    const parseInlineTokens = (text: string): React.ReactNode[] => {
+        const tokenRegex = /\[([A-Z]{2})\]/g;
+        const elements: React.ReactNode[] = [];
+        let lastIndex = 0;
+        let match: RegExpExecArray | null;
+
+        while ((match = tokenRegex.exec(text)) !== null) {
+            const [full, token] = match;
+            if (match.index > lastIndex) {
+                elements.push(text.slice(lastIndex, match.index));
+            }
+            const IconFn = iconMap[token];
+            if (IconFn) {
+                elements.push(<span key={`icon-${match.index}`}>{IconFn()}</span>);
+            } else {
+                elements.push(full); // Unknown token, keep as-is
+            }
+            lastIndex = match.index + full.length;
+        }
+
+        if (lastIndex < text.length) {
+            elements.push(text.slice(lastIndex));
+        }
+
+        return elements;
+    };
+
     const paragraphs = description
         .split(/\[P\]/)
         .map(p => p.trim())
@@ -13,35 +58,33 @@ export function FormattedDescription({ description }: FormattedDescriptionProps)
 
     return (
         <>
-        {
-            paragraphs.map((para, pi) => {
-                // Collect pieces of text and <strong> wraps
+            {paragraphs.map((para, pi) => {
                 const elements: React.ReactNode[] = [];
+                const boldRegex = /\[B\](.+?)\[b\]/g;
                 let lastIndex = 0;
-                const regex = /\[B\](.+?)\[b\]/g;
-                let match: RegExpExecArray | null = null;
+                let match: RegExpExecArray | null;
 
-                while ((match = regex.exec(para)) !== null) {
-                    // Text before the bold
+                while ((match = boldRegex.exec(para)) !== null) {
                     if (match.index > lastIndex) {
-                        elements.push(para.slice(lastIndex, match.index));
+                        const before = para.slice(lastIndex, match.index);
+                        elements.push(...parseInlineTokens(before));
                     }
-                    // Bold text
+                    const boldContent = match[1];
                     elements.push(
-                        <strong key={`${pi}-${match.index}`}>
-                            { match[1]}
-                            </strong>
-          );
-            lastIndex = match.index + match[0].length;
-        }
+                        <strong key={`${pi}-b-${match.index}`}>
+                            {parseInlineTokens(boldContent)}
+                        </strong>
+                    );
+                    lastIndex = match.index + match[0].length;
+                }
 
-        // Remaining text after last match
-        if (lastIndex < para.length) {
-        elements.push(para.slice(lastIndex));
-    }
+                if (lastIndex < para.length) {
+                    const rest = para.slice(lastIndex);
+                    elements.push(...parseInlineTokens(rest));
+                }
 
-    return <p key={ pi }> { elements } </p>;
-})}
-</>
-  );
+                return <p key={pi}>{elements}</p>;
+            })}
+        </>
+    );
 }

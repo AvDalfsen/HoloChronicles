@@ -1,7 +1,7 @@
 import { getCachedData, setCachedData } from './cache';
 
 // Generic function to fetch data from an API with retry logic and caching
-// This function will first check if there's data already cached under the same name. If it is, it will return the cached data.
+// This function will first check if there's data already cached under the same name. If there is, it will return the cached data.
 // If not, it will attempt to fetch the data from the API.
 
 export const fetchDataWithRetryAndCache = async<T>(
@@ -39,9 +39,8 @@ export const fetchDataWithRetryAndCache = async<T>(
     return null;
 };
 
-// Check if the backend is ready, if it has been checked before, no need to call the API again
+// Check if the backend is ready, if it has been checked before during this session, no need to call the API again
 const checkBackendReady = async (): Promise<boolean> => {
-    //TODO add some sort of timeout to the health response in local storage
     const storedHealthStatus = sessionStorage.getItem('apiHealth');
 
     if (storedHealthStatus !== null) {

@@ -6,9 +6,9 @@ export interface Direction {
 }
 
 export interface TalentRow {
-    cost?: number;
-    talents?: string[];
-    directions?: Direction[];
+    cost: number;
+    talents: string[];
+    directions: Direction[];
 }
 
 export interface TalentRequirement {
@@ -105,9 +105,9 @@ export interface Rigger {
 }
 
 export interface Talent {
-    key?: string;
-    name?: string;
-    description?: string;
+    key: string;
+    name: string;
+    description: string;
     sources?: string[];
     custom?: string;
     ranked: boolean;
