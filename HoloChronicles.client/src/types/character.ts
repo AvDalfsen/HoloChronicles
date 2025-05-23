@@ -1,4 +1,4 @@
-export interface Character {
+﻿export interface Character {
     name: string;
     species: string;
     experience: {
@@ -34,7 +34,7 @@ export interface Character {
         isCareer?: boolean;
         charKeyOverride?: string;
     }[];
-    talents: string[];
+    talents: SpecializationTalents[];
     wounds: {
         threshold: number;
         current: number;
@@ -61,4 +61,15 @@ export interface CharacteristicValue {
     bought: number;
     gear: number;
     cybernetics: number;
+}
+
+export interface SpecializationTalents {
+    specializationKey: string;
+    talents: storedTalent[];
+}
+
+export interface storedTalent {
+    key: string;
+    col: number;
+    row: number;
 }

@@ -28,6 +28,10 @@
     z-index: 2;
 }
 
+.talent-box.unavailable {
+    background-color: rgb(226, 226, 226);
+}
+
 .talent-cost {
     font-weight: bold;
     font-size: 0.75rem;
@@ -42,7 +46,13 @@
 }
 
 .talent-desc {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.2;
+}
+
+.talent-footer {
+    font-size: 1rem;
     color: #555;
     line-height: 1.2;
 }
