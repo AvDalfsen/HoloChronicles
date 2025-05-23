@@ -78,11 +78,12 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
         [rows, hasPurchased, specialization]
     );
 
-    // Purchase a talent: update character store
+    // Purchase a talent: update character store and add XP cost
     const buyTalent = useCallback(
         (row: number, col: number) => {
             const talentKey = rows[row].talents[col];
             const newStored: storedTalent = { key: talentKey, row, col };
+            const cost = (row + 1) * 5;
 
             // Clone and update the talents array
             const existing = [...character.talents];
@@ -100,33 +101,101 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
                 existing.push({ specializationKey: specKey, talents: [newStored] });
             }
 
-            updateCharacter({ ...character, talents: existing });
+            // Update character with added talent and XP
+            updateCharacter({
+                ...character,
+                talents: existing,
+                experience: {
+                    ...character.experience,
+                    usedExperience: character.experience.usedExperience + cost,
+                },
+            });
         },
         [character, rows, specKey, updateCharacter]
     );
 
     // Sell a talent: remove from character store
+    // Has some mind-fuckery logic, so extra comments
     const sellTalent = useCallback(
         (row: number, col: number) => {
+            // Clone existing talents for this specialization
             const existing = [...character.talents];
-            const idx = existing.findIndex(
+            const specIndex = existing.findIndex(
                 (s) => s.specializationKey === specKey
             );
-            if (idx < 0) return;
+            if (specIndex < 0) return;
 
-            const bucket = existing[idx];
-            existing[idx] = {
-                ...bucket,
-                talents: bucket.talents.filter(
-                    (t) => !(t.row === row && t.col === col)
-                ),
-            };
+            // Original purchased talents
+            const bucket = existing[specIndex];
+            const originalTalents = bucket.talents;
 
-            updateCharacter({ ...character, talents: existing });
+            // Remove the directly sold talent
+            let updatedTalents = originalTalents.filter(
+                (t) => !(t.row === row && t.col === col)
+            );
+
+            // Build a set of purchased coords for connectivity
+            const purchasedSet = new Set(updatedTalents.map((t) => `${t.row},${t.col}`));
+
+            // BFS from any talent in row 0
+            const queue: [number, number][] = [];
+            updatedTalents.forEach((t) => {
+                if (t.row === 0) queue.push([t.row, t.col]);
+            });
+
+            const reachable = new Set<string>();
+            while (queue.length > 0) {
+                const [r, c] = queue.shift()!;
+                const keyRC = `${r},${c}`;
+                if (reachable.has(keyRC)) continue;
+                reachable.add(keyRC);
+
+                // Traverse connections
+                const dirs = rows[r].directions[c];
+                Object.entries(dirs).forEach(([dir, on]) => {
+                    if (!on) return;
+                    let nr = r, nc = c;
+                    switch (dir) {
+                        case 'down': nr++; break;
+                        case 'up': nr--; break;
+                        case 'left': nc--; break;
+                        case 'right': nc++; break;
+                    }
+                    const neighKey = `${nr},${nc}`;
+                    if (purchasedSet.has(neighKey) && !reachable.has(neighKey)) {
+                        queue.push([nr, nc]);
+                    }
+                });
+            }
+
+            // Filter out orphaned talents (not reachable)
+            const finalTalents = updatedTalents.filter((t) => reachable.has(`${t.row},${t.col}`));
+
+            // Determine which talents were removed (either sold or orphaned)
+            const finalKeys = new Set(finalTalents.map((t) => `${t.row},${t.col}`));
+            const removedTalents = originalTalents.filter(
+                (t) => !finalKeys.has(`${t.row},${t.col}`)
+            );
+
+            // Calculate total XP refund: cost = (row+1)*5
+            const refund = removedTalents.reduce(
+                (sum, t) => sum + (t.row + 1) * 5,
+                0
+            );
+
+            // Update the bucket and character with refund
+            existing[specIndex] = { ...bucket, talents: finalTalents };
+            updateCharacter({
+                ...character,
+                talents: existing,
+                experience: {
+                    ...character.experience,
+                    usedExperience: character.experience.usedExperience - refund,
+                },
+            });
         },
-        [character, specKey, updateCharacter]
+        [character, specKey, rows, updateCharacter]
     );
-
 
     // Compute connector lines after layout
     useLayoutEffect(() => {
