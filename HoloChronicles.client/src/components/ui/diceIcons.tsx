@@ -18,7 +18,7 @@ const Icon = ({ SvgIcon, fill, size = 24 }: IconProps) => {
     const style: React.CSSProperties = {
         fill,
         stroke: 'black',
-        strokeWidth: 1,
+        strokeWidth: .1,
         width: size,
         height: size,
         display: 'inline-block',

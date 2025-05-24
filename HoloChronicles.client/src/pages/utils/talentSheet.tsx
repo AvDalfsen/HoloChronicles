@@ -197,6 +197,7 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
         [character, specKey, rows, updateCharacter]
     );
 
+    // TODO: draw lines from based centre of box instead of after-rendering
     // Compute connector lines after layout
     useLayoutEffect(() => {
         if (!containerRef.current) return;

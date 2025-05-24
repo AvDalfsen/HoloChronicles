@@ -12,6 +12,7 @@ import {
 
 export default function Careers() {
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
+    const [currentCareer, setCurrentCareer] = useState<Career | null>(null);
     const remainingCareerSkills = useCharacterStore(
         (state) => state.character.careerRanksRemaining
     );
@@ -23,10 +24,10 @@ export default function Careers() {
         useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
 
     useEffect(() => {
-        if (careers && character && character.species) {
-            const currentCareer = careers.find(
-                (careerItem) => careerItem.key === character.species
-            );
+        if (careers && character && character.career) {
+            setCurrentCareer(careers.find(
+                (careerItem) => careerItem.key === character.career
+            )!);
             setSelectedCareer(currentCareer ?? null);
         }
     }, [careers, character]);
@@ -145,7 +146,7 @@ export default function Careers() {
                                         : '-'}
                                 </td>
                                 <td className="border-t px-4 py-2 text-right">
-                                    {selectedCareer?.key === c.key && (
+                                    {selectedCareer !== currentCareer && selectedCareer?.key === c.key && (
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation(); // Prevent row click
@@ -211,9 +212,11 @@ export default function Careers() {
                                         )}
                                 </li>
                             ))}
-                        <li className="mt-2 font-medium">
-                            Remaining free career skills: {remainingCareerSkills}
-                        </li>
+                        {selectedCareer === currentCareer && (
+                            <li className="mt-2 font-medium">
+                                Remaining free career skills: {remainingCareerSkills}
+                            </li>
+                        )}
                     </ul>
                 </div>
             )}
