@@ -64,6 +64,11 @@ function checkUpdates(state: CharacterState, changes: Partial<Character>, update
     if ('characteristics' in changes && changes.characteristics) {
         updatedCharacter = applyDerivedStats(state, changes, 'characteristics', updatedCharacter);
     }
+    if ('talents' in changes && changes.talents) {
+        console.log('Applying derived stats for talents');
+        console.log(JSON.stringify(changes))
+        //updatedCharacter = applyDerivedStats(state, changes, 'talents', updatedCharacter);
+    }
 
     return updatedCharacter;
 }

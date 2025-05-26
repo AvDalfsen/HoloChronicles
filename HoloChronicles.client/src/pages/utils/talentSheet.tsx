@@ -53,6 +53,10 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
     // Check if a talent at [row, col] is unlocked (available to buy)
     const isAvailable = useCallback(
         (row: number, col: number) => {
+            if (!character.specializations.includes(specialization.key)) {
+                return false; // Selected specialization not purchased
+            }
+
             if (row === 0) {
                 return true;
             }
@@ -103,7 +107,6 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
 
             // Update character with added talent and XP
             updateCharacter({
-                ...character,
                 talents: existing,
                 experience: {
                     ...character.experience,
@@ -184,9 +187,14 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
             );
 
             // Update the bucket and character with refund
-            existing[specIndex] = { ...bucket, talents: finalTalents };
+            if (finalTalents.length > 0) {
+                existing[specIndex] = { ...bucket, talents: finalTalents };
+            } else {
+                // Remove the specialization entirely if no talents remain
+                existing.splice(specIndex, 1);
+            }
+
             updateCharacter({
-                ...character,
                 talents: existing,
                 experience: {
                     ...character.experience,

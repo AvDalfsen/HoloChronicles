@@ -133,7 +133,6 @@ export default function Skills() {
         }
 
         updateCharacter({
-            ...character,
             experience: {
                 ...character.experience,
                 usedExperience: currentUsedXP + xpChange,

@@ -117,7 +117,6 @@ export default function Specializations() {
         }
 
         updateCharacter({
-            ...character,
             specializationRanksRemaining: character.specializationRanksRemaining - (newValue === 1 ? 1 : -1),
             skills: updatedSkills,
         });
@@ -149,7 +148,6 @@ export default function Specializations() {
             updatedSpecializations[0] = '';
 
             updateCharacter({
-                ...character,
                 skills: updatedSkills,
                 specializations: updatedSpecializations
             });
@@ -159,7 +157,6 @@ export default function Specializations() {
             const currentUsedXP = character.experience.usedExperience;
 
             updateCharacter({
-                ...character,
                 specializations: character.specializations.filter(spec => spec !== specialization.key),
                 experience: {
                     ...character.experience,
@@ -177,7 +174,6 @@ export default function Specializations() {
         const updatedSpecializations = [...character.specializations, specialization.key];
 
         updateCharacter({
-            ...character,
             experience: {
                 ...character.experience,
                 usedExperience: currentUsedXP + xpChange,
