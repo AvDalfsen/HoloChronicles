@@ -20,7 +20,7 @@ export const useCharacterStore = create<CharacterState>()(
                 set((state) => {
                     let updatedCharacter = { ...state.character, ...changes };
 
-                    updatedCharacter = checkUpdates(state, changes, updatedCharacter);
+                    updatedCharacter = checkUpdates(state, changes, updatedCharacter, state.character);
 
                     return { character: updatedCharacter };
                 }),
@@ -55,7 +55,7 @@ export const useCharacterStore = create<CharacterState>()(
     )
 );
 
-function checkUpdates(state: CharacterState, changes: Partial<Character>, updatedCharacter: Character): Character {
+function checkUpdates(state: CharacterState, changes: Partial<Character>, updatedCharacter: Character, originalCharacter: Character): Character {
     console.log(changes);
 
     if ('species' in changes && changes.species) {
@@ -65,9 +65,7 @@ function checkUpdates(state: CharacterState, changes: Partial<Character>, update
         updatedCharacter = applyDerivedStats(state, changes, 'characteristics', updatedCharacter);
     }
     if ('talents' in changes && changes.talents) {
-        console.log('Applying derived stats for talents');
-        console.log(JSON.stringify(changes))
-        //updatedCharacter = applyDerivedStats(state, changes, 'talents', updatedCharacter);
+        updatedCharacter = applyDerivedStats(state, changes, 'talents', updatedCharacter, originalCharacter);
     }
 
     return updatedCharacter;

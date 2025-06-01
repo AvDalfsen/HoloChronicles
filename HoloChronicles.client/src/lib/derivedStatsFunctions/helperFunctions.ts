@@ -1,10 +1,10 @@
 import { Character } from '@/types/character';
 import { Species } from '@/types/species';
 
-export function recalculateTotalCharacteristic(character: Character, changedCharacteristics: string): number {
+export function recalculateTotalCharacteristic(character: Character, changedCharacteristic: string): number {
     const characteristics = character.characteristics;
 
-    const k = changedCharacteristics as keyof typeof characteristics;
+    const k = changedCharacteristic as keyof typeof characteristics;
 
     const species = characteristics[k].species ?? 0;
     const bought = characteristics[k].bought ?? 0;
@@ -17,7 +17,7 @@ export function recalculateTotalCharacteristic(character: Character, changedChar
 }
 
 export function recalculateSoak(character: Character, species?: Species): number {
-    const brawn = character.characteristics.brawn.total ?? 0;
+    const brawn = character.characteristics.brawn.total ?? 1;
     const speciesSoak = species?.startingAttrs?.soakValue ?? 0;
     //TODO const gearSoakBonus = character.gear?.reduce((total, g) => total + (g.soakBonus || 0), 0) ?? 0;
 
@@ -25,7 +25,7 @@ export function recalculateSoak(character: Character, species?: Species): number
 }
 
 export function recalculateWoundThreshold(character: Character, species?: Species): number {
-    const brawn = character.characteristics.brawn.total ?? 0;
+    const brawn = character.characteristics.brawn.total ?? 1;
     const speciesWoundThreshold = species?.startingAttrs?.woundThreshold ?? 0;
     //TODO: gear and other items
 
@@ -33,7 +33,7 @@ export function recalculateWoundThreshold(character: Character, species?: Specie
 }
 
 export function recalculateStrainThreshold(character: Character, species?: Species): number {
-    const willpower = character.characteristics.willpower.total ?? 0;
+    const willpower = character.characteristics.willpower.total ?? 1;
     const speciesStrainThreshold = species?.startingAttrs?.strainThreshold ?? 0;
     //TODO: gear and other items
 

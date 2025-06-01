@@ -1,13 +1,15 @@
 ﻿import { useEffect, useState } from 'react';
 import { Career } from '@/types/career';
 import { Skill } from '@/types/skill';
+import { Specialization } from '@/types/specialization';
 import { useCharacterStore } from '@/stores/characterStore';
 import { PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
 import {
     useCachedData,
     CAREERS_API_KEY, CAREERS_CACHE_KEY,
-    SKILLS_API_KEY, SKILLS_CACHE_KEY
+    SKILLS_API_KEY, SKILLS_CACHE_KEY,
+    SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY
 } from '@/pages/utils/fetcher'
 
 export default function Careers() {
@@ -18,10 +20,19 @@ export default function Careers() {
     );
     const { character, updateCharacter } = useCharacterStore();
 
-    const { data: careers, loading: loadingCareers, error: errorCareers } =
-        useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
-    const { data: skills, loading: loadingSkills, error: errorSkills } =
-        useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
+    const { data: careers, loading: loadingCareers, error: errorCareers } = useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
+    const { data: skills, loading: loadingSkills, error: errorSkills } = useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
+    const { data: specializations, loading: loadingSpecializations, error: errorSpecializations } = useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
+
+    // Switch conditionals ***
+    const [pendingCareer, setPendingCareer] = useState<Career | null>(null);
+    const handleConfirmSwitch = () => {
+        if (pendingCareer) performSwitch();
+        setPendingCareer(null);
+    };
+
+    const handleCancelSwitch = () => setPendingCareer(null);
+    // ***
 
     useEffect(() => {
         if (careers && character && character.career) {
@@ -32,19 +43,19 @@ export default function Careers() {
         }
     }, [careers, character]);
 
-    if (loadingCareers || loadingSkills) {
+    if (loadingCareers || loadingSkills || loadingSpecializations) {
         return <p>Loading…</p>;
     }
 
-    if (errorCareers || errorSkills) {
+    if (errorCareers || errorSkills || errorSpecializations) {
         return (
             <p className="text-red-500">
-                {errorCareers || errorSkills}
+                {errorCareers || errorSkills || errorSpecializations}
             </p>
         );
     }
 
-    if (!careers || !skills) {
+    if (!careers || !skills || !specializations) {
         return <p className="text-red-500">Data missing.</p>;
     }
 
@@ -54,24 +65,112 @@ export default function Careers() {
     };
 
     const selectCareerClick = () => {
-        let forceRating = 0;
-        const selectedCareerForceRating = selectedCareer?.attributes?.forceRating ?? 0;
-        if (selectedCareerForceRating > 0) {
-            forceRating = selectedCareerForceRating;
-        }
+        const hasTalents = character.talents.length > 0
 
-        //When choosing a new career, ensure that all previously set (if any) careerskills (including specialization) are set to 0.
+        // Need confirmation only when talents would be lost
+        if (hasTalents) {
+            setPendingCareer(selectedCareer);
+        } else {
+            performSwitch();
+        }
+    };
+
+    const performSwitch = () => {
+        let forceRating = selectedCareer?.attributes?.forceRating ?? 0;
+        const originalCareer = careers.find(c => c.key === character.career);
+
+        // When choosing a new career, ensure that all previously set (if any) career and specialization ranks are set to 0.
         const updatedSkills = character.skills.map(skill => ({
             ...skill,
             rank: {
                 ...skill.rank,
                 careerRanks: skill.rank.careerRanks === 1 ? 0 : skill.rank.careerRanks,
+                specializationRanks: skill.rank.specializationRanks === 1 ? 0 : skill.rank.specializationRanks,
             },
         }));
 
+        // Going through all the specializations and talents to determine XP to be refunded
+        let refundSpecXP = 0;
+        let refundTalentXP = 0;
+
+        let remaining = character.specializations.length;
+
+        for (const specKey of character.specializations) {
+            const specialization = specializations.find(s => s.key === specKey);
+
+            // Don't refund 'cost' for starting specialization
+            if (character.specializations[0] != specKey) {
+                refundSpecXP +=
+                    ((originalCareer!.specializations.includes(specKey) ?? false) || specialization?.universal ? 0 : 10) +   // career/universal discount
+                    remaining * 10;                          // tier surcharge
+            }
+
+            // But DO refund any purchased talents in the starting specialization
+            const specTalentsBlock = character.talents.find(
+                t => t.specializationKey === specKey
+            );
+
+            const boughtTalents = specTalentsBlock?.talents ?? [];
+
+            for (const t of boughtTalents) {
+                refundTalentXP += (t.row + 1) * 5;
+            }
+
+            remaining--;
+        }
+
+        // Recalculate cost of skill levels already purchased (career vs non-career. Take all specializations into account)
+        let skillXPBalance = 0;
+
+        for (const skill of character.skills) {
+            if (skill.rank.purchasedRanks ?? 0 > 0) {
+                const isOriginalCareerSkill = originalCareer?.careerSkills?.includes(skill.key) ?? false;
+                const isNewCareerSkill = selectedCareer?.careerSkills?.includes(skill.key) ?? false;
+                let isSpecializationCareerSkill = false;
+
+                // Check if skill is contained in the purchased specializations
+                for (const spec of character.specializations) {
+                    const specialization = specializations.find(s => s.key === spec);
+
+                    isSpecializationCareerSkill = specialization?.careerSkills.includes(skill.key) ?? false;
+
+                    if (isSpecializationCareerSkill) break;
+                }
+
+                if (isOriginalCareerSkill || isSpecializationCareerSkill) {
+                    if (isNewCareerSkill) {
+                        continue; // Do nothing if skill is a career skill of both the original and the new career
+                    }
+                    else {
+                        skillXPBalance += 5 * skill.rank.purchasedRanks!; // Deduct 5 extra XP if skill was a career skill, but now won't be
+                        continue;
+                    }
+                }
+                else if (isNewCareerSkill) {
+                    skillXPBalance -= 5 * skill.rank.purchasedRanks!; // Refund 5 XP if skill wasn't a career skill, but now will be
+                    continue;
+                }
+            }
+        }
+
+        console.log("refundTalentXP: ", refundTalentXP)
+        console.log("refundSpecXP: ", refundSpecXP)
+        console.log("skillXPBalance: ", skillXPBalance)
+
+        const refundTotalXP = refundTalentXP + refundSpecXP + skillXPBalance;
+
+        console.log("refundTotalXP: ", refundTotalXP)
+
         updateCharacter({
             career: selectedCareer?.key,
+            experience: {
+                ...character.experience,
+                usedExperience: character.experience.usedExperience + refundTotalXP,
+            },
+            talents: [],
+            specializations: [],
             careerRanksRemaining: selectedCareer?.freeRanks ?? 4,
+            specializationRanksRemaining: 2,
             skills: updatedSkills,
             forceRating: forceRating,
         });
@@ -220,7 +319,35 @@ export default function Careers() {
                     </ul>
                 </div>
             )}
+            {pendingCareer && (
+                <div
+                    className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                    onClick={handleCancelSwitch}
+                >
+                    <div
+                        className="bg-background p-6 rounded shadow-md text-center max-w-sm w-full"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <h3 className="text-lg font-semibold mb-4">
+                            Set Career to {pendingCareer!.name}?
+                        </h3>
 
+                        <p className="mb-6 text-sm text-muted-foreground">
+                            You have have at least one specialization with purchased talents.
+                            Switching career will remove them and refund the XP. Are you sure?
+                        </p>
+
+                        <div className="flex justify-center gap-4">
+                            <button className="btn" onClick={handleConfirmSwitch}>
+                                Yes, switch
+                            </button>
+                            <button className="btn btn-outline" onClick={handleCancelSwitch}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -31,6 +31,16 @@ export default function Specializations() {
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
     const [selectedSpecializationIsCareerOrUniversal, setSelectedSpecializationIsCareerOrUniversal] = useState(true);
 
+    // Sale conditionals ***
+    const [pendingSpec, setPendingSpec] = useState<Specialization | null>(null);
+    const handleConfirmSell = () => {
+        if (pendingSpec) performSale(pendingSpec);
+        setPendingSpec(null);
+    };
+
+    const handleCancelSell = () => setPendingSpec(null);
+    // ***
+
     useEffect(() => {
         if (careers && character?.career) {
             const currentCareer = careers.find(
@@ -122,51 +132,84 @@ export default function Specializations() {
         });
     }
 
-    const sellSpecializationClick = (specialization: Specialization) => {
-        //TODO: Stuff with talents; they all need to be refunded and unapplied.
-        //TODO: Add a confirmation box
+    const sellSpecializationClick = (spec: Specialization) => {
+        const specTalents = character.talents.find(t => t.specializationKey === spec.key);
+        const hasTalents = specTalents?.talents.length ?? 0;
 
-        if (specialization === startingSpecialization) {
-            //Reset specialization ranks for chosen skills to 0.
-            const updatedSkills = character.skills.map(skill => {
-                const currentRank = skill.rank.specializationRanks ?? 0;
+        // Need confirmation only when talents would be lost
+        if (hasTalents) {
+            setPendingSpec(spec);
+        } else {
+            performSale(spec);
+        }
+    };
 
-                if (currentRank > 0) {
-                    return {
-                        ...skill,
-                        rank: {
-                            ...skill.rank,
-                            specializationRanks: 0,
-                        },
-                    };
-                }
+    const performSale = (specialization: Specialization) => {
+        const isStartingSpec = specialization === startingSpecialization;
 
-                return skill;
-            });
+        const specTalentsBlock = character.talents.find(
+            t => t.specializationKey === specialization.key
+        );
 
-            let updatedSpecializations = character.specializations;
+        const boughtTalents = specTalentsBlock?.talents ?? [];
+
+        let refundTalentXP = 0;
+        for (const t of boughtTalents) {
+            refundTalentXP += (t.row + 1) * 5;
+        }
+
+        const specXP =
+            (selectedSpecializationIsCareerOrUniversal ? 0 : 10) + //   career/universal discount
+            numberOfSpecializations * 10;                          // + tier surcharge
+        const totalRefund = refundTalentXP + (isStartingSpec ? 0 : specXP);
+
+        const updatedTalents = character.talents.filter(
+            t => t.specializationKey !== specialization.key
+        );
+
+        // Needed for selling both starting and non-starting specializations
+        const basePatch = {
+            talents: updatedTalents,
+            experience: {
+                ...character.experience,
+                usedExperience: character.experience.usedExperience - totalRefund,
+            },
+        };
+
+        if (isStartingSpec) {
+            // Reset specialization ranks for all skills that referenced the start-spec
+            const updatedSkills = character.skills.map(skill => ({
+                ...skill,
+                rank: {
+                    ...skill.rank,
+                    careerRanks: skill.rank.careerRanks === 1 ? 0 : skill.rank.careerRanks,
+                    specializationRanks: skill.rank.specializationRanks === 1 ? 0 : skill.rank.specializationRanks,
+                },
+            }));
+
+            // TODO: Only for starting spec, if already-purchased skills become careerskills upon purchasing the starting career, refund a certain amount of XP.
+
+            const updatedSpecializations = [...character.specializations];
             updatedSpecializations[0] = '';
 
             updateCharacter({
+                ...basePatch,
                 skills: updatedSkills,
-                specializations: updatedSpecializations
+                specializations: updatedSpecializations,
             });
-        }
-        else {
-            const refundedXP = (selectedSpecializationIsCareerOrUniversal ? 0 : 10) + numberOfSpecializations * 10;
-            const currentUsedXP = character.experience.usedExperience;
-
+        } else {
             updateCharacter({
-                specializations: character.specializations.filter(spec => spec !== specialization.key),
-                experience: {
-                    ...character.experience,
-                    usedExperience: currentUsedXP - refundedXP,
-                }
+                ...basePatch,
+                specializations: character.specializations.filter(
+                    spec => spec !== specialization.key
+                ),
             });
         }
-        return;
-    }
+    };
 
+    // TODO: Add new specialization's skills to career skills.
+    // TODO: Some Universal specializations grant a Force Rating
+    // TDOO: Retroactively apply purchased talents if user gets a Force Rating after purchasing Force talents
     const purchaseSpecializationClick = (specialization: Specialization) => {
         const currentUsedXP = character.experience.usedExperience;
         const xpChange = (selectedSpecializationIsCareerOrUniversal ? 0 : 10) + (numberOfSpecializations + 1) * 10;
@@ -400,11 +443,40 @@ export default function Specializations() {
                         <li className="mt-2 font-medium">
                             {character.specializations.length === 0 || character.specializations[0] === ''
                                 ? 'Please choose a specialization.'
-                                : `Remaining specialization skill picks: ${remainingSpecializationsSkills}`}
+                                : `Remaining free specialization skills: ${remainingSpecializationsSkills}`}
                         </li>
                     </ul>
                 </div>
             )}
+            {pendingSpec && (
+                <div
+                    className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                    onClick={handleCancelSell}
+                >
+                    <div
+                        className="bg-background p-6 rounded shadow-md text-center max-w-sm w-full"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <h3 className="text-lg font-semibold mb-4">
+                            Sell {pendingSpec!.name}?
+                        </h3>
+
+                        <p className="mb-6 text-sm text-muted-foreground">
+                            This specialization has purchased talents. Selling it will remove them
+                            and refund the XP. Are you sure?
+                        </p>
+
+                        <div className="flex justify-center gap-4">
+                            <button className="btn" onClick={handleConfirmSell}>
+                                Yes, sell it
+                            </button>
+                            <button className="btn btn-outline" onClick={handleCancelSell}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-    );
+    )
 }

@@ -3,24 +3,28 @@ import { Species } from '@/types/species';
 import { CharacterState } from '@/stores/characterStore';
 import { deriveStatsFromCharacteristics } from '@/lib/derivedStatsFunctions/statsDerivedFromCharacteristics'
 import { deriveStatsFromSpecies } from '@/lib/derivedStatsFunctions/statsDerivedFromSpecies'
+import { deriveEffectsFromTalents } from '@/lib/derivedStatsFunctions/talentEffects'
 import { SPECIES_CACHE_KEY } from '@/pages/utils/fetcher';
 
-export function applyDerivedStats(state: CharacterState, changes: Partial<Character>, changedBaseStat: String, character: Character): Character {
-    const selectedSpecies = getSelectedSpeciesFromCache(character)
+export function applyDerivedStats(state: CharacterState, changes: Partial<Character>, changedBaseStat: String, updatedCharacter: Character, originalCharacter: Character): Character {
+    const selectedSpecies = getSelectedSpeciesFromCache(updatedCharacter)
 
     if (!selectedSpecies) {
         console.error('No Species found in cache with key from Character.');
-        return character;
+        return updatedCharacter;
     }
 
     if (changedBaseStat === 'species') {
-        character = deriveStatsFromSpecies(state, character, selectedSpecies)
+        updatedCharacter = deriveStatsFromSpecies(state, updatedCharacter, selectedSpecies)
     }
     else if (changedBaseStat === 'characteristics') {
-        character = deriveStatsFromCharacteristics(state, changes, character, selectedSpecies)
+        updatedCharacter = deriveStatsFromCharacteristics(state, changes, updatedCharacter, selectedSpecies)
+    }
+    else if (changedBaseStat === 'talents') {
+        updatedCharacter = deriveEffectsFromTalents(state, changes, updatedCharacter, originalCharacter, selectedSpecies)
     }
 
-    return character;
+    return updatedCharacter;
 }
 
 export function getSelectedSpeciesFromCache(character: Character): Species | null {
