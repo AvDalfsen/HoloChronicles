@@ -12,8 +12,6 @@
     xp: number;
     career: string;
     specializations: string[];
-    careerRanksRemaining: number;
-    specializationRanksRemaining: number;
     characteristics: {
         brawn: CharacteristicValue;
         agility: CharacteristicValue;

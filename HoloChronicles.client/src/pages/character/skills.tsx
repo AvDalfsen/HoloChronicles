@@ -83,16 +83,18 @@ export default function Skills() {
 
         const currentSkillRankTotal = currentCareerRanks + currentSpecializationRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
 
+        console.log("delta =", delta, "and current skill rank total =", currentSkillRankTotal);
+
         //Do nothing if user tries to go past the minimum or maximum number of trained ranks
-        if ((currentSkillRankTotal === 0 && delta === -1) || (currentSkillRankTotal === 5 && delta === 1)) return;
+        if ((currentPurchasedRanks === 0 && delta === -1) || (currentSkillRankTotal === 5 && delta === 1)) return;
 
         const isCareer = skill?.isCareer;
         const currentUsedXP = character.experience.usedExperience;
-        const newBought = Math.max(0, currentSkillRankTotal + delta);
+        const newBought = Math.max(0, currentPurchasedRanks + delta);
 
         let xpChange = 0;
 
-        if (Math.sign(delta) == 1) {
+        if (Math.sign(delta) === 1) {
             xpChange = ((currentSkillRankTotal + delta) * 5);
             if (!isCareer) {
                 xpChange += 5;

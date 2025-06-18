@@ -59,10 +59,10 @@ function checkUpdates(state: CharacterState, changes: Partial<Character>, update
     console.log(changes);
 
     if ('species' in changes && changes.species) {
-        updatedCharacter = applyDerivedStats(state, changes, 'species', updatedCharacter);
+        updatedCharacter = applyDerivedStats(state, changes, 'species', updatedCharacter, originalCharacter);
     }
     if ('characteristics' in changes && changes.characteristics) {
-        updatedCharacter = applyDerivedStats(state, changes, 'characteristics', updatedCharacter);
+        updatedCharacter = applyDerivedStats(state, changes, 'characteristics', updatedCharacter, originalCharacter);
     }
     if ('talents' in changes && changes.talents) {
         updatedCharacter = applyDerivedStats(state, changes, 'talents', updatedCharacter, originalCharacter);

@@ -16,7 +16,6 @@ export default function Specializations() {
     const { character, updateCharacter } = useCharacterStore();
 
     const numberOfSpecializations = character.specializations.length ?? 0;
-    const remainingSpecializationsSkills = character.specializationRanksRemaining;
 
     const { data: specializations, loading: loadingSpecs, error: errorSpecs } =
         useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
@@ -30,6 +29,8 @@ export default function Specializations() {
     const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
     const [selectedSpecializationIsCareerOrUniversal, setSelectedSpecializationIsCareerOrUniversal] = useState(true);
+
+    const remainingSpecializationsSkills = 2 - (character.skills.filter(s => s.rank.specializationRanks === 1).length ?? 0);
 
     // Sale conditionals ***
     const [pendingSpec, setPendingSpec] = useState<Specialization | null>(null);
@@ -70,7 +71,7 @@ export default function Specializations() {
         ? specializations.find(s => s.key === character.specializations[0])
         : null;
 
-    const activeSpecialization = startingSpecialization || selectedSpecialization;
+    const activeSpecialization = startingSpecialization || selectedSpecialization; // Show either skills from the selected specialization, or the starting specialization if it has been purchased.
 
     const onSpecializationClick = (spec: Specialization) => {
         setSelectedSpecialization(spec);
@@ -81,7 +82,7 @@ export default function Specializations() {
     };
 
     const selectStartingSpecializationClick = () => {
-        //When choosing a new specialization, ensure that all previously set (if any) specialization ranks are set to 0.
+        //When choosing a new starting specialization, ensure that all previously set (if any) specialization ranks are set to 0.
         const updatedSkills = character.skills.map(skill => ({
             ...skill,
             rank: {
@@ -96,7 +97,6 @@ export default function Specializations() {
         updateCharacter({
             specializations: updatedSpecializations,
             skills: updatedSkills,
-            specializationRanksRemaining: 2,
         });
     };
 
@@ -127,17 +127,19 @@ export default function Specializations() {
         }
 
         updateCharacter({
-            specializationRanksRemaining: character.specializationRanksRemaining - (newValue === 1 ? 1 : -1),
             skills: updatedSkills,
         });
     }
 
     const sellSpecializationClick = (spec: Specialization) => {
         const specTalents = character.talents.find(t => t.specializationKey === spec.key);
-        const hasTalents = specTalents?.talents.length ?? 0;
+        // If the specialization to-be-sold has purchased talents, notify the user
+        const hasTalents = specTalents?.talents.length ?? 0 > 0;
+        // If the user has purchased skills, those will be reset when the starting specialization is sold
+        const hasPurchasedSkills = spec.key === startingSpecialization!.key && (character.skills.filter(s => s.rank.purchasedRanks ?? 0 > 0).length ?? 0) > 0;
 
         // Need confirmation only when talents would be lost
-        if (hasTalents) {
+        if (hasTalents || hasPurchasedSkills) {
             setPendingSpec(spec);
         } else {
             performSale(spec);
@@ -182,7 +184,6 @@ export default function Specializations() {
                 ...skill,
                 rank: {
                     ...skill.rank,
-                    careerRanks: skill.rank.careerRanks === 1 ? 0 : skill.rank.careerRanks,
                     specializationRanks: skill.rank.specializationRanks === 1 ? 0 : skill.rank.specializationRanks,
                 },
             }));
@@ -212,7 +213,7 @@ export default function Specializations() {
     // TDOO: Retroactively apply purchased talents if user gets a Force Rating after purchasing Force talents
     const purchaseSpecializationClick = (specialization: Specialization) => {
         const currentUsedXP = character.experience.usedExperience;
-        const xpChange = (selectedSpecializationIsCareerOrUniversal ? 0 : 10) + (numberOfSpecializations + 1) * 10;
+        const xpChange = (numberOfSpecializations + 1) * 10 - (selectedSpecializationIsCareerOrUniversal ? 0 : 10);
 
         const updatedSpecializations = [...character.specializations, specialization.key];
 
@@ -417,7 +418,7 @@ export default function Specializations() {
                                         character.skills.find(s => s.key === sk)?.rank
                                             .specializationRanks === 1,
                                 };
-                            })
+                            }) // Ensure that the skills with a free specialization rank are checked.
                             .sort((a, b) => a.name.localeCompare(b.name))
                             .map(({ key: skillKey, name, isChecked }, idx) => (
                                 <li
@@ -442,7 +443,7 @@ export default function Specializations() {
                             ))}
                         <li className="mt-2 font-medium">
                             {character.specializations.length === 0 || character.specializations[0] === ''
-                                ? 'Please choose a specialization.'
+                                ? 'Please choose your starting specialization.'
                                 : `Remaining free specialization skills: ${remainingSpecializationsSkills}`}
                         </li>
                     </ul>
@@ -462,8 +463,19 @@ export default function Specializations() {
                         </h3>
 
                         <p className="mb-6 text-sm text-muted-foreground">
-                            This specialization has purchased talents. Selling it will remove them
-                            and refund the XP. Are you sure?
+                            {pendingSpec?.key === startingSpecialization?.key ? (
+                                <>
+                                    Selling your <strong>starting</strong> specialization will refund all of its purchased talents, as well as all purchased skills.
+                                    <p />
+                                    Are you sure?
+                                </>
+                            ) : (
+                                <>
+                                    This specialization has purchased talents. Selling it will remove them and refund the XP.
+                                    <p />
+                                    Are you sure?
+                                </>
+                            )}
                         </p>
 
                         <div className="flex justify-center gap-4">

@@ -15,14 +15,14 @@ import {
 export default function Careers() {
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
     const [currentCareer, setCurrentCareer] = useState<Career | null>(null);
-    const remainingCareerSkills = useCharacterStore(
-        (state) => state.character.careerRanksRemaining
-    );
+
     const { character, updateCharacter } = useCharacterStore();
 
     const { data: careers, loading: loadingCareers, error: errorCareers } = useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
     const { data: skills, loading: loadingSkills, error: errorSkills } = useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
     const { data: specializations, loading: loadingSpecializations, error: errorSpecializations } = useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
+
+    const remainingCareerSkills = currentCareer?.freeRanks ?? 4 - (character.skills.filter(s => s.rank.careerRanks === 1).length ?? 0);
 
     // Switch conditionals ***
     const [pendingCareer, setPendingCareer] = useState<Career | null>(null);
@@ -35,12 +35,12 @@ export default function Careers() {
     // ***
 
     useEffect(() => {
-        if (careers && character && character.career) {
-            setCurrentCareer(careers.find(
-                (careerItem) => careerItem.key === character.career
-            )!);
-            setSelectedCareer(currentCareer ?? null);
-        }
+        if (!careers || !character?.career) return;
+
+        const found = careers.find(c => c.key === character.career) ?? null;
+
+        setCurrentCareer(found);
+        setSelectedCareer(found);
     }, [careers, character]);
 
     if (loadingCareers || loadingSkills || loadingSpecializations) {
@@ -66,9 +66,10 @@ export default function Careers() {
 
     const selectCareerClick = () => {
         const hasTalents = character.talents.length > 0
+        const hasSpecializations = character.specializations.length > 1;
 
         // Need confirmation only when talents would be lost
-        if (hasTalents) {
+        if (hasTalents || hasSpecializations) {
             setPendingCareer(selectedCareer);
         } else {
             performSwitch();
@@ -79,44 +80,32 @@ export default function Careers() {
         let forceRating = selectedCareer?.attributes?.forceRating ?? 0;
         const originalCareer = careers.find(c => c.key === character.career);
 
-        // When choosing a new career, ensure that all previously set (if any) career and specialization ranks are set to 0.
-        const updatedSkills = character.skills.map(skill => ({
-            ...skill,
-            rank: {
-                ...skill.rank,
-                careerRanks: skill.rank.careerRanks === 1 ? 0 : skill.rank.careerRanks,
-                specializationRanks: skill.rank.specializationRanks === 1 ? 0 : skill.rank.specializationRanks,
-            },
-        }));
-
         // Going through all the specializations and talents to determine XP to be refunded
         let refundSpecXP = 0;
         let refundTalentXP = 0;
 
-        let remaining = character.specializations.length;
-
-        for (const specKey of character.specializations) {
+        for (let i = character.specializations.length - 1; i >= 0; i--) {
+            const specKey = character.specializations[i];
             const specialization = specializations.find(s => s.key === specKey);
 
             // Don't refund 'cost' for starting specialization
-            if (character.specializations[0] != specKey) {
-                refundSpecXP +=
-                    ((originalCareer!.specializations.includes(specKey) ?? false) || specialization?.universal ? 0 : 10) +   // career/universal discount
-                    remaining * 10;                          // tier surcharge
+            if (i !== 0) {                            // ← i === 0 → starting spec
+                refundSpecXP -=
+                    ((originalCareer!.specializations.includes(specKey) ?? false) ||
+                      specialization?.universal
+                      ? 0 : 10)                       // career/universal discount
+                    + ((i + 1) * 10);                 // tier surcharge
             }
 
-            // But DO refund any purchased talents in the starting specialization
+            // Refund purchased talents
             const specTalentsBlock = character.talents.find(
                 t => t.specializationKey === specKey
             );
-
             const boughtTalents = specTalentsBlock?.talents ?? [];
 
             for (const t of boughtTalents) {
-                refundTalentXP += (t.row + 1) * 5;
+                refundTalentXP -= (t.row + 1) * 5;
             }
-
-            remaining--;
         }
 
         // Recalculate cost of skill levels already purchased (career vs non-career. Take all specializations into account)
@@ -124,8 +113,7 @@ export default function Careers() {
 
         for (const skill of character.skills) {
             if (skill.rank.purchasedRanks ?? 0 > 0) {
-                const isOriginalCareerSkill = originalCareer?.careerSkills?.includes(skill.key) ?? false;
-                const isNewCareerSkill = selectedCareer?.careerSkills?.includes(skill.key) ?? false;
+                const isCareerSkill = originalCareer?.careerSkills?.includes(skill.key) ?? false;
                 let isSpecializationCareerSkill = false;
 
                 // Check if skill is contained in the purchased specializations
@@ -134,22 +122,12 @@ export default function Careers() {
 
                     isSpecializationCareerSkill = specialization?.careerSkills.includes(skill.key) ?? false;
 
-                    if (isSpecializationCareerSkill) break;
+                    if (isSpecializationCareerSkill) continue;
                 }
 
-                if (isOriginalCareerSkill || isSpecializationCareerSkill) {
-                    if (isNewCareerSkill) {
-                        continue; // Do nothing if skill is a career skill of both the original and the new career
-                    }
-                    else {
-                        skillXPBalance += 5 * skill.rank.purchasedRanks!; // Deduct 5 extra XP if skill was a career skill, but now won't be
-                        continue;
-                    }
-                }
-                else if (isNewCareerSkill) {
-                    skillXPBalance -= 5 * skill.rank.purchasedRanks!; // Refund 5 XP if skill wasn't a career skill, but now will be
-                    continue;
-                }
+                const cost = isCareerSkill || isSpecializationCareerSkill ? 5 : 10; // Career skills cost 5 XP, non-career cost 10 XP
+
+                skillXPBalance -= cost * skill.rank.purchasedRanks!; // Refund XP for each purchased rank
             }
         }
 
@@ -161,6 +139,7 @@ export default function Careers() {
 
         console.log("refundTotalXP: ", refundTotalXP)
 
+        // When choosing a new career, reset talents, specializations, and skills.
         updateCharacter({
             career: selectedCareer?.key,
             experience: {
@@ -169,9 +148,7 @@ export default function Careers() {
             },
             talents: [],
             specializations: [],
-            careerRanksRemaining: selectedCareer?.freeRanks ?? 4,
-            specializationRanksRemaining: 2,
-            skills: updatedSkills,
+            skills: [],
             forceRating: forceRating,
         });
     };
@@ -204,7 +181,6 @@ export default function Careers() {
 
         updateCharacter({
             ...character,
-            careerRanksRemaining: character.careerRanksRemaining - (newValue === 1 ? 1 : -1),
             skills: updatedSkills,
         });
     }
@@ -333,8 +309,10 @@ export default function Careers() {
                         </h3>
 
                         <p className="mb-6 text-sm text-muted-foreground">
-                            You have have at least one specialization with purchased talents.
-                            Switching career will remove them and refund the XP. Are you sure?
+                            You have have at least one purchased specialization and/or purchased talents.
+                            Switching career will refund them, as well as all purchased skills.
+
+                            Are you sure?
                         </p>
 
                         <div className="flex justify-center gap-4">
