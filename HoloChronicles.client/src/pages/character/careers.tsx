@@ -139,6 +139,17 @@ export default function Careers() {
 
         console.log("refundTotalXP: ", refundTotalXP)
 
+        // Replace skills with the career skills of the new career
+        let updatedSkills = [];
+
+        for (const careerSkill of selectedCareer?.careerSkills!) {
+            updatedSkills.push({
+                key: careerSkill,
+                rank: {},
+                isCareer: true,
+            });
+        }
+
         // When choosing a new career, reset talents, specializations, and skills.
         updateCharacter({
             career: selectedCareer?.key,
@@ -148,7 +159,7 @@ export default function Careers() {
             },
             talents: [],
             specializations: [],
-            skills: [],
+            skills: updatedSkills,
             forceRating: forceRating,
         });
     };

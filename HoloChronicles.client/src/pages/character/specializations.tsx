@@ -11,6 +11,7 @@ import {
 } from '@/pages/utils/fetcher';
 import { MinusSquare, PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
+import { calculateSkillXPRefund } from '@/pages/utils/genericFunctions';
 
 export default function Specializations() {
     const { character, updateCharacter } = useCharacterStore();
@@ -27,7 +28,7 @@ export default function Specializations() {
         useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
 
     const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
-    const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
+    const [currentCareer, setCurrentCareer] = useState<Career | null>(null);
     const [selectedSpecializationIsCareerOrUniversal, setSelectedSpecializationIsCareerOrUniversal] = useState(true);
 
     const remainingSpecializationsSkills = 2 - (character.skills.filter(s => s.rank.specializationRanks === 1).length ?? 0);
@@ -47,7 +48,7 @@ export default function Specializations() {
             const currentCareer = careers.find(
                 (careerItem) => careerItem.key === character.career
             );
-            setSelectedCareer(currentCareer ?? null);
+            setCurrentCareer(currentCareer ?? null);
         }
     }, [careers, character?.career]);
 
@@ -75,29 +76,10 @@ export default function Specializations() {
 
     const onSpecializationClick = (spec: Specialization) => {
         setSelectedSpecialization(spec);
-        if (selectedCareer?.specializations.includes(spec.key ?? '') || spec.universal) {
+        if (currentCareer?.specializations.includes(spec.key ?? '') || spec.universal) {
             setSelectedSpecializationIsCareerOrUniversal(true);
         }
         console.log('Specialization selected:', spec.key)
-    };
-
-    const selectStartingSpecializationClick = () => {
-        //When choosing a new starting specialization, ensure that all previously set (if any) specialization ranks are set to 0.
-        const updatedSkills = character.skills.map(skill => ({
-            ...skill,
-            rank: {
-                ...skill.rank,
-                specializationRanks: skill.rank.specializationRanks === 1 ? 0 : skill.rank.specializationRanks,
-            },
-        }));
-
-        const updatedSpecializations = character.specializations;
-        updatedSpecializations[0] = selectedSpecialization?.key ?? '';
-
-        updateCharacter({
-            specializations: updatedSpecializations,
-            skills: updatedSkills,
-        });
     };
 
     const updateCharacterSpecializationSkillValues = (skillKey: string, newValue: number) => {
@@ -146,6 +128,7 @@ export default function Specializations() {
         }
     };
 
+    // TODO : remove careerskills where relevant; can't just throw out the ones belonging to the sold specialization, as it can overlap.
     const performSale = (specialization: Specialization) => {
         const isStartingSpec = specialization === startingSpecialization;
 
@@ -188,13 +171,20 @@ export default function Specializations() {
                 },
             }));
 
-            // TODO: Only for starting spec, if already-purchased skills become careerskills upon purchasing the starting career, refund a certain amount of XP.
+            // Recalculate cost of skill levels already purchased (career vs non-career. Take all specializations into account)
+            const skillXPBalance = calculateSkillXPRefund(currentCareer!, character, specializations);
+
+            console.log("skillxpbalance:",skillXPBalance)
 
             const updatedSpecializations = [...character.specializations];
             updatedSpecializations[0] = '';
 
             updateCharacter({
                 ...basePatch,
+                experience: {
+                    ...basePatch.experience,
+                    usedExperience: basePatch.experience.usedExperience + skillXPBalance,
+                },
                 skills: updatedSkills,
                 specializations: updatedSpecializations,
             });
@@ -208,7 +198,42 @@ export default function Specializations() {
         }
     };
 
-    // TODO: Add new specialization's skills to career skills.
+    const selectStartingSpecializationClick = () => {
+        //When choosing a new starting specialization, ensure that all previously set (if any) specialization ranks are set to 0.
+        const specCareerSet = new Set(selectedSpecialization?.careerSkills ?? []);
+
+        const updatedSkills = character.skills.map(skill => {
+            const inSpecCareer = specCareerSet.has(skill.key);
+
+            return {
+                ...skill,
+                rank: {
+                    ...skill.rank,
+                    specializationRanks: skill.rank.specializationRanks === 1 ? 0 : undefined,
+                },
+                isCareer: inSpecCareer ? true : skill.isCareer,
+            };
+        });
+
+        for (const specSkill of specCareerSet) {
+            if (!updatedSkills.some(s => s.key === specSkill)) {
+                updatedSkills.push({
+                    key: specSkill,
+                    rank: { specializationRanks: undefined }, // Typescript is silly
+                    isCareer: true,
+                });
+            }
+        }
+
+        const updatedSpecializations = character.specializations;
+        updatedSpecializations[0] = selectedSpecialization?.key ?? '';
+
+        updateCharacter({
+            specializations: updatedSpecializations,
+            skills: updatedSkills,
+        });
+    };
+
     // TODO: Some Universal specializations grant a Force Rating
     // TDOO: Retroactively apply purchased talents if user gets a Force Rating after purchasing Force talents
     const purchaseSpecializationClick = (specialization: Specialization) => {
@@ -217,12 +242,34 @@ export default function Specializations() {
 
         const updatedSpecializations = [...character.specializations, specialization.key];
 
+        const specCareerSet = new Set(selectedSpecialization?.careerSkills ?? []);
+
+        const updatedSkills = character.skills.map(skill => {
+            const inSpecCareer = specCareerSet.has(skill.key);
+
+            return {
+                ...skill,
+                isCareer: inSpecCareer ? true : skill.isCareer,
+            };
+        });
+
+        for (const specSkill of specCareerSet) {
+            if (!updatedSkills.some(s => s.key === specSkill)) {
+                updatedSkills.push({
+                    key: specSkill,
+                    rank: { specializationRanks: undefined }, // Typescript is silly
+                    isCareer: true,
+                });
+            }
+        }
+
         updateCharacter({
             experience: {
                 ...character.experience,
                 usedExperience: currentUsedXP + xpChange,
             },
             specializations: updatedSpecializations,
+            skills: updatedSkills,
         });
     }
 
@@ -241,7 +288,7 @@ export default function Specializations() {
                         <tbody>
                             {specializations
                                 .filter((spec) =>
-                                    selectedCareer?.specializations.includes(spec.key ?? '')
+                                    currentCareer?.specializations.includes(spec.key ?? '')
                                 )
                                 .map((spec) => {
                                     const isPurchased = character.specializations.includes(spec.key ?? '');
@@ -314,7 +361,7 @@ export default function Specializations() {
                                     label: 'Career Specializations',
                                     specs: specializations.filter(
                                         spec =>
-                                            selectedCareer?.specializations.includes(spec.key ?? '') &&
+                                            currentCareer?.specializations.includes(spec.key ?? '') &&
                                             !character.specializations.includes(spec.key ?? '')
                                     ),
                                 },
@@ -331,7 +378,7 @@ export default function Specializations() {
                                     specs: specializations.filter(
                                         spec =>
                                             !spec.universal &&
-                                            !selectedCareer?.specializations.includes(spec.key ?? '') &&
+                                            !currentCareer?.specializations.includes(spec.key ?? '') &&
                                             !character.specializations.includes(spec.key ?? '')
                                     ),
                                 },
@@ -353,7 +400,7 @@ export default function Specializations() {
                                                 <td className="border-t px-4 py-2 w-[20px] font-medium">
                                                     
                                                     {//If specialization has already been purchased, do not show a cost
-                                                     character.specializations.includes(spec.key) ? '' : (selectedCareer?.specializations.includes(spec.key ?? '') || spec.universal ? 0 : 10) + (10 * (numberOfSpecializations + 1))}
+                                                        character.specializations.includes(spec.key) ? '' : (currentCareer?.specializations.includes(spec.key ?? '') || spec.universal ? 0 : 10) + (10 * (numberOfSpecializations + 1))}
                                                 </td>
                                                 <td className="border-t px-4 py-2 text-right">
                                                     {selectedSpecialization?.key === spec.key && (

@@ -4,6 +4,7 @@ import { Skill } from '@/types/skill';
 import * as diceIcons from '@/components/ui/diceIcons';
 import { JSX } from 'react/jsx-runtime';
 import { useCharacterStore } from '@/stores/characterStore';
+import { calculateTotalSkillLevel } from '@/pages/utils/genericFunctions';
 import { CHAR_ORDER } from '@/pages/character/species';
 import {
     useCachedData,
@@ -35,16 +36,8 @@ export default function Skills() {
     function deriveAndDisplaySkillIcons(skillKey: string, skillCharKey: string): JSX.Element {
         let proficiencyCount = 0;
         let abilityCount = 0;
-
-        const skill = character.skills.find(s => s.key === skillKey);
-
-        const currentPurchasedRanks = skill?.rank.purchasedRanks ?? 0;
-        const currentCareerRanks = skill?.rank.careerRanks ?? 0;
-        const currentSpecializationRanks = skill?.rank.specializationRanks ?? 0;
-        const currentCyberRanks = skill?.rank.cyberRanks ?? 0;
-        const currentSpeciesRanks = skill?.rank.speciesRanks ?? 0;
-
-        const currentSkillRankTotal = currentCareerRanks + currentSpecializationRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
+        
+        const currentSkillRankTotal = calculateTotalSkillLevel(skillKey, character);
 
         let characteristicTotal = 0;
 
@@ -76,14 +69,7 @@ export default function Skills() {
         const skill = character.skills.find(s => s.key === skillKey);
 
         const currentPurchasedRanks = skill?.rank.purchasedRanks ?? 0;
-        const currentCareerRanks = skill?.rank.careerRanks ?? 0;
-        const currentSpecializationRanks = skill?.rank.specializationRanks ?? 0;
-        const currentCyberRanks = skill?.rank.cyberRanks ?? 0;
-        const currentSpeciesRanks = skill?.rank.speciesRanks ?? 0;
-
-        const currentSkillRankTotal = currentCareerRanks + currentSpecializationRanks + currentCyberRanks + currentPurchasedRanks + currentSpeciesRanks;
-
-        console.log("delta =", delta, "and current skill rank total =", currentSkillRankTotal);
+        const currentSkillRankTotal = calculateTotalSkillLevel(skillKey, character);
 
         //Do nothing if user tries to go past the minimum or maximum number of trained ranks
         if ((currentPurchasedRanks === 0 && delta === -1) || (currentSkillRankTotal === 5 && delta === 1)) return;
