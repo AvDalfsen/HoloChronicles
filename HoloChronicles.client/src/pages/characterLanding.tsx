@@ -45,12 +45,11 @@ export default function CharacterLanding() {
 
     const createNewCharacter = () => {
         const newCharacter = {
-            ...defaultCharacter,
-            name: 'New Character',  // Or any other initial data you want to assign
+            ...defaultCharacter, // Just some default information to get going. Mostly just defaults to Human with the relevant stats.
+            name: 'New Character',
         };
 
-        updateCharacter(newCharacter); // Update the store with the new character
-        console.log('char.key:', newCharacter.characteristics);
+        updateCharacter(newCharacter);
         navigate('/character/build');
     };
 

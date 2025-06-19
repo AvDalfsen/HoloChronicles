@@ -3,7 +3,7 @@ import { CharacterState } from '@/stores/characterStore';
 import { Species } from '@/types/species';
 import * as helperFunctions from '@/lib/derivedStatsFunctions/helperFunctions'
 
-export function deriveStatsFromCharacteristics(state: CharacterState, changes: Partial<Character>, character: Character, species?: Species): Character {
+export function deriveStatsFromCharacteristics(state: CharacterState, changes: Partial<Character>, character: Character, species?: Species, speciesChanged: boolean): Character {
     const changedCharacteristics = checkCharacteristicsUpdate(state, changes);
 
     for (const key of changedCharacteristics) {
@@ -23,7 +23,8 @@ export function deriveStatsFromCharacteristics(state: CharacterState, changes: P
 
         console.log('New total', key, ':', total);
 
-        if (key === 'brawn') {
+        //Recalculate wounds and soak if brawn changed, or if species changed
+        if (key === 'brawn' || speciesChanged) {
             const newSoakTotal = helperFunctions.recalculateSoak(character, species);
             const newWoundsThreshold = helperFunctions.recalculateWoundThreshold(character, species);
 
@@ -40,7 +41,8 @@ export function deriveStatsFromCharacteristics(state: CharacterState, changes: P
             console.log('New wounds threshold:', newWoundsThreshold);
         };
 
-        if (key === 'willpower') {
+        //Recalculate strain if willpower changed, or if species changed
+        if (key === 'willpower' || speciesChanged) {
             const newStrainTotal = helperFunctions.recalculateStrainThreshold(character, species);
 
             character = {

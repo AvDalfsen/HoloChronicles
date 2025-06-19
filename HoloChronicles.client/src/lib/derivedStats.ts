@@ -18,7 +18,7 @@ export function applyDerivedStats(state: CharacterState, changes: Partial<Charac
         updatedCharacter = deriveStatsFromSpecies(state, updatedCharacter, selectedSpecies)
     }
     else if (changedBaseStat === 'characteristics') {
-        updatedCharacter = deriveStatsFromCharacteristics(state, changes, updatedCharacter, selectedSpecies)
+        updatedCharacter = deriveStatsFromCharacteristics(state, changes, updatedCharacter, selectedSpecies, false)
     }
     else if (changedBaseStat === 'talents') {
         updatedCharacter = deriveEffectsFromTalents(state, changes, updatedCharacter, originalCharacter, selectedSpecies)

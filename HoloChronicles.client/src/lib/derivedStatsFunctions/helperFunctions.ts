@@ -28,6 +28,7 @@ export function recalculateWoundThreshold(character: Character, species?: Specie
     const brawn = character.characteristics.brawn.total ?? 1;
     const speciesWoundThreshold = species?.startingAttrs?.woundThreshold ?? 0;
     //TODO: gear and other items
+    //TODO grit
 
     return (speciesWoundThreshold + brawn)
 }
@@ -36,6 +37,7 @@ export function recalculateStrainThreshold(character: Character, species?: Speci
     const willpower = character.characteristics.willpower.total ?? 1;
     const speciesStrainThreshold = species?.startingAttrs?.strainThreshold ?? 0;
     //TODO: gear and other items
+    //TODO ... the strain talent
 
     return (speciesStrainThreshold + willpower)
 }

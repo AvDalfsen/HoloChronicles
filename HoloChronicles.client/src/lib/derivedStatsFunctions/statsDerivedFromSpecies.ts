@@ -49,7 +49,7 @@ export function deriveStatsFromSpecies(state: CharacterState, character: Charact
         },
     });
 
-    character = deriveStatsFromCharacteristics(state, character, character, species);
+    character = deriveStatsFromCharacteristics(state, character, character, species, true);
 
     return character;
 }

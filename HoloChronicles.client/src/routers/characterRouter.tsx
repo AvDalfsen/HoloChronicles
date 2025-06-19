@@ -13,7 +13,7 @@ export default function CharacterRouter() {
         <ThemeProvider>
             <Routes>
                 <Route element={<CharacterLayout />}>
-                    <Route index element={<Navigate to="characteristics" replace />} />
+                    <Route index element={<Navigate to="species" replace />} />
                     <Route path="species" element={<Species />} />
                     <Route path="characteristics" element={<Characteristics />} />
                     <Route path="skills" element={<Skills />} />

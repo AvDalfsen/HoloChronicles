@@ -14,7 +14,7 @@ import {
 export default function Talents() {
     const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
-    const { character, updateCharacter } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
 
     const { data: careers, loading: loadingCareers, error: errorCareers } =
         useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
