@@ -115,12 +115,14 @@ export default function Specializations() {
 
     const sellSpecializationClick = (spec: Specialization) => {
         const specTalents = character.talents.find(t => t.specializationKey === spec.key);
+
         // If the specialization to-be-sold has purchased talents, notify the user
         const hasTalents = specTalents?.talents.length ?? 0 > 0;
+
         // If the user has purchased skills, those will be reset when the starting specialization is sold
         const hasPurchasedSkills = spec.key === startingSpecialization!.key && (character.skills.filter(s => s.rank.purchasedRanks ?? 0 > 0).length ?? 0) > 0;
 
-        // Need confirmation only when talents would be lost
+        // Need confirmation only when talents or skills would be refunded
         if (hasTalents || hasPurchasedSkills) {
             setPendingSpec(spec);
         } else {
@@ -128,10 +130,10 @@ export default function Specializations() {
         }
     };
 
-    // TODO : remove careerskills where relevant; can't just throw out the ones belonging to the sold specialization, as it can overlap.
     const performSale = (specialization: Specialization) => {
         const isStartingSpec = specialization === startingSpecialization;
 
+        //Calculate XP refund for talents
         const specTalentsBlock = character.talents.find(
             t => t.specializationKey === specialization.key
         );
@@ -143,6 +145,7 @@ export default function Specializations() {
             refundTalentXP += (t.row + 1) * 5;
         }
 
+        //Calculate XP refund for specialization
         const specXP =
             (selectedSpecializationIsCareerOrUniversal ? 0 : 10) + //   career/universal discount
             numberOfSpecializations * 10;                          // + tier surcharge
@@ -152,7 +155,26 @@ export default function Specializations() {
             t => t.specializationKey !== specialization.key
         );
 
-        // Needed for selling both starting and non-starting specializations
+        // Remove careerskill flags where relevant
+        const careerSkillSet = new Set(
+            careers.find(c => c.key === character.career)?.careerSkills ?? [],
+        );
+
+        for (const specKey of character.specializations) {
+            if (specKey === selectedSpecialization!.key) continue;    // skip the one we’re selling
+            const spec = specializations.find(s => s.key === specKey);
+            spec?.careerSkills.forEach(cs => careerSkillSet.add(cs));
+        }
+
+        let updatedSkills = character.skills.map(skill => {
+            if (!selectedSpecialization!.careerSkills.includes(skill.key)) return skill; // If the skill is *not* in the specialization being sold, leave it alone
+            if (careerSkillSet.has(skill.key)) return skill;                             // If the career or another specialization still grants the skill, keep the flag
+            return { ...skill, isCareer: false };                                        // Otherwise: this skill only came from the sold specialization → unflag
+        });
+
+        console.log(JSON.stringify(updatedSkills))
+
+        // Needed for selling both any specializations
         const basePatch = {
             talents: updatedTalents,
             experience: {
@@ -161,9 +183,10 @@ export default function Specializations() {
             },
         };
 
+        // Specifically for starting specialization
         if (isStartingSpec) {
-            // Reset specialization ranks for all skills that referenced the start-spec
-            const updatedSkills = character.skills.map(skill => ({
+            // Reset specialization ranks for all skills that referenced the starting specialization
+            updatedSkills = updatedSkills.map(skill => ({
                 ...skill,
                 rank: {
                     ...skill.rank,
@@ -194,6 +217,7 @@ export default function Specializations() {
                 specializations: character.specializations.filter(
                     spec => spec !== specialization.key
                 ),
+                skills: updatedSkills,
             });
         }
     };
