@@ -205,7 +205,7 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
         [character, specKey, rows, updateCharacter]
     );
 
-    // TODO: draw lines from based centre of box instead of after-rendering
+    // TODO: fix how the lines are drawn. In Republic Representative (and others) they are all sorts of borked.
     // Compute connector lines after layout
     useLayoutEffect(() => {
         if (!containerRef.current) return;
