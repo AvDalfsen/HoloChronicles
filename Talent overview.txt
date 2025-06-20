@@ -1,0 +1,48 @@
+// When character attacks
+ACKLAYSCST
+CALLEM // Specifically for the 'called shot' version of the Aim maneuver, which adds 2 SEs
+
+// When character is attacked
+ADV
+
+// When character uses a skill
+ALLTERDRIV
+ANIMALBOND
+ANIMALBONDIMP
+ANIMALEMP
+ASFORCEWILLS
+ATARU
+BAR
+BASICTRAIN
+COM
+COMBATVET
+COMMPRES
+CONDITIONED
+
+// Talents that directly influence stats
+ARM
+ARMIMP
+BOLSTARMOR
+BURLY
+
+// Stuff I can't code
+ANTREAS
+BACT
+BADCOP
+BARRELIMP
+BARRELSUP
+BODSUP
+BRAIMP
+BRASUP
+BEASTWRANG
+BLINDSPOT
+BLO
+BYP
+CALMAURA
+CALMCOMM // I've never run into Mass Combat, maybe look into?
+CENTBEINGIMP
+CENTERSUPR
+CIRCLESHELTER
+CLANKILLIMP
+CLEVCOMM // I've never run into Mass Combat, maybe look into?
+COD

@@ -6,6 +6,21 @@ export default function Sidebar() {
 
     const links = [
         {
+            label: 'Overview',
+            to: '/character/build/overview',
+            enabled: true,
+        },
+        {
+            label: 'Character Details',
+            to: '/character/build/character-details',
+            enabled: true,
+        },
+        {
+            label: 'Duty & Obligation',
+            to: '/character/build/duty-obligation',
+            enabled: true,
+        },
+        {
             label: 'Species',
             to: '/character/build/species',
             enabled: true,

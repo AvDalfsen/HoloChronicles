@@ -15,8 +15,6 @@ export const defaultCharacter: Character = {
     },
     career: '',
     specializations: [],
-    careerRanksRemaining: 0,
-    specializationRanksRemaining: 0,
     characteristics: {
         brawn: { total: 2, species: 2, bought: 0, gear: 0, cybernetics: 0 },
         agility: { total: 2, species: 2, bought: 0, gear: 0, cybernetics: 0 },
@@ -28,11 +26,11 @@ export const defaultCharacter: Character = {
     skills:[],
     talents: [],
     wounds: {
-        threshold: 10,
+        threshold: 12,
         current: 0,
     },
     strain: {
-        threshold: 10,
+        threshold: 12,
         current: 0,
     },
     soak: 2,
