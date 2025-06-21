@@ -22,7 +22,7 @@ namespace HoloChronicles.Server.Controllers
             string relativePath = Path.Combine("Assets", "BaseData", "Characteristics.xml");
             string fullPath = Path.Combine(basePath, relativePath);
 
-            _logger.LogInformation($"Attempting to parse characteristics from file: {fullPath}");
+            _logger.LogInformation($"Attempting to parse Characteristics from file: {fullPath}");
 
             return CharacteristicsParser.ParseCharacteristicsFromFile(fullPath);
         }

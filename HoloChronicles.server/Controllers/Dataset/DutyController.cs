@@ -22,7 +22,7 @@ namespace HoloChronicles.Server.Controllers
             string relativePath = Path.Combine("Assets", "BaseData", "Duty.xml");
             string fullPath = Path.Combine(basePath, relativePath);
 
-            _logger.LogInformation($"Attempting to parse skills from file: {fullPath}");
+            _logger.LogInformation($"Attempting to parse Duties from file: {fullPath}");
 
             return DutiesParser.ParseDutiesFromFile(fullPath);
         }

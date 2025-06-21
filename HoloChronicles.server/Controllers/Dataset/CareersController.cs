@@ -22,7 +22,7 @@ namespace HoloChronicles.Server.Controllers
             string relativePath = Path.Combine("Assets", "BaseData", "Careers");
             string fullPath = Path.Combine(basePath, relativePath);
 
-            _logger.LogInformation($"Attempting to parse careers from folder: {fullPath}");
+            _logger.LogInformation($"Attempting to parse Careers from folder: {fullPath}");
 
             return CareerParser.ParseCareersFromFiles(fullPath);
         }

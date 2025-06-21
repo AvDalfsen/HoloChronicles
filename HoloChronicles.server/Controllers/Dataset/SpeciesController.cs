@@ -22,7 +22,7 @@ namespace HoloChronicles.Server.Controllers
             string relativePath = Path.Combine("Assets", "BaseData", "Species");
             string fullPath = Path.Combine(basePath, relativePath);
 
-            _logger.LogInformation($"Attempting to parse spevies from folder: {fullPath}");
+            _logger.LogInformation($"Attempting to parse Species from folder: {fullPath}");
 
             return SpeciesParser.ParseSpeciesFromFiles(fullPath);
         }
