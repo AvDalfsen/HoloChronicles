@@ -9,7 +9,7 @@ import { Specialization } from '@/types/specialization';
 import { storedTalent } from '@/types/character';
 import { Talent } from '@/types/talent';
 import { useCharacterStore } from '@/stores/characterStore';
-import './TalentSheet.css';
+import './talentSheet.css';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
 
 // Represents a connector line between two talent boxes
