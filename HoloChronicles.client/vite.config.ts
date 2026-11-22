@@ -15,6 +15,9 @@ const certificateName = 'holochronicles.client'
 const certFilePath = path.join(baseFolder, `${certificateName}.pem`)
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`)
 
+const trustDevCert = process.env.TRUST_DEV_CERT === 'true'
+const proxySecure = process.env.PROXY_SECURE ? process.env.PROXY_SECURE === 'true' : false
+
 export default defineConfig(({ command }) => {
     const plugins = [tailwindcss(), svgr(), react()]
     let serverConfig
@@ -36,6 +39,15 @@ export default defineConfig(({ command }) => {
             if (status !== 0) throw new Error('Could not create HTTPS dev-certificate.')
         }
 
+        // Optionally trust the machine dev-certificate (prompts UI on some platforms)
+        if (trustDevCert) {
+            const { status } = child_process.spawnSync('dotnet', ['dev-certs', 'https', '--trust'], { stdio: 'inherit' })
+            if (status !== 0) {
+                // don't fail the dev server just because trust failed, but warn in console
+                console.warn('Warning: could not trust the dev certificate. You may need to run `dotnet dev-certs https --trust` manually.')
+            }
+        }
+
         // sanity check: both files must start with “-----BEGIN”
         for (const p of [keyFilePath, certFilePath]) {
             const content = fs.readFileSync(p, 'utf8')
@@ -54,13 +66,13 @@ export default defineConfig(({ command }) => {
             port: parseInt(process.env.DEV_SERVER_PORT || '60939'),
             https: {
                 key: fs.readFileSync(keyFilePath),
-                cert: fs.readFileSync(certFilePath),   // ← certFilePath, not keyFilePath
+                cert: fs.readFileSync(certFilePath),
             },
             proxy: {
                 '/api': {
                     target: apiTarget,
                     changeOrigin: true,
-                    secure: false,
+                    secure: proxySecure, // set to true if backend cert is trusted
                 },
             },
         }

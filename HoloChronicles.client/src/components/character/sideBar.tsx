@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useCharacterStore } from '@/stores/characterStore';
+import { getExperienceSummary } from '@/domain/character/experience';
 
 export default function Sidebar() {
     const character = useCharacterStore(state => state.character);
+    const experience = getExperienceSummary(character);
 
     const links = [
         {
@@ -62,7 +64,7 @@ export default function Sidebar() {
             <ul className="space-y-4">
                 {links.map(link =>
                     link.enabled ? (
-                        /* –– enabled: regular <Link> –– */
+                        /* â€“â€“ enabled: regular <Link> â€“â€“ */
                         <li key={link.to}>
                             <Link
                                 to={link.to}
@@ -72,12 +74,12 @@ export default function Sidebar() {
                             </Link>
                         </li>
                     ) : (
-                        /* –– disabled: styled <span> with tooltip –– */
+                        /* â€“â€“ disabled: styled <span> with tooltip â€“â€“ */
                         <li key={link.to}>
                             <span
                                 /* visual */
                                 className="block opacity-40 cursor-not-allowed relative group"
-                                /* a11y – make it unfocusable & let screen-readers know */
+                                /* a11y â€“ make it unfocusable & let screen-readers know */
                                 tabIndex={-1}
                                 aria-disabled="true"
                                 /* simple tooltip (fallback) */
@@ -96,8 +98,8 @@ export default function Sidebar() {
 
                     <div>
                         <span className="font-medium">XP&nbsp;</span>
-                        {character.xp} &nbsp;
-                        <span className="opacity-70">(rem&nbsp;{character.xp - character.experience.usedExperience})</span>
+                        {experience.total} &nbsp;
+                        <span className="opacity-70">(spent&nbsp;{experience.spent}; rem&nbsp;{experience.available})</span>
                     </div>
 
                     <div>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '@/stores/characterStore';
-import { defaultCharacter } from '@/types/defaultCharacter';
 import { Species } from '@/types/species';
 import {
     useCachedData,
@@ -11,7 +10,7 @@ import {
 export default function CharacterLanding() {
     const navigate = useNavigate();
     const storedCharacter = useCharacterStore((state) => state.character);
-    const updateCharacter = useCharacterStore((state) => state.updateCharacter);
+    const resetCharacter = useCharacterStore((state) => state.resetCharacter);
     const [showConfirm, setShowConfirm] = useState(false);
 
     const hasStoredCharacter = storedCharacter?.name?.trim() !== ''; // crude check for presence
@@ -20,7 +19,7 @@ export default function CharacterLanding() {
         useCachedData<Species[]>(SPECIES_API_KEY, SPECIES_CACHE_KEY);
 
     if (loadingSpecies) {
-        return <p>Loading…</p>;
+        return <p>Loadingâ€¦</p>;
     }
 
     if (errorSpecies) {
@@ -44,12 +43,7 @@ export default function CharacterLanding() {
     };
 
     const createNewCharacter = () => {
-        const newCharacter = {
-            ...defaultCharacter, // Just some default information to get going. Mostly just defaults to Human with the relevant stats.
-            name: 'New Character',
-        };
-
-        updateCharacter(newCharacter);
+        resetCharacter('New Character');
         navigate('/character/build');
     };
 

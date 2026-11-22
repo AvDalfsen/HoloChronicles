@@ -1,107 +1,87 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
-import { Characteristic } from '@/types/characteristic';
-import { CharacteristicValue } from '@/types/character';
+import type { Characteristic } from '@/types/characteristic';
+import type { CharacteristicKey } from '@/types/character';
+import type { Species } from '@/types/species';
 import { useCharacterStore } from '@/stores/characterStore';
+import { planCharacteristicChange } from '@/domain/character/characteristics';
+import { deriveCharacteristicStats, getCharacteristicKey } from '@/domain/character/derivedStats';
 import {
     useCachedData,
     CHARACTERISTICS_API, CHARACTERISTICS_CACHE_KEY,
+    SPECIES_API_KEY, SPECIES_CACHE_KEY,
 } from '@/pages/utils/fetcher';
 
 export default function Characteristics() {
-    const { character, updateCharacter } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
+    const adjustCharacteristic = useCharacterStore(state => state.adjustCharacteristic);
+    const [actionError, setActionError] = useState<string | null>(null);
+    const definitions = useCachedData<Characteristic[]>(CHARACTERISTICS_API, CHARACTERISTICS_CACHE_KEY);
+    const speciesData = useCachedData<Species[]>(SPECIES_API_KEY, SPECIES_CACHE_KEY);
 
-    const { data: characteristics, loading: loadingChars, error: errorChars } =
-        useCachedData<Characteristic[]>(CHARACTERISTICS_API, CHARACTERISTICS_CACHE_KEY);
-
-    if (loadingChars) {
-        return <p>Loading…</p>;
+    if (definitions.loading || speciesData.loading) return <p>Loadingâ€¦</p>;
+    if (definitions.error || speciesData.error) {
+        return <p role="alert" className="text-destructive">{definitions.error || speciesData.error}</p>;
+    }
+    const species = speciesData.data?.find(item => item.key === character.species);
+    if (!definitions.data || !species) {
+        return <p role="alert">The characteristic or selected species definitions are missing. No edits have been applied.</p>;
     }
 
-    if (errorChars) {
-        return (
-            <p className="text-red-500">
-                {errorChars}
-            </p>
-        );
-    }
-
-    if (!characteristics) {
-        return <p className="text-red-500">Data missing.</p>;
-    }
-
-    const adjustValue = (key: string, characteristic: CharacteristicValue, bought: number, total: number, delta: number) => {
-        if (!characteristic || (bought === 0 && delta === -1) || (total === 5 && delta === 1)) return;
-
-        const newBought = Math.max(0, bought + delta);
-
-        let xpChange = 0;
-
-        if (Math.sign(delta) == 1) {
-            xpChange = ((total + delta) * 10);
-        }
-        else {
-            xpChange = ((total) * -10);
-        }
-
-        const xp = character.experience.usedExperience + xpChange;
-
-        console.log('XP change:', xpChange, 'XP:', xp, 'previously used total:', character.experience.usedExperience, 'new used total:', (character.experience.usedExperience + xpChange));
-
-        updateCharacter({
-            experience: {
-                ...character.experience,
-                usedExperience: xp
-            },
-            characteristics: {
-                ...character.characteristics,
-                [key]: {
-                    ...characteristic,
-                    bought: newBought,
-                },
-            },
-        });
+    const view = deriveCharacteristicStats(character, species);
+    const adjustValue = (key: CharacteristicKey, delta: 1 | -1) => {
+        const result = adjustCharacteristic(key, delta, species);
+        setActionError(result.ok ? null : result.message);
     };
-
 
     return (
         <div className="p-6 space-y-4">
             <h1 className="text-3xl font-bold">Characteristics</h1>
-            <p className="text-muted-foreground mb-6">Adjust your stats below:</p>
+            <p className="text-muted-foreground mb-6">Spend starting XP to increase characteristics. Undo returns the recorded purchase cost.</p>
+            {actionError && <p role="alert" className="text-destructive">{actionError}</p>}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {characteristics.map((char) => {
-                    const key = (char.name ?? '').toLowerCase();
-                    const characteristic = character.characteristics[key as keyof typeof character.characteristics];
-                    const value = characteristic.total ?? 0;
-                    const bought = characteristic.bought ?? 0;
+                {definitions.data.map(definition => {
+                    const key = getCharacteristicKey(definition.key);
+                    if (!key) {
+                        return <p role="alert" key={definition.key ?? definition.name}>Unknown characteristic: {definition.key ?? definition.name}</p>;
+                    }
+                    const increase = planCharacteristicChange(character, { key, delta: 1 }, species);
+                    const decrease = planCharacteristicChange(character, { key, delta: -1 }, species);
 
                     return (
-                        <div
-                            key={char.key}
-                            className="bg-white shadow-md rounded-2xl p-4 flex flex-col items-center text-center border"
-                        >
-                            <h2 className="text-xl font-semibold mb-2">{char.name}</h2>
-                            {char.abbrev && (
-                                <p className="text-muted-foreground text-sm mb-2">({char.abbrev})</p>
-                            )}
+                        <div key={definition.key} className="bg-card text-card-foreground shadow-md rounded-2xl p-4 flex flex-col items-center text-center border">
+                            <h2 className="text-xl font-semibold mb-2">{definition.name}</h2>
+                            {definition.abbrev && <p className="text-muted-foreground text-sm mb-2">({definition.abbrev})</p>}
                             <div className="flex items-center space-x-4 mt-4">
                                 <Button
                                     size="icon"
-                                    onClick={() => adjustValue(key, characteristic, bought, value, -1)}
+                                    aria-label={'Undo ' + definition.name + ' purchase'}
+                                    title={decrease.ok ? 'Refund ' + -decrease.xpChange + ' XP' : decrease.message}
+                                    disabled={!decrease.ok}
+                                    onClick={() => adjustValue(key, -1)}
                                     variant="outline"
                                 >
                                     <Minus />
                                 </Button>
-                                <span className="text-2xl w-10 text-center">{value}</span>
+                                <span className="text-2xl w-10 text-center" aria-label={definition.name + ' total'}>{view.characteristics[key].total}</span>
                                 <Button
                                     size="icon"
-                                    onClick={() => adjustValue(key, characteristic, bought, value, 1)}
+                                    aria-label={'Increase ' + definition.name}
+                                    title={increase.ok ? 'Costs ' + increase.xpChange + ' XP' : increase.message}
+                                    disabled={!increase.ok}
+                                    onClick={() => adjustValue(key, 1)}
                                     variant="outline"
                                 >
                                     <Plus />
                                 </Button>
                             </div>
+                            <p className="text-sm text-muted-foreground mt-2">
+                                {increase.ok ? 'Next increase: ' + increase.xpChange + ' XP' : increase.message}
+                            </p>
+                            {!decrease.ok && decrease.code === 'unknown-purchase-cost' && (
+                                <p className="text-sm text-muted-foreground mt-2">{decrease.message}</p>
+                            )}
                         </div>
                     );
                 })}

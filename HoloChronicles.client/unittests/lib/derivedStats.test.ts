@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useCharacterStore } from '../../src/stores/characterStore';
-import { SPECIES_API, SPECIES_CACHE_KEY } from '../../src/pages/character/species';
-import { fetchDataWithRetryAndCache } from '../../src/api/fetcher';
+import { SPECIES_API_KEY, SPECIES_CACHE_KEY } from '../../src/pages/utils/fetcher';
+import { fetchDataWithRetryAndCache } from '../../src/api/dataFetcher';
 import { Species } from '../../src/types/species';
 
 let store: ReturnType<typeof useCharacterStore.getState>;
@@ -11,11 +11,11 @@ let data: Species[] | null | undefined = null;
 beforeEach(async () => {
     localStorage.setItem(SPECIES_CACHE_KEY, JSON.stringify(mockSpecies));
 
+    useCharacterStore.getState().resetCharacter();
     store = useCharacterStore.getState();
-    store.resetCharacter();
 
     data = await fetchDataWithRetryAndCache<Species[]>(
-        SPECIES_API,
+        SPECIES_API_KEY,
         SPECIES_CACHE_KEY
     );
 
@@ -121,7 +121,7 @@ describe('Species updates', () => {
 
     it('should update soak correctly', () => {
         const updated = useCharacterStore.getState().character;
-        const actualSoak = updated.characteristics.brawn.total + (currentSpecies?.startingAttrs?.soakValue);
+        const actualSoak = updated.soak;
         const expectedSoak = (currentSpecies?.startingChars.brawn ?? 0) + (currentSpecies?.startingAttrs?.soakValue ?? 0);
 
         expect(actualSoak).toEqual(expectedSoak);
@@ -129,7 +129,7 @@ describe('Species updates', () => {
 
     it('should update wounds correctly', () => {
         const updated = useCharacterStore.getState().character;
-        const actualWoundsThreshold = updated.characteristics.brawn.total + (currentSpecies?.startingAttrs?.woundThreshold);
+        const actualWoundsThreshold = updated.wounds.threshold;
         const expectedWoundsThreshold = (currentSpecies?.startingChars.brawn ?? 0) + (currentSpecies?.startingAttrs?.woundThreshold ?? 0);
 
         expect(actualWoundsThreshold).toEqual(expectedWoundsThreshold);

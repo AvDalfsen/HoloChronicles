@@ -9,6 +9,7 @@
         }
         usedExperience: number
     }
+    /** Legacy cached available XP. Read domain getExperienceSummary for balances. */
     xp: number;
     career: string;
     specializations: string[];
@@ -59,7 +60,12 @@ export interface CharacteristicValue {
     bought: number;
     gear: number;
     cybernetics: number;
+    /** Exact costs of the most recently bought ranks, in purchase order.
+     * Older bought ranks may have no cost history; never infer their refund. */
+    purchaseCosts?: number[];
 }
+
+export type CharacteristicKey = keyof Character['characteristics'];
 
 export interface SpecializationTalents {
     specializationKey: string;

@@ -1,4 +1,5 @@
-import { useCharacterStore, defaultCharacter } from '@/stores/characterStore';
+import { useCharacterStore } from '@/stores/characterStore';
+import { defaultCharacter } from '@/types/defaultCharacter';
 import isEqual from 'fast-deep-equal';
 
 function ImportCharacterButton() {

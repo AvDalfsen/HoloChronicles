@@ -1,12 +1,11 @@
 import { Character } from '@/types/character';
-import { CharacterState } from '@/stores/characterStore';
 import { Species } from '@/types/species';
-import { deriveStatsFromCharacteristics } from '@/lib/derivedStatsFunctions/statsDerivedFromCharacteristics'
+import { deriveCharacteristicStats } from '@/domain/character/derivedStats';
 
-export function deriveStatsFromSpecies(state: CharacterState, character: Character, species?: Species): Character {
+export function deriveStatsFromSpecies(character: Character, species?: Species): Character {
     const startingCharacteristics = species?.startingChars;
 
-    if (!startingCharacteristics) {
+    if (!species || !startingCharacteristics) {
         return character;
     }
 
@@ -49,7 +48,7 @@ export function deriveStatsFromSpecies(state: CharacterState, character: Charact
         },
     });
 
-    character = deriveStatsFromCharacteristics(state, character, character, species, true);
+    character = deriveCharacteristicStats(character, species);
 
     return character;
 }

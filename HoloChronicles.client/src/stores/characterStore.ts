@@ -1,32 +1,43 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Character } from '@/types/character';
-import { defaultCharacter } from '@/types/defaultCharacter';
+import type { Character, CharacteristicKey } from '@/types/character';
+import type { Species } from '@/types/species';
+import { createDefaultCharacter } from '@/types/defaultCharacter';
 import { applyDerivedStats } from '@/lib/derivedStats';
+import { planCharacteristicChange, type CharacteristicChangeResult } from '@/domain/character/characteristics';
+import { getExperienceSummary } from '@/domain/character/experience';
 
 export interface CharacterState {
-    [x: string]: any;
     character: Character;
     updateCharacter: (updates: Partial<Character>) => void;
-    resetCharacter: () => void;
+    adjustCharacteristic: (key: CharacteristicKey, delta: 1 | -1, species: Species) => CharacteristicChangeResult;
+    resetCharacter: (name?: string) => void;
     saveToFile: () => void;
+    importCharacter: (json: string) => void;
 }
 
 export const useCharacterStore = create<CharacterState>()(
     persist(
         (set, get) => ({
-            character: defaultCharacter,
+            character: createDefaultCharacter(),
             updateCharacter: (changes) =>
                 set((state) => {
                     let updatedCharacter = { ...state.character, ...changes };
 
                     updatedCharacter = checkUpdates(state, changes, updatedCharacter, state.character);
+                    updatedCharacter.xp = getExperienceSummary(updatedCharacter).available;
 
                     return { character: updatedCharacter };
                 }),
-            resetCharacter: () =>
+            adjustCharacteristic: (key, delta, species) => {
+                // Read at dispatch time, so consecutive clicks use the latest state.
+                const result = planCharacteristicChange(get().character, { key, delta }, species);
+                if (result.ok) set({ character: result.character });
+                return result;
+            },
+            resetCharacter: (name) =>
                 set(() => ({
-                    character: defaultCharacter,
+                    character: createDefaultCharacter(name),
                 })),
             saveToFile: () => {
                 const character = get().character;
@@ -56,8 +67,6 @@ export const useCharacterStore = create<CharacterState>()(
 );
 
 function checkUpdates(state: CharacterState, changes: Partial<Character>, updatedCharacter: Character, originalCharacter: Character): Character {
-    console.log(changes);
-
     if ('species' in changes && changes.species) {
         updatedCharacter = applyDerivedStats(state, changes, 'species', updatedCharacter, originalCharacter);
     }

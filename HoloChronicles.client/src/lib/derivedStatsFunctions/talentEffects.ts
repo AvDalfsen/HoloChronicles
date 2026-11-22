@@ -1,7 +1,6 @@
 import { Character, SpecializationTalents, storedTalent } from '@/types/character';
 import { CharacterState } from '@/stores/characterStore';
 import { Species } from '@/types/species';
-import * as helperFunctions from '@/lib/derivedStatsFunctions/helperFunctions'
 
 export function deriveEffectsFromTalents(
     state: CharacterState,
