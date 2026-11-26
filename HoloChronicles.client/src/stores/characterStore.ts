@@ -4,13 +4,15 @@ import type { Character, CharacteristicKey } from '@/types/character';
 import type { Species } from '@/types/species';
 import { createDefaultCharacter } from '@/types/defaultCharacter';
 import { applyDerivedStats } from '@/lib/derivedStats';
-import { planCharacteristicChange, type CharacteristicChangeResult } from '@/domain/character/characteristics';
+import { planCharacteristicPurchaseChange, type CharacteristicPurchaseResult } from '@/domain/character/characteristics';
 import { getExperienceSummary } from '@/domain/character/experience';
+import { planSkillPurchaseChange, type SkillPurchaseResult, type SkillDefinitions } from '@/domain/character/skills';
 
 export interface CharacterState {
     character: Character;
     updateCharacter: (updates: Partial<Character>) => void;
-    adjustCharacteristic: (key: CharacteristicKey, delta: 1 | -1, species: Species) => CharacteristicChangeResult;
+    adjustCharacteristicPurchase: (key: CharacteristicKey, delta: 1 | -1, species: Species) => CharacteristicPurchaseResult;
+    adjustSkillPurchase: (key: string, delta: 1 | -1, definitions: SkillDefinitions) => SkillPurchaseResult;
     resetCharacter: (name?: string) => void;
     saveToFile: () => void;
     importCharacter: (json: string) => void;
@@ -29,9 +31,14 @@ export const useCharacterStore = create<CharacterState>()(
 
                     return { character: updatedCharacter };
                 }),
-            adjustCharacteristic: (key, delta, species) => {
+            adjustCharacteristicPurchase: (key, delta, species) => {
                 // Read at dispatch time, so consecutive clicks use the latest state.
-                const result = planCharacteristicChange(get().character, { key, delta }, species);
+                const result = planCharacteristicPurchaseChange(get().character, { key, delta }, species);
+                if (result.ok) set({ character: result.character });
+                return result;
+            },
+            adjustSkillPurchase: (key, delta, definitions) => {
+                const result = planSkillPurchaseChange(get().character, { key, delta }, definitions);
                 if (result.ok) set({ character: result.character });
                 return result;
             },

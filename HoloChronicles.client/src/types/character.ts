@@ -21,18 +21,7 @@
         willpower: CharacteristicValue;
         presence: CharacteristicValue;
     };
-    skills: {
-        key: string;
-        rank: {
-            speciesRanks?: number;
-            careerRanks?: number;
-            specializationRanks?: number;
-            purchasedRanks?: number;
-            cyberRanks?: number;
-        }
-        isCareer?: boolean;
-        charKeyOverride?: string;
-    }[];
+    skills: CharacterSkill[];
     talents: SpecializationTalents[];
     wounds: {
         threshold: number;
@@ -66,6 +55,28 @@ export interface CharacteristicValue {
 }
 
 export type CharacteristicKey = keyof Character['characteristics'];
+
+export interface CharacterSkill {
+    key: string;
+    rank: {
+        speciesRanks?: number;
+        careerRanks?: number;
+        specializationRanks?: number;
+        purchasedRanks?: number;
+        cyberRanks?: number;
+    };
+    /** Exact history for the most recent purchased ranks. Earlier ranks may be unknown. */
+    purchases?: SkillPurchase[];
+    /** Legacy display cache; purchase eligibility uses resolved career/specialization grants. */
+    isCareer?: boolean;
+    charKeyOverride?: string;
+}
+
+export interface SkillPurchase {
+    cost: number;
+    /** Career changes never rewrite the surcharge paid on this purchase. */
+    nonCareer: boolean;
+}
 
 export interface SpecializationTalents {
     specializationKey: string;

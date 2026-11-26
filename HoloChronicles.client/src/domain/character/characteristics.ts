@@ -3,7 +3,8 @@ import type { Species } from '@/types/species';
 import { CHARACTERISTIC_KEYS, deriveCharacteristicStats } from './derivedStats';
 import { getExperienceSummary } from './experience';
 
-export interface CharacteristicChange {
+/** Buy one paid rank (+1), or undo the latest known purchase (-1). */
+export interface CharacteristicPurchaseChange {
     key: CharacteristicKey;
     delta: 1 | -1;
 }
@@ -11,17 +12,17 @@ export interface CharacteristicChange {
 type RejectionCode = 'invalid-character' | 'species-mismatch' | 'rank-limit'
     | 'insufficient-xp' | 'no-purchase' | 'unknown-purchase-cost';
 
-export type CharacteristicChangeResult =
+export type CharacteristicPurchaseResult =
     | { ok: true; character: Character; xpChange: number }
     | { ok: false; code: RejectionCode; message: string };
 
 /** Plan one creation purchase/undo. This function never mutates its inputs. */
-export function planCharacteristicChange(
+export function planCharacteristicPurchaseChange(
     character: Character,
-    change: CharacteristicChange,
+    change: CharacteristicPurchaseChange,
     species: Species,
-): CharacteristicChangeResult {
-    const reject = (code: RejectionCode, message: string): CharacteristicChangeResult =>
+): CharacteristicPurchaseResult {
+    const reject = (code: RejectionCode, message: string): CharacteristicPurchaseResult =>
         ({ ok: false, code, message });
 
     if (species.key !== character.species) {
@@ -47,7 +48,7 @@ export function planCharacteristicChange(
     let purchaseCosts: number[];
     if (change.delta === 1) {
         if (trainingRank >= 5) {
-            return reject('rank-limit', 'Creation purchases cannot raise a characteristic above 5.');
+            return reject('rank-limit', 'Direct XP purchases cannot raise a characteristic above 5.');
         }
         xpChange = (trainingRank + 1) * 10;
         if (xp.available < xpChange) {

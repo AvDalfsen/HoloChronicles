@@ -12,7 +12,7 @@ beforeEach(() => {
 
 describe('characteristic operations in the character store', () => {
     it('uses the latest state for consecutive actions and commits complete results', () => {
-        const adjust = useCharacterStore.getState().adjustCharacteristic;
+        const adjust = useCharacterStore.getState().adjustCharacteristicPurchase;
         expect(adjust('brawn', 1, humanSpecies).ok).toBe(true);
         expect(adjust('brawn', 1, humanSpecies).ok).toBe(true);
         const character = useCharacterStore.getState().character;
@@ -26,15 +26,15 @@ describe('characteristic operations in the character store', () => {
     });
 
     it('retains exact refund costs through real persistence and rehydration', async () => {
-        useCharacterStore.getState().adjustCharacteristic('brawn', 1, humanSpecies);
-        useCharacterStore.getState().adjustCharacteristic('brawn', 1, humanSpecies);
+        useCharacterStore.getState().adjustCharacteristicPurchase('brawn', 1, humanSpecies);
+        useCharacterStore.getState().adjustCharacteristicPurchase('brawn', 1, humanSpecies);
         const saved = localStorage.getItem('swrpg-character')!;
 
         useCharacterStore.setState({ character: createDefaultCharacter() });
         localStorage.setItem('swrpg-character', saved);
         await useCharacterStore.persist.rehydrate();
 
-        const undo = useCharacterStore.getState().adjustCharacteristic('brawn', -1, humanSpecies);
+        const undo = useCharacterStore.getState().adjustCharacteristicPurchase('brawn', -1, humanSpecies);
         expect(undo).toMatchObject({ ok: true, xpChange: -40 });
         expect(useCharacterStore.getState().character.characteristics.brawn.purchaseCosts).toEqual([30]);
         expect(useCharacterStore.getState().character.experience.usedExperience).toBe(30);
@@ -49,7 +49,7 @@ describe('characteristic operations in the character store', () => {
         await useCharacterStore.persist.rehydrate();
 
         const before = useCharacterStore.getState().character;
-        expect(useCharacterStore.getState().adjustCharacteristic('brawn', -1, humanSpecies))
+        expect(useCharacterStore.getState().adjustCharacteristicPurchase('brawn', -1, humanSpecies))
             .toMatchObject({ ok: false, code: 'unknown-purchase-cost' });
         expect(useCharacterStore.getState().character).toBe(before);
     });

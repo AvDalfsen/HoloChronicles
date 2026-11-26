@@ -11,10 +11,11 @@ import {
 } from '@/pages/utils/fetcher';
 import { MinusSquare, PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
-import { calculateSkillXPRefund } from '@/pages/utils/genericFunctions';
+import { planSkillPurchaseReset } from '@/domain/character/skills';
 
 export default function Specializations() {
     const { character, updateCharacter } = useCharacterStore();
+    const [actionError, setActionError] = useState<string | null>(null);
 
     const numberOfSpecializations = character.specializations.length ?? 0;
 
@@ -120,7 +121,8 @@ export default function Specializations() {
         const hasTalents = specTalents?.talents.length ?? 0 > 0;
 
         // If the user has purchased skills, those will be reset when the starting specialization is sold
-        const hasPurchasedSkills = spec.key === startingSpecialization!.key && (character.skills.filter(s => s.rank.purchasedRanks ?? 0 > 0).length ?? 0) > 0;
+        const hasPurchasedSkills = spec.key === startingSpecialization?.key
+            && character.skills.some(skill => (skill.rank.purchasedRanks ?? 0) > 0);
 
         // Need confirmation only when talents or skills would be refunded
         if (hasTalents || hasPurchasedSkills) {
@@ -131,7 +133,13 @@ export default function Specializations() {
     };
 
     const performSale = (specialization: Specialization) => {
-        const isStartingSpec = specialization === startingSpecialization;
+        const isStartingSpec = specialization.key === startingSpecialization?.key;
+        const skillReset = isStartingSpec ? planSkillPurchaseReset(character) : null;
+        if (skillReset && !skillReset.ok) {
+            setActionError(skillReset.message);
+            return;
+        }
+        setActionError(null);
 
         //Calculate XP refund for talents
         const specTalentsBlock = character.talents.find(
@@ -161,13 +169,13 @@ export default function Specializations() {
         );
 
         for (const specKey of character.specializations) {
-            if (specKey === selectedSpecialization!.key) continue;    // skip the one we’re selling
+            if (specKey === specialization.key) continue;
             const spec = specializations.find(s => s.key === specKey);
             spec?.careerSkills.forEach(cs => careerSkillSet.add(cs));
         }
 
-        let updatedSkills = character.skills.map(skill => {
-            if (!selectedSpecialization!.careerSkills.includes(skill.key)) return skill; // If the skill is *not* in the specialization being sold, leave it alone
+        let updatedSkills = (skillReset?.ok ? skillReset.character.skills : character.skills).map(skill => {
+            if (!specialization.careerSkills.includes(skill.key)) return skill;
             if (careerSkillSet.has(skill.key)) return skill;                             // If the career or another specialization still grants the skill, keep the flag
             return { ...skill, isCareer: false };                                        // Otherwise: this skill only came from the sold specialization → unflag
         });
@@ -194,8 +202,8 @@ export default function Specializations() {
                 },
             }));
 
-            // Recalculate cost of skill levels already purchased (career vs non-career. Take all specializations into account)
-            const skillXPBalance = calculateSkillXPRefund(currentCareer!, character, specializations);
+            // Refunds and paid-rank removal come from the same domain result.
+            const skillXPBalance = skillReset?.ok ? skillReset.xpChange : 0;
 
             console.log("skillxpbalance:",skillXPBalance)
 
@@ -300,6 +308,7 @@ export default function Specializations() {
     //TODO: on purchasing Republic Representative, show window to allow user to pick knowledge skill (addlCareerSkill) as new career skill.
     return (
         <div className="z-20 p-5 w-full flex items-start space-x-6">
+            {actionError && <p role="alert" className="text-destructive">{actionError}</p>}
             {!startingSpecialization && (
                 <div className="sticky top-0 left-0 bg-white border rounded-lg shadow-md overflow-auto max-w-2xl">
                     <table className="w-full table-fixed text-sm text-left border-collapse">
@@ -537,13 +546,11 @@ export default function Specializations() {
                             {pendingSpec?.key === startingSpecialization?.key ? (
                                 <>
                                     Selling your <strong>starting</strong> specialization will refund all of its purchased talents, as well as all purchased skills.
-                                    <p />
                                     Are you sure?
                                 </>
                             ) : (
                                 <>
                                     This specialization has purchased talents. Selling it will remove them and refund the XP.
-                                    <p />
                                     Are you sure?
                                 </>
                             )}

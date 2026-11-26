@@ -1,6 +1,7 @@
 import type { Character, CharacteristicKey } from '@/types/character';
 import type { Species } from '@/types/species';
 import { getExperienceSummary } from './experience';
+import { capEffectiveRank } from './rankLimits';
 
 export const CHARACTERISTIC_KEYS: readonly CharacteristicKey[] = [
     'brawn', 'agility', 'intellect', 'cunning', 'willpower', 'presence',
@@ -18,7 +19,9 @@ export function getCharacteristicKey(definitionKey: string | undefined) {
 
 export function recalculateTotalCharacteristic(character: Character, key: CharacteristicKey): number {
     const value = character.characteristics[key];
-    return (value.species ?? 0) + (value.bought ?? 0) + (value.gear ?? 0) + (value.cybernetics ?? 0);
+    const cybernetics = value.cybernetics ?? 0;
+    const total = (value.species ?? 0) + (value.bought ?? 0) + (value.gear ?? 0) + cybernetics;
+    return capEffectiveRank('characteristic', total, cybernetics);
 }
 
 export function recalculateSoak(character: Character, species?: Species): number {

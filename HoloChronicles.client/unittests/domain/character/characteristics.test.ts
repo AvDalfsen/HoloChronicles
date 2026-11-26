@@ -2,13 +2,13 @@
 import { describe, expect, it } from 'vitest';
 import type { Character, CharacteristicKey } from '@/types/character';
 import { createDefaultCharacter } from '@/types/defaultCharacter';
-import { planCharacteristicChange } from '@/domain/character/characteristics';
-import { deriveCharacteristicStats } from '@/domain/character/derivedStats';
+import { planCharacteristicPurchaseChange } from '@/domain/character/characteristics';
+import { deriveCharacteristicStats, recalculateTotalCharacteristic } from '@/domain/character/derivedStats';
 import { getExperienceSummary } from '@/domain/character/experience';
 import { humanSpecies } from '../../fixtures/character';
 
 function apply(character: Character, key: CharacteristicKey, delta: 1 | -1) {
-    const result = planCharacteristicChange(character, { key, delta }, humanSpecies);
+    const result = planCharacteristicPurchaseChange(character, { key, delta }, humanSpecies);
     if (!result.ok) throw new Error(result.message);
     return result;
 }
@@ -48,12 +48,55 @@ describe('creation characteristic operations without browser storage', () => {
         expect(result.character.characteristics.brawn.total).toBe(6);
     });
 
+    it('caps the effective characteristic at six without losing source contributions', () => {
+        const character = createDefaultCharacter();
+        character.characteristics.brawn = { species: 3, bought: 2, gear: 4, cybernetics: 0, total: 99 };
+        character.wounds.current = 4;
+        freeze(character);
+        const result = deriveCharacteristicStats(character, humanSpecies);
+
+        expect(result.characteristics.brawn).toEqual({ species: 3, bought: 2, gear: 4, cybernetics: 0, total: 6 });
+        expect(recalculateTotalCharacteristic(character, 'brawn')).toBe(6);
+        expect(result.soak).toBe(6);
+        expect(result.wounds.current).toBe(4);
+        expect(character.characteristics.brawn.total).toBe(99);
+        expect(result.experience).toBe(character.experience);
+    });
+
+    it('allows a cybernetic total of seven and restores the six-rank ceiling when that bonus is removed', () => {
+        const character = createDefaultCharacter();
+        character.characteristics.willpower = { species: 3, bought: 2, gear: 2, cybernetics: 2, total: 99 };
+        const result = deriveCharacteristicStats(character, humanSpecies);
+        expect(result.characteristics.willpower.total).toBe(7);
+        expect(result.characteristics.willpower.cybernetics).toBe(2);
+
+        const withoutCybernetics = {
+            ...result,
+            characteristics: { ...result.characteristics, willpower: { ...result.characteristics.willpower, cybernetics: 0 } },
+        };
+        expect(deriveCharacteristicStats(withoutCybernetics, humanSpecies).characteristics.willpower.total).toBe(6);
+    });
+
+    it('buys and undoes a training rank at its actual price while the effective total is already capped', () => {
+        const character = createDefaultCharacter();
+        character.characteristics.brawn.gear = 5;
+        character.characteristics.brawn.cybernetics = 1;
+        const purchased = apply(character, 'brawn', 1);
+        expect(purchased.xpChange).toBe(30);
+        expect(purchased.character.characteristics.brawn).toMatchObject({ bought: 1, gear: 5, cybernetics: 1, total: 7, purchaseCosts: [30] });
+
+        const undone = apply(purchased.character, 'brawn', -1);
+        expect(undone.xpChange).toBe(-30);
+        expect(undone.character.characteristics.brawn).toMatchObject({ bought: 0, gear: 5, cybernetics: 1, total: 7 });
+        expect(undone.character.experience.usedExperience).toBe(0);
+    });
+
     it('rejects unaffordable purchases using experience inputs rather than stale cached XP', () => {
         const character = createDefaultCharacter();
         character.experience.usedExperience = 90;
         character.xp = 1000;
         const before = structuredClone(character);
-        expect(planCharacteristicChange(character, { key: 'brawn', delta: 1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(character, { key: 'brawn', delta: 1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'insufficient-xp' });
         expect(character).toEqual(before);
     });
@@ -67,12 +110,12 @@ describe('creation characteristic operations without browser storage', () => {
     it.each([5, 6])('rejects increases at training rank %i', rank => {
         const character = createDefaultCharacter();
         character.characteristics.brawn.bought = rank - 2;
-        expect(planCharacteristicChange(character, { key: 'brawn', delta: 1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(character, { key: 'brawn', delta: 1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'rank-limit' });
     });
 
     it('cannot undo a species rank', () => {
-        expect(planCharacteristicChange(createDefaultCharacter(), { key: 'brawn', delta: -1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(createDefaultCharacter(), { key: 'brawn', delta: -1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'no-purchase' });
     });
 
@@ -101,7 +144,7 @@ describe('creation characteristic operations without browser storage', () => {
         const legacy = createDefaultCharacter();
         legacy.characteristics.brawn.bought = 1;
         legacy.experience.usedExperience = 30;
-        expect(planCharacteristicChange(legacy, { key: 'brawn', delta: -1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(legacy, { key: 'brawn', delta: -1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'unknown-purchase-cost' });
 
         const purchased = apply(legacy, 'brawn', 1);
@@ -109,22 +152,22 @@ describe('creation characteristic operations without browser storage', () => {
         const undone = apply(purchased.character, 'brawn', -1).character;
         expect(undone.characteristics.brawn.bought).toBe(1);
         expect(undone.experience.usedExperience).toBe(30);
-        expect(planCharacteristicChange(undone, { key: 'brawn', delta: -1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(undone, { key: 'brawn', delta: -1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'unknown-purchase-cost' });
     });
 
     it('rejects inconsistent purchase histories and refunds exceeding recorded spending', () => {
         const character = createDefaultCharacter();
         character.characteristics.brawn.purchaseCosts = [30];
-        expect(planCharacteristicChange(character, { key: 'brawn', delta: -1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(character, { key: 'brawn', delta: -1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'invalid-character' });
         character.characteristics.brawn.bought = 1;
-        expect(planCharacteristicChange(character, { key: 'brawn', delta: -1 }, humanSpecies))
+        expect(planCharacteristicPurchaseChange(character, { key: 'brawn', delta: -1 }, humanSpecies))
             .toMatchObject({ ok: false, code: 'invalid-character' });
     });
 
     it('rejects a species context for another character', () => {
-        expect(planCharacteristicChange(createDefaultCharacter(), { key: 'brawn', delta: 1 }, { ...humanSpecies, key: 'OTHER' }))
+        expect(planCharacteristicPurchaseChange(createDefaultCharacter(), { key: 'brawn', delta: 1 }, { ...humanSpecies, key: 'OTHER' }))
             .toMatchObject({ ok: false, code: 'species-mismatch' });
     });
 

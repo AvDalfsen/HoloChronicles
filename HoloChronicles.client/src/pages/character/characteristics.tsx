@@ -5,7 +5,7 @@ import type { Characteristic } from '@/types/characteristic';
 import type { CharacteristicKey } from '@/types/character';
 import type { Species } from '@/types/species';
 import { useCharacterStore } from '@/stores/characterStore';
-import { planCharacteristicChange } from '@/domain/character/characteristics';
+import { planCharacteristicPurchaseChange } from '@/domain/character/characteristics';
 import { deriveCharacteristicStats, getCharacteristicKey } from '@/domain/character/derivedStats';
 import {
     useCachedData,
@@ -15,7 +15,7 @@ import {
 
 export default function Characteristics() {
     const character = useCharacterStore(state => state.character);
-    const adjustCharacteristic = useCharacterStore(state => state.adjustCharacteristic);
+    const adjustCharacteristicPurchase = useCharacterStore(state => state.adjustCharacteristicPurchase);
     const [actionError, setActionError] = useState<string | null>(null);
     const definitions = useCachedData<Characteristic[]>(CHARACTERISTICS_API, CHARACTERISTICS_CACHE_KEY);
     const speciesData = useCachedData<Species[]>(SPECIES_API_KEY, SPECIES_CACHE_KEY);
@@ -30,8 +30,8 @@ export default function Characteristics() {
     }
 
     const view = deriveCharacteristicStats(character, species);
-    const adjustValue = (key: CharacteristicKey, delta: 1 | -1) => {
-        const result = adjustCharacteristic(key, delta, species);
+    const changePurchase = (key: CharacteristicKey, delta: 1 | -1) => {
+        const result = adjustCharacteristicPurchase(key, delta, species);
         setActionError(result.ok ? null : result.message);
     };
 
@@ -46,8 +46,8 @@ export default function Characteristics() {
                     if (!key) {
                         return <p role="alert" key={definition.key ?? definition.name}>Unknown characteristic: {definition.key ?? definition.name}</p>;
                     }
-                    const increase = planCharacteristicChange(character, { key, delta: 1 }, species);
-                    const decrease = planCharacteristicChange(character, { key, delta: -1 }, species);
+                    const increase = planCharacteristicPurchaseChange(character, { key, delta: 1 }, species);
+                    const decrease = planCharacteristicPurchaseChange(character, { key, delta: -1 }, species);
 
                     return (
                         <div key={definition.key} className="bg-card text-card-foreground shadow-md rounded-2xl p-4 flex flex-col items-center text-center border">
@@ -59,7 +59,7 @@ export default function Characteristics() {
                                     aria-label={'Undo ' + definition.name + ' purchase'}
                                     title={decrease.ok ? 'Refund ' + -decrease.xpChange + ' XP' : decrease.message}
                                     disabled={!decrease.ok}
-                                    onClick={() => adjustValue(key, -1)}
+                                    onClick={() => changePurchase(key, -1)}
                                     variant="outline"
                                 >
                                     <Minus />
@@ -70,7 +70,7 @@ export default function Characteristics() {
                                     aria-label={'Increase ' + definition.name}
                                     title={increase.ok ? 'Costs ' + increase.xpChange + ' XP' : increase.message}
                                     disabled={!increase.ok}
-                                    onClick={() => adjustValue(key, 1)}
+                                    onClick={() => changePurchase(key, 1)}
                                     variant="outline"
                                 >
                                     <Plus />

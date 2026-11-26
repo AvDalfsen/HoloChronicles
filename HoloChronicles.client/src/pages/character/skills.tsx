@@ -1,169 +1,106 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
-import { Skill } from '@/types/skill';
+import type { Skill } from '@/types/skill';
+import type { Career } from '@/types/career';
+import type { Specialization } from '@/types/specialization';
 import * as diceIcons from '@/components/ui/diceIcons';
-import { JSX } from 'react/jsx-runtime';
 import { useCharacterStore } from '@/stores/characterStore';
-import { calculateTotalSkillLevel } from '@/pages/utils/genericFunctions';
-import { CHAR_ORDER } from '@/pages/character/species';
+import { getSkillDicePool, getSkillTotalRanks, planSkillPurchaseChange } from '@/domain/character/skills';
 import {
     useCachedData,
-    SKILLS_API_KEY, SKILLS_CACHE_KEY
-} from '@/pages/utils/fetcher'
+    SKILLS_API_KEY, SKILLS_CACHE_KEY,
+    CAREERS_API_KEY, CAREERS_CACHE_KEY,
+    SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY,
+} from '@/pages/utils/fetcher';
 
 export default function Skills() {
-    const { character, updateCharacter } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
+    const adjustSkillPurchase = useCharacterStore(state => state.adjustSkillPurchase);
+    const [actionError, setActionError] = useState<string | null>(null);
+    const skills = useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
+    const careers = useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
+    const specializations = useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
 
-    const { data: skills, loading: loadingSkills, error: errorSkills } =
-        useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
-
-    if (loadingSkills) {
-        return <p>Loading…</p>;
+    if (skills.loading || careers.loading || specializations.loading) return <p>Loadingâ€¦</p>;
+    if (skills.error || !skills.data) {
+        return <p role="alert" className="text-destructive">{skills.error || 'Skill definitions are missing. No edits have been applied.'}</p>;
     }
 
-    if ( errorSkills) {
-        return (
-            <p className="text-red-500">
-                {errorSkills}
-            </p>
-        );
-    }
-
-    if (!skills) {
-        return <p className="text-red-500">Data missing.</p>;
-    }
-
-    function deriveAndDisplaySkillIcons(skillKey: string, skillCharKey: string): JSX.Element {
-        let proficiencyCount = 0;
-        let abilityCount = 0;
-        
-        const currentSkillRankTotal = calculateTotalSkillLevel(skillKey, character);
-
-        let characteristicTotal = 0;
-
-        const shortToLongCharMap = Object.fromEntries(
-            CHAR_ORDER.map(([long, short]) => [short.toUpperCase(), long])
-        );
-
-        const characteristicKey = shortToLongCharMap[skillCharKey];
-              characteristicTotal = characteristicKey
-            ? character.characteristics[characteristicKey].total
-            : 0;
-        
-        proficiencyCount = Math.min(characteristicTotal, currentSkillRankTotal);
-        abilityCount = Math.max(characteristicTotal, currentSkillRankTotal) - proficiencyCount;
-
-        return (
-            <span style={{ display: 'flex' }}>
-                {Array.from({ length: proficiencyCount }, (_, index) => (
-                    <diceIcons.proficiencyIcon key={index} />
-                ))}
-                {Array.from({ length: abilityCount }, (_, index) => (
-                    <diceIcons.abilityIcon key={index} />
-                ))}
-            </span>
-        );
-    }
-
-    const adjustValue = (skillKey: string, delta: number) => {
-        const skill = character.skills.find(s => s.key === skillKey);
-
-        const currentPurchasedRanks = skill?.rank.purchasedRanks ?? 0;
-        const currentSkillRankTotal = calculateTotalSkillLevel(skillKey, character);
-
-        //Do nothing if user tries to go past the minimum or maximum number of trained ranks
-        if ((currentPurchasedRanks === 0 && delta === -1) || (currentSkillRankTotal === 5 && delta === 1)) return;
-
-        const isCareer = skill?.isCareer;
-        const currentUsedXP = character.experience.usedExperience;
-        const newBought = Math.max(0, currentPurchasedRanks + delta);
-
-        let xpChange = 0;
-
-        if (Math.sign(delta) === 1) {
-            xpChange = ((currentSkillRankTotal + delta) * 5);
-            if (!isCareer) {
-                xpChange += 5;
-            }
-        }
-        else {
-            xpChange = ((currentSkillRankTotal) * -5);
-            if (!isCareer) {
-                xpChange -= 5;
-            }
-        }
-
-        const xp = currentUsedXP + xpChange;
-
-        console.log('XP change:', xpChange, 'XP:', xp, 'previously used total:', character.experience.usedExperience, 'new used total:', (character.experience.usedExperience + xpChange));
-
-        const updatedSkills = character.skills.map(s => {
-            if (s.key === skillKey) {
-                return {
-                    ...s,
-                    rank: {
-                        ...s.rank,
-                        purchasedRanks: newBought,
-                    },
-                };
-            }
-            return s;
-        });
-
-        // If the skill wasn't found, add it
-        if (!skill) {
-            updatedSkills.push({
-                key: skillKey,
-                rank: {
-                    purchasedRanks: newBought,
-                },
-            });
-        }
-
-        updateCharacter({
-            experience: {
-                ...character.experience,
-                usedExperience: currentUsedXP + xpChange,
-            },
-            skills: updatedSkills,
-        });
+    const definitions = {
+        skills: skills.data,
+        careers: careers.data ?? [],
+        specializations: specializations.data ?? [],
+    };
+    const changePurchase = (key: string, delta: 1 | -1) => {
+        const result = adjustSkillPurchase(key, delta, definitions);
+        setActionError(result.ok ? null : result.message);
     };
 
     return (
         <div>
-            <table className="table table-striped" aria-labelledby="tableLabel">
+            <h1 className="text-3xl font-bold">Skills</h1>
+            <p className="text-muted-foreground">Buy trained ranks with XP. Undo returns the recorded purchase cost.</p>
+            {(careers.error || specializations.error) && (
+                <p role="alert" className="text-destructive">{careers.error || specializations.error}</p>
+            )}
+            {actionError && <p role="alert" className="text-destructive">{actionError}</p>}
+            <table className="table table-striped" aria-label="Skills">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
+                    <tr><th>Name</th><th>Training</th><th>Dice pool</th></tr>
                 </thead>
                 <tbody>
-                    {skills.map(skill => (
-                        <tr key={skill.name}>
-                            <td>{skill.name}</td>
-                            <td>
-                                <div className="flex items-center space-x-4 mt-4">
-                                    <Button
-                                        size="icon"
-                                        onClick={() => adjustValue(skill.key, -1)}
-                                        variant="outline"
-                                    >
-                                        <Minus />
-                                    </Button>
-                                    <Button
-                                        size="icon"
-                                        onClick={() => adjustValue(skill.key, 1)}
-                                        variant="outline"
-                                    >
-                                        <Plus />
-                                    </Button>
-                                </div>
-                            </td>
-                            <td>
-                                {deriveAndDisplaySkillIcons(skill.key, skill.charKey)}
-                            </td>
-                        </tr>
-                    ))}
+                    {skills.data.map(skill => {
+                        const increase = planSkillPurchaseChange(character, { key: skill.key, delta: 1 }, definitions);
+                        const decrease = planSkillPurchaseChange(character, { key: skill.key, delta: -1 }, definitions);
+                        const pool = getSkillDicePool(character, skill);
+                        const saved = character.skills.find(item => item.key === skill.key);
+
+                        return (
+                            <tr key={skill.key}>
+                                <th scope="row">{skill.name}</th>
+                                <td>
+                                    <div className="flex items-center space-x-4 mt-4">
+                                        <Button
+                                            size="icon"
+                                            aria-label={'Undo ' + skill.name + ' purchase'}
+                                            title={decrease.ok ? 'Refund ' + -decrease.xpChange + ' XP' : decrease.message}
+                                            disabled={!decrease.ok}
+                                            onClick={() => changePurchase(skill.key, -1)}
+                                            variant="outline"
+                                        ><Minus /></Button>
+                                        <span aria-label={skill.name + ' total ranks'}>{getSkillTotalRanks(saved)}</span>
+                                        <Button
+                                            size="icon"
+                                            aria-label={'Increase ' + skill.name}
+                                            title={increase.ok ? 'Costs ' + increase.xpChange + ' XP' : increase.message}
+                                            disabled={!increase.ok}
+                                            onClick={() => changePurchase(skill.key, 1)}
+                                            variant="outline"
+                                        ><Plus /></Button>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mt-2">
+                                        {increase.ok ? 'Next increase: ' + increase.xpChange + ' XP' : increase.message}
+                                    </p>
+                                    {!decrease.ok && decrease.code !== 'no-purchase' && (
+                                        <p className="text-sm text-muted-foreground mt-2">{decrease.message}</p>
+                                    )}
+                                </td>
+                                <td>
+                                    {pool.ok ? (
+                                        <span
+                                            className="flex"
+                                            role="img"
+                                            aria-label={`${skill.name} dice pool: ${pool.proficiency} proficiency, ${pool.ability} ability`}
+                                        >
+                                            {Array.from({ length: pool.proficiency }, (_, index) => <diceIcons.proficiencyIcon key={'p' + index} />)}
+                                            {Array.from({ length: pool.ability }, (_, index) => <diceIcons.abilityIcon key={'a' + index} />)}
+                                        </span>
+                                    ) : <p role="alert">{pool.message}</p>}
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
         </div>
