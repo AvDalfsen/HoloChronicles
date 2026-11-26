@@ -5,6 +5,7 @@ import type { Specialization } from '@/types/specialization';
 import { getCharacteristicKey, recalculateTotalCharacteristic } from './derivedStats';
 import { getExperienceSummary } from './experience';
 import { capEffectiveRank } from './rankLimits';
+import { resolveCareerSkillKeys } from './careerSkills';
 
 export interface SkillDefinitions {
     skills: readonly Skill[];
@@ -64,22 +65,6 @@ function validSkill(skill: CharacterSkill): boolean {
             && purchase.cost > 0 && purchase.cost % 5 === 0 && typeof purchase.nonCareer === 'boolean');
 }
 
-function careerStatus(character: Character, key: string, definitions: SkillDefinitions) {
-    const career = definitions.careers.find(item => item.key === character.career);
-    if (character.career && !career) {
-        return { ok: false as const, message: 'The selected career definition is missing. Restore it before buying skill ranks.' };
-    }
-    let isCareer = career?.careerSkills.includes(key) ?? false;
-    for (const specKey of character.specializations.filter(Boolean)) {
-        const specialization = definitions.specializations.find(item => item.key === specKey);
-        if (!specialization) {
-            return { ok: false as const, message: 'A selected specialization definition is missing. Restore it before buying skill ranks.' };
-        }
-        isCareer ||= specialization.careerSkills.includes(key);
-    }
-    return { ok: true as const, isCareer };
-}
-
 function validExperience(character: Character): boolean {
     const { total, spent } = getExperienceSummary(character);
     return [total, spent].every(value => Number.isSafeInteger(value) && value >= 0);
@@ -116,16 +101,17 @@ export function planSkillPurchaseChange(character: Character, change: SkillPurch
     let history: SkillPurchase[];
     let updatedSkill = { ...skill, rank: { ...skill.rank, purchasedRanks: purchasedRanks + change.delta } };
     if (change.delta === 1) {
-        const status = careerStatus(character, change.key, definitions);
+        const status = resolveCareerSkillKeys(character, definitions);
         if (!status.ok) return reject('missing-definition', status.message);
+        const isCareer = status.keys.has(change.key);
         const trainingRank = getSkillTrainingRank(skill);
         if (trainingRank >= 5) return reject('rank-limit', 'Skill purchases cannot raise the trained rank above 5.');
-        xpChange = (trainingRank + 1) * 5 + (status.isCareer ? 0 : 5);
+        xpChange = (trainingRank + 1) * 5 + (isCareer ? 0 : 5);
         if (xp.available < xpChange) {
             return reject('insufficient-xp', `This increase costs ${xpChange} XP; ${xp.available} XP is available.`);
         }
-        history = [...purchases, { cost: xpChange, nonCareer: !status.isCareer }];
-        updatedSkill = { ...updatedSkill, isCareer: status.isCareer };
+        history = [...purchases, { cost: xpChange, nonCareer: !isCareer }];
+        updatedSkill = { ...updatedSkill, isCareer };
     } else {
         if (purchasedRanks === 0) return reject('no-purchase', 'There is no purchased skill rank to undo.');
         const purchase = purchases[purchases.length - 1];
@@ -144,15 +130,17 @@ export function planSkillPurchaseChange(character: Character, change: SkillPurch
     return { ok: true, character: withSpending(character, skills, xpChange), xpChange };
 }
 
-/** Transitional adapter for legacy career/starting-specialization resets.
- * Refund all paid ranks together, or leave everything untouched if any cost is unknown. */
-export function planSkillPurchaseReset(character: Character): SkillPurchaseResult {
+/** Remove paid ranks for the selected skills (all skills when omitted).
+ * Refund their recorded charges together, or leave everything untouched if a selected cost is unknown. */
+export function planSkillPurchaseReset(character: Character, skillKeys?: readonly string[]): SkillPurchaseResult {
     if (!validExperience(character) || new Set(character.skills.map(skill => skill.key)).size !== character.skills.length
         || !character.skills.every(validSkill)) {
         return reject('invalid-character', 'This character has inconsistent skill ranks, history, or XP and needs correction before resetting purchases.');
     }
+    const selectedKeys = new Set(skillKeys ?? character.skills.map(skill => skill.key));
     let refund = 0;
     for (const skill of character.skills) {
+        if (!selectedKeys.has(skill.key)) continue;
         if ((skill.rank.purchasedRanks ?? 0) !== (skill.purchases?.length ?? 0)) {
             return reject('unknown-purchase-cost', 'Some saved skill ranks have no recorded XP cost. Their purchases cannot be reset automatically.');
         }
@@ -162,7 +150,7 @@ export function planSkillPurchaseReset(character: Character): SkillPurchaseResul
         return reject('invalid-character', 'The recorded skill purchases exceed spent XP; correct the character before resetting them.');
     }
     const skills = character.skills.map(skill => {
-        if (!(skill.rank.purchasedRanks ?? 0)) return skill;
+        if (!selectedKeys.has(skill.key) || !(skill.rank.purchasedRanks ?? 0)) return skill;
         const updated = { ...skill, rank: { ...skill.rank, purchasedRanks: 0 } };
         delete updated.purchases;
         return updated;

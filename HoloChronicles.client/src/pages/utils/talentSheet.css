@@ -19,6 +19,7 @@
 }
 
 .talent-box {
+    position: relative;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     padding: 8px;
@@ -30,6 +31,45 @@
 
 .talent-box.unavailable {
     background-color: rgb(226, 226, 226);
+}
+
+.talent-box.unaffordable {
+    background-color: #fef2f2;
+    box-shadow: inset 0 0 0 1px rgba(220,38,38,0.22), 0 2px 8px rgba(220,38,38,0.12);
+}
+
+.talent-box.unavailable.unaffordable {
+    background-color: rgb(226, 226, 226);
+}
+
+.talent-box.purchased {
+    background-color: #dbeafe;
+    box-shadow: inset 0 0 0 2px #2563eb, 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.talent-toggle {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.talent-toggle:enabled:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+.talent-toggle:disabled {
+    cursor: not-allowed;
+}
+
+.talent-toggle:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
 }
 
 .talent-cost {
@@ -45,6 +85,25 @@
     margin-bottom: 4px;
 }
 
+.talent-name.ranked {
+    /* Keep this space even at zero ranks so purchasing never reflows the title. */
+    padding-right: 3.5rem;
+}
+
+.talent-rank {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    max-width: 3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 1.2;
+    color: #555;
+}
+
 .talent-desc {
     font-size: 0.85rem;
     color: #555;
@@ -52,6 +111,8 @@
 }
 
 .talent-footer {
+    position: relative;
+    padding-right: 24px;
     font-size: 1rem;
     color: #555;
     line-height: 1.2;

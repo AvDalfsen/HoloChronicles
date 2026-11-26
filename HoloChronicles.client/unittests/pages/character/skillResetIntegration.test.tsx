@@ -27,16 +27,18 @@ beforeEach(() => {
 function switchCareer() {
     fireEvent.click(screen.getByText('Other career'));
     fireEvent.click(screen.getByTitle('Select this career'));
-    fireEvent.click(screen.getByRole('button', { name: 'Yes, switch' }));
+    const confirmation = screen.queryByRole('button', { name: 'Apply change' });
+    if (confirmation) fireEvent.click(confirmation);
 }
 
 function sellStartingSpecialization() {
     fireEvent.click(screen.getByText('Test specialization'));
     fireEvent.click(screen.getByTitle('Unselect this specialization'));
-    fireEvent.click(screen.getByRole('button', { name: 'Yes, sell it' }));
+    const confirmation = screen.queryByRole('button', { name: 'Apply change' });
+    if (confirmation) fireEvent.click(confirmation);
 }
 
-describe('legacy transitions use the skill domain for paid-rank resets', () => {
+describe('career edits reset only the paid ranks affected by changed free grants', () => {
     it.each(['before', 'after'] as const)('refunds exact skill charges after reload when cybernetics were added %s training', async timing => {
         const store = useCharacterStore.getState();
         store.updateCharacter({
@@ -68,7 +70,7 @@ describe('legacy transitions use the skill domain for paid-rank resets', () => {
         sellStartingSpecialization();
 
         const character = useCharacterStore.getState().character;
-        expect(character.specializations).toEqual(['']);
+        expect(character.specializations).toEqual([]);
         expect(character.experience.usedExperience).toBe(0);
         expect(character.xp).toBe(110);
         expect(character.skills[0].rank).toEqual({ specializationRanks: 0, purchasedRanks: 0, cyberRanks: 2 });
@@ -79,7 +81,7 @@ describe('legacy transitions use the skill domain for paid-rank resets', () => {
         expect(useCharacterStore.getState().character.experience.usedExperience).toBe(0);
     });
 
-    it('refunds the original non-career charges when changing career, and removes the ranks', () => {
+    it('keeps original non-career charges and ranks when only career membership changes', () => {
         const store = useCharacterStore.getState();
         store.adjustSkillPurchase('ATHL', 1, skillDefinitions);
         store.adjustSkillPurchase('ATHL', 1, skillDefinitions);
@@ -88,15 +90,17 @@ describe('legacy transitions use the skill domain for paid-rank resets', () => {
         switchCareer();
         const character = useCharacterStore.getState().character;
         expect(character.career).toBe('OTHER');
-        expect(character.experience.usedExperience).toBe(0);
-        expect(character.xp).toBe(110);
-        expect(character.skills.every(skill => !(skill.rank.purchasedRanks ?? 0) && !skill.purchases)).toBe(true);
+        expect(character.experience.usedExperience).toBe(25);
+        expect(character.xp).toBe(85);
+        expect(character.skills[0]).toMatchObject({ rank: { purchasedRanks: 2 }, purchases: [
+            { cost: 10, nonCareer: true }, { cost: 15, nonCareer: true },
+        ] });
     });
 
     it('leaves a legacy character intact when career switching cannot refund unknown costs', () => {
         const store = useCharacterStore.getState();
         const character = { ...store.character, career: 'CAREER',
-            skills: [{ key: 'ATHL', rank: { purchasedRanks: 1 } }],
+            skills: [{ key: 'ATHL', rank: { careerRanks: 1, purchasedRanks: 1 } }],
             experience: { ...store.character.experience, usedExperience: 10 },
         };
         useCharacterStore.setState({ character });
@@ -118,7 +122,7 @@ describe('legacy transitions use the skill domain for paid-rank resets', () => {
         render(<Specializations />);
         sellStartingSpecialization();
         const character = useCharacterStore.getState().character;
-        expect(character.specializations).toEqual(['']);
+        expect(character.specializations).toEqual([]);
         expect(character.experience.usedExperience).toBe(0);
         expect(character.skills[0].rank).toMatchObject({ speciesRanks: 1, specializationRanks: 0, purchasedRanks: 0 });
         expect(character.skills[0].purchases).toBeUndefined();
@@ -128,7 +132,7 @@ describe('legacy transitions use the skill domain for paid-rank resets', () => {
     it('leaves a legacy character intact when starting-specialization removal cannot refund unknown costs', () => {
         const store = useCharacterStore.getState();
         const character = { ...store.character, career: 'CAREER', specializations: ['SPEC'],
-            skills: [{ key: 'ATHL', rank: { purchasedRanks: 1 } }],
+            skills: [{ key: 'STEALTH', rank: { specializationRanks: 1, purchasedRanks: 1 } }],
             experience: { ...store.character.experience, usedExperience: 10 },
         };
         useCharacterStore.setState({ character });

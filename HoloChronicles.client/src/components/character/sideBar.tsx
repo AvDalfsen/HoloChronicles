@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useCharacterStore } from '@/stores/characterStore';
 import { getExperienceSummary } from '@/domain/character/experience';
+import { getStartingSpecializationKey } from '@/domain/character/specializationSelections';
 
 export default function Sidebar() {
     const character = useCharacterStore(state => state.character);
     const experience = getExperienceSummary(character);
+    const hasStartingSpecialization = Boolean(character.career && getStartingSpecializationKey(character));
 
     const links = [
         {
@@ -41,19 +43,19 @@ export default function Sidebar() {
         {
             label: 'Characteristics',
             to: '/character/build/characteristics',
-            enabled: (character?.specializations?.length ?? 0) > 0,
+            enabled: hasStartingSpecialization,
             reason: 'Please choose a career and specialization first',
         },
         {
             label: 'Skills',
             to: '/character/build/skills',
-            enabled: (character?.specializations?.length ?? 0) > 0,
+            enabled: hasStartingSpecialization,
             reason: 'Please choose a career and specialization first',
         },
         {
             label: 'Talents',
             to: '/character/build/talents',
-            enabled: (character?.specializations?.length ?? 0) > 0,
+            enabled: hasStartingSpecialization,
             reason: 'Please choose a career and specialization first',
         },
     ];

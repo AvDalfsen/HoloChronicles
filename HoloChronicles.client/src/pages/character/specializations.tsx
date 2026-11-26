@@ -1,572 +1,153 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useCharacterStore } from '@/stores/characterStore';
-import { Specialization } from '@/types/specialization';
-import { Career } from '@/types/career';
-import { Skill } from '@/types/skill';
+import type { Character } from '@/types/character';
+import type { Specialization } from '@/types/specialization';
+import type { Career } from '@/types/career';
+import type { Skill } from '@/types/skill';
 import {
-    useCachedData,
-    CAREERS_API_KEY, CAREERS_CACHE_KEY,
-    SKILLS_API_KEY, SKILLS_CACHE_KEY,
-    SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY
+    useCachedData, CAREERS_API_KEY, CAREERS_CACHE_KEY, SKILLS_API_KEY, SKILLS_CACHE_KEY,
+    SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY,
 } from '@/pages/utils/fetcher';
 import { MinusSquare, PlusSquare } from 'lucide-react';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
-import { planSkillPurchaseReset } from '@/domain/character/skills';
+import { getExperienceSummary } from '@/domain/character/experience';
+import { getFreeSkillAllowance, planCharacterChoice } from '@/domain/character/careerChoices';
+import { resolveCareerSkillKeys } from '@/domain/character/careerSkills';
+import { getOwnedSpecializationKeys, getStartingSpecializationKey, getSpecializationGroups, getSpecializationPurchaseCost } from '@/domain/character/specializationSelections';
+import { useCharacterChoiceAction } from '@/features/character/useCharacterChoiceAction';
+import { CharacterChoiceFeedback } from '@/components/character/choiceConfirmation';
 
 export default function Specializations() {
     const { character, updateCharacter } = useCharacterStore();
+    const [selectedKey, setSelectedKey] = useState<string | null>(null);
     const [actionError, setActionError] = useState<string | null>(null);
+    const [pendingSale, setPendingSale] = useState<{ spec: Specialization; before: Character } | null>(null);
+    const specs = useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
+    const careers = useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
+    const skills = useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
+    const definitions = { careers: careers.data ?? [], skills: skills.data ?? [], specializations: specs.data ?? [] };
+    const action = useCharacterChoiceAction(definitions);
 
-    const numberOfSpecializations = character.specializations.length ?? 0;
+    if (specs.loading || careers.loading || skills.loading) return <p>Loading…</p>;
+    if (specs.error || careers.error || skills.error) return <p role="alert">{specs.error || careers.error || skills.error}</p>;
+    if (!specs.data || !careers.data || !skills.data) return <p role="alert">Data missing.</p>;
 
-    const { data: specializations, loading: loadingSpecs, error: errorSpecs } =
-        useCachedData<Specialization[]>(SPECIALIZATIONS_API_KEY, SPECIALIZATIONS_CACHE_KEY);
+    const career = careers.data.find(item => item.key === character.career);
+    const startingKey = getStartingSpecializationKey(character);
+    const starting = specs.data.find(item => item.key === startingKey);
+    const selected = specs.data.find(item => item.key === selectedKey);
+    const active = starting ?? selected;
+    const owned = getOwnedSpecializationKeys(character);
+    const allowance = getFreeSkillAllowance(character, 'starting-specialization', definitions);
+    const groups = getSpecializationGroups(character, specs.data, career)
+        .filter(group => startingKey || group.label === 'Purchased Specializations' || group.label === 'Career Specializations');
 
-    const { data: careers, loading: loadingCareers, error: errorCareers } =
-        useCachedData<Career[]>(CAREERS_API_KEY, CAREERS_CACHE_KEY);
-
-    const { data: skills, loading: loadingSkills, error: errorSkills } =
-        useCachedData<Skill[]>(SKILLS_API_KEY, SKILLS_CACHE_KEY);
-
-    const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
-    const [currentCareer, setCurrentCareer] = useState<Career | null>(null);
-    const [selectedSpecializationIsCareerOrUniversal, setSelectedSpecializationIsCareerOrUniversal] = useState(true);
-
-    const remainingSpecializationsSkills = 2 - (character.skills.filter(s => s.rank.specializationRanks === 1).length ?? 0);
-
-    // Sale conditionals ***
-    const [pendingSpec, setPendingSpec] = useState<Specialization | null>(null);
-    const handleConfirmSell = () => {
-        if (pendingSpec) performSale(pendingSpec);
-        setPendingSpec(null);
-    };
-
-    const handleCancelSell = () => setPendingSpec(null);
-    // ***
-
-    useEffect(() => {
-        if (careers && character?.career) {
-            const currentCareer = careers.find(
-                (careerItem) => careerItem.key === character.career
-            );
-            setCurrentCareer(currentCareer ?? null);
-        }
-    }, [careers, character?.career]);
-
-    if (loadingSpecs || loadingCareers || loadingSkills) {
-        return <p>Loading…</p>;
-    }
-
-    if (errorSpecs || errorCareers || errorSkills) {
-        return (
-            <p className="text-red-500">
-                {errorSpecs || errorCareers || errorSkills}
-            </p>
-        );
-    }
-
-    if (!specializations || !skills || !careers) {
-        return <p className="text-red-500">Data missing.</p>;
-    }
-
-    const startingSpecialization = character.specializations.length > 0
-        ? specializations.find(s => s.key === character.specializations[0])
-        : null;
-
-    const activeSpecialization = startingSpecialization || selectedSpecialization; // Show either skills from the selected specialization, or the starting specialization if it has been purchased.
-
-    const onSpecializationClick = (spec: Specialization) => {
-        setSelectedSpecialization(spec);
-        if (currentCareer?.specializations.includes(spec.key ?? '') || spec.universal) {
-            setSelectedSpecializationIsCareerOrUniversal(true);
-        }
-        console.log('Specialization selected:', spec.key)
-    };
-
-    const updateCharacterSpecializationSkillValues = (skillKey: string, newValue: number) => {
-        const skill = character.skills.find(s => s.key === skillKey);
-
-        const updatedSkills = character.skills.map(s => {
-            if (s.key === skillKey) {
-                return {
-                    ...s,
-                    rank: {
-                        ...s.rank,
-                        specializationRanks: newValue,
-                    },
-                };
-            }
-            return s;
+    // Additional paid specialization accounting remains the next domain slice.
+    const purchaseAdditional = (spec: Specialization) => {
+        const cost = getSpecializationPurchaseCost(character, spec, career);
+        if (!startingKey || owned.includes(spec.key) || getExperienceSummary(character).available < cost) return;
+        const specializations = [...character.specializations, spec.key];
+        const membership = resolveCareerSkillKeys({ ...character, specializations }, definitions);
+        if (!membership.ok) { setActionError(membership.message); return; }
+        setActionError(null);
+        updateCharacter({ specializations,
+            skills: character.skills.map(skill => ({ ...skill, isCareer: membership.keys.has(skill.key) })),
+            experience: { ...character.experience, usedExperience: character.experience.usedExperience + cost },
         });
-
-        // If the skill wasn't found, add it
-        if (!skill) {
-            updatedSkills.push({
-                key: skillKey,
-                rank: {
-                    specializationRanks: newValue,
-                },
-            });
-        }
-
-        updateCharacter({
-            skills: updatedSkills,
-        });
-    }
-
-    const sellSpecializationClick = (spec: Specialization) => {
-        const specTalents = character.talents.find(t => t.specializationKey === spec.key);
-
-        // If the specialization to-be-sold has purchased talents, notify the user
-        const hasTalents = specTalents?.talents.length ?? 0 > 0;
-
-        // If the user has purchased skills, those will be reset when the starting specialization is sold
-        const hasPurchasedSkills = spec.key === startingSpecialization?.key
-            && character.skills.some(skill => (skill.rank.purchasedRanks ?? 0) > 0);
-
-        // Need confirmation only when talents or skills would be refunded
-        if (hasTalents || hasPurchasedSkills) {
-            setPendingSpec(spec);
-        } else {
-            performSale(spec);
-        }
     };
-
-    const performSale = (specialization: Specialization) => {
-        const isStartingSpec = specialization.key === startingSpecialization?.key;
-        const skillReset = isStartingSpec ? planSkillPurchaseReset(character) : null;
-        if (skillReset && !skillReset.ok) {
-            setActionError(skillReset.message);
+    const sellAdditional = (spec: Specialization, before: Character) => {
+        if (useCharacterStore.getState().character !== before) {
+            setActionError('Your character changed while this confirmation was open. Review the sale again.');
+            setPendingSale(null);
             return;
         }
+        const specializations = character.specializations.filter(key => key !== spec.key);
+        const membership = resolveCareerSkillKeys({ ...character, specializations }, definitions);
+        if (!membership.ok) { setActionError(membership.message); return; }
+        const talentRefund = character.talents.filter(block => block.specializationKey === spec.key)
+            .flatMap(block => block.talents).reduce((sum, talent) => sum + (talent.purchaseCost ?? (talent.row + 1) * 5), 0);
+        const refund = owned.length * 10 + (career?.specializations.includes(spec.key) || spec.universal ? 0 : 10) + talentRefund;
+        if (refund > character.experience.usedExperience) {
+            setActionError('The refund exceeds spent XP. Reconcile the specialization purchases before selling.');
+            setPendingSale(null);
+            return;
+        }
+        updateCharacter({ specializations,
+            talents: character.talents.filter(block => block.specializationKey !== spec.key),
+            skills: character.skills.map(skill => ({ ...skill, isCareer: membership.keys.has(skill.key) })),
+            experience: { ...character.experience, usedExperience: character.experience.usedExperience - refund },
+        });
         setActionError(null);
-
-        //Calculate XP refund for talents
-        const specTalentsBlock = character.talents.find(
-            t => t.specializationKey === specialization.key
-        );
-
-        const boughtTalents = specTalentsBlock?.talents ?? [];
-
-        let refundTalentXP = 0;
-        for (const t of boughtTalents) {
-            refundTalentXP += (t.row + 1) * 5;
-        }
-
-        //Calculate XP refund for specialization
-        const specXP =
-            (selectedSpecializationIsCareerOrUniversal ? 0 : 10) + //   career/universal discount
-            numberOfSpecializations * 10;                          // + tier surcharge
-        const totalRefund = refundTalentXP + (isStartingSpec ? 0 : specXP);
-
-        const updatedTalents = character.talents.filter(
-            t => t.specializationKey !== specialization.key
-        );
-
-        // Remove careerskill flags where relevant
-        const careerSkillSet = new Set(
-            careers.find(c => c.key === character.career)?.careerSkills ?? [],
-        );
-
-        for (const specKey of character.specializations) {
-            if (specKey === specialization.key) continue;
-            const spec = specializations.find(s => s.key === specKey);
-            spec?.careerSkills.forEach(cs => careerSkillSet.add(cs));
-        }
-
-        let updatedSkills = (skillReset?.ok ? skillReset.character.skills : character.skills).map(skill => {
-            if (!specialization.careerSkills.includes(skill.key)) return skill;
-            if (careerSkillSet.has(skill.key)) return skill;                             // If the career or another specialization still grants the skill, keep the flag
-            return { ...skill, isCareer: false };                                        // Otherwise: this skill only came from the sold specialization → unflag
-        });
-
-        console.log(JSON.stringify(updatedSkills))
-
-        // Needed for selling both any specializations
-        const basePatch = {
-            talents: updatedTalents,
-            experience: {
-                ...character.experience,
-                usedExperience: character.experience.usedExperience - totalRefund,
-            },
-        };
-
-        // Specifically for starting specialization
-        if (isStartingSpec) {
-            // Reset specialization ranks for all skills that referenced the starting specialization
-            updatedSkills = updatedSkills.map(skill => ({
-                ...skill,
-                rank: {
-                    ...skill.rank,
-                    specializationRanks: skill.rank.specializationRanks === 1 ? 0 : skill.rank.specializationRanks,
-                },
-            }));
-
-            // Refunds and paid-rank removal come from the same domain result.
-            const skillXPBalance = skillReset?.ok ? skillReset.xpChange : 0;
-
-            console.log("skillxpbalance:",skillXPBalance)
-
-            const updatedSpecializations = [...character.specializations];
-            updatedSpecializations[0] = '';
-
-            updateCharacter({
-                ...basePatch,
-                experience: {
-                    ...basePatch.experience,
-                    usedExperience: basePatch.experience.usedExperience + skillXPBalance,
-                },
-                skills: updatedSkills,
-                specializations: updatedSpecializations,
-            });
-        } else {
-            updateCharacter({
-                ...basePatch,
-                specializations: character.specializations.filter(
-                    spec => spec !== specialization.key
-                ),
-                skills: updatedSkills,
-            });
-        }
+        setPendingSale(null);
+    };
+    const remove = (spec: Specialization) => {
+        setActionError(null);
+        if (spec.key === startingKey) action.request({ type: 'starting-specialization', key: null });
+        else if (character.talents.some(block => block.specializationKey === spec.key && block.talents.length)) {
+            setPendingSale({ spec, before: character });
+        } else sellAdditional(spec, character);
     };
 
-    const selectStartingSpecializationClick = () => {
-        //When choosing a new starting specialization, ensure that all previously set (if any) specialization ranks are set to 0.
-        const specCareerSet = new Set(selectedSpecialization?.careerSkills ?? []);
-
-        const updatedSkills = character.skills.map(skill => {
-            const inSpecCareer = specCareerSet.has(skill.key);
-
-            return {
-                ...skill,
-                rank: {
-                    ...skill.rank,
-                    specializationRanks: skill.rank.specializationRanks === 1 ? 0 : undefined,
-                },
-                isCareer: inSpecCareer ? true : skill.isCareer,
-            };
-        });
-
-        for (const specSkill of specCareerSet) {
-            if (!updatedSkills.some(s => s.key === specSkill)) {
-                updatedSkills.push({
-                    key: specSkill,
-                    rank: { specializationRanks: undefined }, // Typescript is silly
-                    isCareer: true,
-                });
-            }
-        }
-
-        const updatedSpecializations = character.specializations;
-        updatedSpecializations[0] = selectedSpecialization?.key ?? '';
-
-        updateCharacter({
-            specializations: updatedSpecializations,
-            skills: updatedSkills,
-        });
-    };
-
-    // TODO: Some Universal specializations grant a Force Rating
-    // TDOO: Retroactively apply purchased talents if user gets a Force Rating after purchasing Force talents
-    const purchaseSpecializationClick = (specialization: Specialization) => {
-        const currentUsedXP = character.experience.usedExperience;
-        const xpChange = (numberOfSpecializations + 1) * 10 - (selectedSpecializationIsCareerOrUniversal ? 0 : 10);
-
-        const updatedSpecializations = [...character.specializations, specialization.key];
-
-        const specCareerSet = new Set(selectedSpecialization?.careerSkills ?? []);
-
-        const updatedSkills = character.skills.map(skill => {
-            const inSpecCareer = specCareerSet.has(skill.key);
-
-            return {
-                ...skill,
-                isCareer: inSpecCareer ? true : skill.isCareer,
-            };
-        });
-
-        for (const specSkill of specCareerSet) {
-            if (!updatedSkills.some(s => s.key === specSkill)) {
-                updatedSkills.push({
-                    key: specSkill,
-                    rank: { specializationRanks: undefined }, // Typescript is silly
-                    isCareer: true,
-                });
-            }
-        }
-
-        updateCharacter({
-            experience: {
-                ...character.experience,
-                usedExperience: currentUsedXP + xpChange,
-            },
-            specializations: updatedSpecializations,
-            skills: updatedSkills,
-        });
-    }
-
-    //TODO: on purchasing Republic Representative, show window to allow user to pick knowledge skill (addlCareerSkill) as new career skill.
-    return (
-        <div className="z-20 p-5 w-full flex items-start space-x-6">
-            {actionError && <p role="alert" className="text-destructive">{actionError}</p>}
-            {!startingSpecialization && (
-                <div className="sticky top-0 left-0 bg-white border rounded-lg shadow-md overflow-auto max-w-2xl">
-                    <table className="w-full table-fixed text-sm text-left border-collapse">
-                        <thead className="table-header">
-                            <tr>
-                                <th className="table-cell w-[50%] min-w-[150px]">Name</th>
-                                <th className="table-cell w-10 text-right"> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {specializations
-                                .filter((spec) =>
-                                    currentCareer?.specializations.includes(spec.key ?? '')
-                                )
-                                .map((spec) => {
-                                    const isPurchased = character.specializations.includes(spec.key ?? '');
-                                    const isActive = selectedSpecialization?.key === spec.key;
-
-                                    return (
-                                        <tr
-                                            key={spec.key}
-                                            className={`
-                                                hover:bg-gray-50 transition-colors 
-                                                ${isPurchased ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} 
-                                                ${isActive ? 'bg-blue-50' : ''}
-                                            `}
-                                            onClick={() => {
-                                                if (!isPurchased) {
-                                                    onSpecializationClick(spec);
-                                                }
-                                            }}
-                                        >
-                                            <td className="border-t px-4 py-2 font-medium">
-                                                {spec.name}
-                                                {isPurchased && <span className="text-gray-500"> – Purchased</span>}
-                                            </td>
-                                            <td className="border-t px-4 py-2 text-right">
-                                                {isActive && !isPurchased && (
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation(); // Prevent row click
-                                                            selectStartingSpecializationClick();
-                                                        }}
-                                                        className="text-blue-600 hover:text-blue-800"
-                                                        title="Select this specialization"
-                                                    >
-                                                        <PlusSquare className="w-5 h-5 inline" />
-                                                    </button>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-            {startingSpecialization && (
-                <div className="sticky top-0 left-0 bg-white border rounded-lg shadow-md overflow-auto max-w-2xl">
-                    <table className="w-full table-fixed text-sm text-left border-collapse">
-                        <thead className="table-header">
-                            <tr>
-                                <th className="table-cell w-[40%] min-w-[150px]">Name</th>
-                                <th className="table-cell">Cost</th>
-                                <th className="table-cell w-10 text-right"> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[
-                                {
-                                    label: 'Starting Specialization',
-                                    specs: specializations.filter(
-                                        spec => character.specializations[0] === spec.key
-                                    ),
-                                },
-                                {
-                                    label: 'Purchased Specializations',
-                                    specs: specializations.filter(
-                                        spec => character.specializations.includes(spec.key ?? '') && character.specializations[0] !== spec.key
-                                    ),
-                                },
-                                {
-                                    label: 'Career Specializations',
-                                    specs: specializations.filter(
-                                        spec =>
-                                            currentCareer?.specializations.includes(spec.key ?? '') &&
-                                            !character.specializations.includes(spec.key ?? '')
-                                    ),
-                                },
-                                {
-                                    label: 'Universal Specializations',
-                                    specs: specializations.filter(
-                                        spec =>
-                                            spec.universal &&
-                                            !character.specializations.includes(spec.key ?? '')
-                                    ),
-                                },
-                                {
-                                    label: 'Non-Career Specializations',
-                                    specs: specializations.filter(
-                                        spec =>
-                                            !spec.universal &&
-                                            !currentCareer?.specializations.includes(spec.key ?? '') &&
-                                            !character.specializations.includes(spec.key ?? '')
-                                    ),
-                                },
-                            ].map(({ label, specs }) => (
-                                specs.length > 0 && (
-                                    <React.Fragment key={label}>
-                                        <tr className="bg-gray-100">
-                                            <td colSpan={5} className="px-4 py-2 font-semibold text-gray-700">
-                                                {label}
-                                            </td>
-                                        </tr>
-                                        {specs.map(spec => (
-                                            <tr
-                                                key={spec.key}
-                                                className={`hover:bg-gray-50 transition-colors cursor-pointer ${selectedSpecialization?.key === spec.key ? 'bg-blue-50' : ''}`}
-                                                onClick={() => onSpecializationClick(spec)}
-                                            >
-                                                <td className="border-t px-4 py-2 w-[20px] font-medium">{spec.name}</td>
-                                                <td className="border-t px-4 py-2 w-[20px] font-medium">
-                                                    
-                                                    {//If specialization has already been purchased, do not show a cost
-                                                        character.specializations.includes(spec.key) ? '' : (currentCareer?.specializations.includes(spec.key ?? '') || spec.universal ? 0 : 10) + (10 * (numberOfSpecializations + 1))}
-                                                </td>
-                                                <td className="border-t px-4 py-2 text-right">
-                                                    {selectedSpecialization?.key === spec.key && (
-                                                        character.specializations.includes(spec.key ?? '') ? (
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    sellSpecializationClick(selectedSpecialization);
-                                                                }}
-                                                                className="text-red-600 hover:text-red-800"
-                                                                title="Unselect this specialization"
-                                                            >
-                                                                <MinusSquare className="w-5 h-5 inline" />
-                                                            </button>
-                                                        ) : (
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                        purchaseSpecializationClick(selectedSpecialization);
-                                                                }}
-                                                                className="text-blue-600 hover:text-blue-800"
-                                                                title="Select this specialization"
-                                                            >
-                                                                <PlusSquare className="w-5 h-5 inline" />
-                                                            </button>
-                                                        )
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </React.Fragment>
-                                )
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-            {/* Selected Specialization Info Card */}
-            {selectedSpecialization && (
-                <div className="card w-1/3 max-h-[calc(100vh-130px)] overflow-auto">
-                    <h2 className="text-lg font-semibold mb-4">{selectedSpecialization.name}</h2>
-                    <div>
-                        <div>
-                            <strong>Description:</strong>
-                            <FormattedDescription description={selectedSpecialization.description} />
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Selected Specialization Skills Card */}
-            {activeSpecialization && (
-                <div className="card w-1/3 max-h-[calc(100vh-130px)] overflow-auto">
-                    <h2 className="text-lg font-semibold mb-4">Specialization skills</h2>
-                    <ul>
-                        {(activeSpecialization.careerSkills ?? [])
-                            .map(sk => {
-                                const skill = skills.find(s => s.key === sk);
-                                return {
-                                    key: sk,
-                                    name: skill?.name ?? sk,
-                                    isChecked:
-                                        character.skills.find(s => s.key === sk)?.rank
-                                            .specializationRanks === 1,
-                                };
-                            }) // Ensure that the skills with a free specialization rank are checked.
-                            .sort((a, b) => a.name.localeCompare(b.name))
-                            .map(({ key: skillKey, name, isChecked }, idx) => (
-                                <li
-                                    key={idx}
-                                    className="flex items-center justify-between border-t px-4 py-2"
-                                >
-                                    <span>{name}</span>
-                                    {(remainingSpecializationsSkills > 0 || isChecked) && (
-                                            <input
-                                                type="checkbox"
-                                                checked={isChecked}
-                                                onChange={e => {
-                                                    const newValue = e.target.checked ? 1 : 0;
-                                                    updateCharacterSpecializationSkillValues(
-                                                        skillKey,
-                                                        newValue
-                                                    );
-                                                }}
-                                            />
-                                        )}
-                                </li>
-                            ))}
-                        <li className="mt-2 font-medium">
-                            {character.specializations.length === 0 || character.specializations[0] === ''
-                                ? 'Please choose your starting specialization.'
-                                : `Remaining free specialization skills: ${remainingSpecializationsSkills}`}
-                        </li>
-                    </ul>
-                </div>
-            )}
-            {pendingSpec && (
-                <div
-                    className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
-                    onClick={handleCancelSell}
-                >
-                    <div
-                        className="bg-background p-6 rounded shadow-md text-center max-w-sm w-full"
-                        onClick={e => e.stopPropagation()}
-                    >
-                        <h3 className="text-lg font-semibold mb-4">
-                            Sell {pendingSpec!.name}?
-                        </h3>
-
-                        <p className="mb-6 text-sm text-muted-foreground">
-                            {pendingSpec?.key === startingSpecialization?.key ? (
-                                <>
-                                    Selling your <strong>starting</strong> specialization will refund all of its purchased talents, as well as all purchased skills.
-                                    Are you sure?
-                                </>
-                            ) : (
-                                <>
-                                    This specialization has purchased talents. Selling it will remove them and refund the XP.
-                                    Are you sure?
-                                </>
-                            )}
-                        </p>
-
-                        <div className="flex justify-center gap-4">
-                            <button className="btn" onClick={handleConfirmSell}>
-                                Yes, sell it
-                            </button>
-                            <button className="btn btn-outline" onClick={handleCancelSell}>
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+    return <div className="z-20 p-5 w-full flex items-start space-x-6">
+        {actionError && <p role="alert" className="text-destructive">{actionError}</p>}
+        <CharacterChoiceFeedback action={action} />
+        <div className="sticky top-0 bg-white border rounded-lg shadow-md overflow-auto max-w-2xl">
+            <table aria-label="Specializations" className="w-full table-fixed text-sm text-left border-collapse">
+                <thead className="table-header"><tr><th className="table-cell">Name</th><th className="table-cell">Cost</th><th className="table-cell"> </th></tr></thead>
+                <tbody>{groups.map(({ label, specs: entries }) => entries.length > 0 && <React.Fragment key={label}>
+                    <tr className="bg-gray-100"><td colSpan={3} className="px-4 py-2 font-semibold">{label}</td></tr>
+                    {entries.map(spec => {
+                        const purchased = owned.includes(spec.key);
+                        const quote = !startingKey && !purchased ? planCharacterChoice(character, { type: 'starting-specialization', key: spec.key }, definitions) : null;
+                        const cost = getSpecializationPurchaseCost(character, spec, career);
+                        const disabled = !purchased && (quote ? !quote.ok : getExperienceSummary(character).available < cost);
+                        return <tr key={spec.key} onClick={() => setSelectedKey(spec.key)} className={`cursor-pointer hover:bg-gray-50 ${selectedKey === spec.key ? 'bg-blue-50' : ''}`}>
+                            <td className="border-t px-4 py-2 font-medium">{spec.name}</td>
+                            <td className="border-t px-4 py-2">{purchased ? '' : startingKey ? cost : 'Free'}</td>
+                            <td className="border-t px-4 py-2 text-right">{selectedKey === spec.key && <button
+                                title={purchased ? 'Unselect this specialization' : 'Select this specialization'}
+                                aria-label={`${purchased ? 'Remove' : 'Select'} ${spec.name}`}
+                                disabled={disabled}
+                                onClick={event => {
+                                    event.stopPropagation();
+                                    setActionError(null);
+                                    if (purchased) remove(spec);
+                                    else if (!startingKey) action.request({ type: 'starting-specialization', key: spec.key });
+                                    else purchaseAdditional(spec);
+                                }}>
+                                {purchased ? <MinusSquare className="w-5 h-5 inline" /> : <PlusSquare className="w-5 h-5 inline" />}
+                            </button>}</td>
+                        </tr>;
+                    })}
+                </React.Fragment>)}</tbody>
+            </table>
         </div>
-    )
+        {selected && <div className="card w-1/3 max-h-[calc(100vh-130px)] overflow-auto">
+            <h2 className="text-lg font-semibold mb-4">{selected.name}</h2>
+            <FormattedDescription description={selected.description} />
+        </div>}
+        {active && <div className="card w-1/3 max-h-[calc(100vh-130px)] overflow-auto">
+            <h2 className="text-lg font-semibold mb-4">Specialization skills</h2>
+            <ul>{active.careerSkills.map(key => {
+                const name = definitions.skills.find(skill => skill.key === key)?.name ?? key;
+                const checked = !!startingKey && character.skills.some(skill => skill.key === key && skill.rank.specializationRanks === 1);
+                const choice = { type: 'free-skill', source: 'starting-specialization', sourceKey: active.key, skillKey: key, selected: !checked } as const;
+                const quote = startingKey === active.key ? planCharacterChoice(character, choice, definitions) : null;
+                return { key, name, checked, choice, quote };
+            }).sort((a, b) => a.name.localeCompare(b.name)).map(({ key, name, checked, choice, quote }) => <li key={key} className="flex items-center justify-between border-t px-4 py-2">
+                <span>{name}</span><input type="checkbox" aria-label={`Free starting-specialization rank in ${name}`}
+                    checked={checked} disabled={!quote?.ok} title={quote && !quote.ok ? quote.message : undefined}
+                    onChange={() => action.request(choice)} />
+            </li>)}</ul>
+            <p className="mt-2 font-medium">{startingKey ? `Remaining free specialization skills: ${allowance.remaining}` : 'Please choose your starting specialization.'}</p>
+        </div>}
+        {pendingSale && <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50" role="dialog" aria-label="Sell specialization">
+            <div className="bg-background p-6 rounded shadow-md max-w-sm">
+                <h3>Sell {pendingSale.spec.name}?</h3>
+                <p>This also removes and refunds its purchased talents.</p>
+                <button className="btn" onClick={() => sellAdditional(pendingSale.spec, pendingSale.before)}>Yes, sell it</button>
+                <button className="btn" onClick={() => setPendingSale(null)}>Cancel</button>
+            </div>
+        </div>}
+    </div>;
 }

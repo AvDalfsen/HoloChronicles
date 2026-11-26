@@ -87,4 +87,6 @@ export interface storedTalent {
     key: string;
     col: number;
     row: number;
+    /** Actual charge for a new purchase; absent for older saved occurrences. */
+    purchaseCost?: number;
 }

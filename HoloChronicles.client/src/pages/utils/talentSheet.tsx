@@ -11,6 +11,21 @@ import { Talent } from '@/types/talent';
 import { useCharacterStore } from '@/stores/characterStore';
 import './talentSheet.css';
 import { FormattedDescription } from '@/lib/descriptionFormatter';
+import { getTalentPurchaseCounts, getTalentPurchaseQuote } from '@/domain/character/talents';
+
+function formatRomanRank(rank: number): string {
+    const numerals: [number, string][] = [
+        [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+        [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+        [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I'],
+    ];
+    let result = '';
+    for (const [value, numeral] of numerals) {
+        result += numeral.repeat(Math.floor(rank / value));
+        rank %= value;
+    }
+    return result;
+}
 
 // Represents a connector line between two talent boxes
 interface Line {
@@ -33,9 +48,10 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
         [rows]
     );
     const containerRef = useRef<HTMLDivElement>(null);
-    const cellRefs = useRef<Array<Array<HTMLDivElement | null>>>([]);
+    const boxRefs = useRef<Array<Array<HTMLDivElement | null>>>([]);
     const [lines, setLines] = useState<Line[]>([]);
     const { character, updateCharacter } = useCharacterStore();
+    const purchaseCounts = useMemo(() => getTalentPurchaseCounts(character.talents), [character.talents]);
 
     // Check if a talent at [row, col] has been purchased
     const hasPurchased = useCallback(
@@ -85,12 +101,17 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
     // Purchase a talent: update character store and add XP cost
     const buyTalent = useCallback(
         (row: number, col: number) => {
+            // A click can arrive before another XP update has rendered.
+            const current = useCharacterStore.getState().character;
+            const { cost, canAfford } = getTalentPurchaseQuote(current, row);
+            if (!canAfford || !current.specializations.includes(specKey)
+                || current.talents.some(sheet => sheet.specializationKey === specKey
+                    && sheet.talents.some(talent => talent.row === row && talent.col === col))) return;
             const talentKey = rows[row].talents[col];
-            const newStored: storedTalent = { key: talentKey, row, col };
-            const cost = (row + 1) * 5;
+            const newStored: storedTalent = { key: talentKey, row, col, purchaseCost: cost };
 
             // Clone and update the talents array
-            const existing = [...character.talents];
+            const existing = [...current.talents];
             const idx = existing.findIndex(
                 (s) => s.specializationKey === specKey
             );
@@ -109,12 +130,12 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
             updateCharacter({
                 talents: existing,
                 experience: {
-                    ...character.experience,
-                    usedExperience: character.experience.usedExperience + cost,
+                    ...current.experience,
+                    usedExperience: current.experience.usedExperience + cost,
                 },
             });
         },
-        [character, rows, specKey, updateCharacter]
+        [rows, specKey, updateCharacter]
     );
 
     // Sell a talent: remove from character store
@@ -182,7 +203,7 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
 
             // Calculate total XP refund: cost = (row+1)*5
             const refund = removedTalents.reduce(
-                (sum, t) => sum + (t.row + 1) * 5,
+                (sum, t) => sum + (t.purchaseCost ?? (t.row + 1) * 5),
                 0
             );
 
@@ -205,25 +226,27 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
         [character, specKey, rows, updateCharacter]
     );
 
-    // TODO: fix how the lines are drawn. In Republic Representative (and others) they are all sorts of borked.
-    // Compute connector lines after layout
+    // Measure visible cards, not the grid cells stretched to the tallest card.
     useLayoutEffect(() => {
         if (!containerRef.current) return;
 
         const newLines: Line[] = [];
-        const containerRect =
-            containerRef.current.getBoundingClientRect();
-        
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const boxRects = rows.map((row, rowIdx) => row.talents.map((_, colIdx) =>
+            boxRefs.current[rowIdx]?.[colIdx]?.getBoundingClientRect()
+        ));
+        const rowConnectionYs = boxRects.map(rects => {
+            const visible = rects.filter(rect => rect !== undefined);
+            if (!visible.length) return undefined;
+            const shortest = visible.reduce((shortest, rect) => rect.height < shortest.height ? rect : shortest);
+            // Top-aligned cards all contain the shortest card's centre height.
+            return shortest.top + shortest.height / 2 - containerRect.top;
+        });
+
         rows.forEach((row, rowIdx) => {
             row.directions.forEach((dirs, colIdx) => {
-                const fromEl = cellRefs.current[rowIdx]?.[colIdx];
-                if (!fromEl) return;
-
-                const fromRect = fromEl.getBoundingClientRect();
-                const fromX =
-                    fromRect.left + fromRect.width / 2 - containerRect.left;
-                const fromY =
-                    fromRect.top + fromRect.height / 2 - containerRect.top;
+                const fromRect = boxRects[rowIdx]?.[colIdx];
+                if (!fromRect) return;
 
                 Object.entries(dirs).forEach(([dir, on]) => {
                     if (!on) return;
@@ -243,24 +266,35 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
                         case 'right':
                             toCol++;
                             break;
+                        default:
+                            return;
                     }
 
-                    const toEl = cellRefs.current[toRow]?.[toCol];
-                    if (!toEl) return;
+                    const toRect = boxRects[toRow]?.[toCol];
+                    if (!toRect) return;
 
-                    const toRect = toEl.getBoundingClientRect();
-                    const toX =
-                        toRect.left + toRect.width / 2 - containerRect.left;
-                    const toY =
-                        toRect.top + toRect.height / 2 - containerRect.top;
-
-                    newLines.push({ x1: fromX, y1: fromY, x2: toX, y2: toY });
+                    if (dir === 'left' || dir === 'right') {
+                        const y = rowConnectionYs[rowIdx]!;
+                        newLines.push({
+                            x1: (dir === 'right' ? fromRect.right : fromRect.left) - containerRect.left,
+                            y1: y,
+                            x2: (dir === 'right' ? toRect.left : toRect.right) - containerRect.left,
+                            y2: y,
+                        });
+                    } else {
+                        newLines.push({
+                            x1: fromRect.left + fromRect.width / 2 - containerRect.left,
+                            y1: (dir === 'down' ? fromRect.bottom : fromRect.top) - containerRect.top,
+                            x2: toRect.left + toRect.width / 2 - containerRect.left,
+                            y2: (dir === 'down' ? toRect.top : toRect.bottom) - containerRect.top,
+                        });
+                    }
                 });
             });
         });
 
         setLines(newLines);
-    }, [rows, cols]);
+    }, [rows, cols, talents]);
 
     //Render
     return (
@@ -274,31 +308,50 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
                 }}
             >
                 {rows.map((row, rowIdx) => {
-                    const cost = (rowIdx + 1) * 5;
-                    cellRefs.current[rowIdx] =
-                        cellRefs.current[rowIdx] || [];
+                    const { cost, canAfford } = getTalentPurchaseQuote(character, rowIdx);
+                    boxRefs.current[rowIdx] = boxRefs.current[rowIdx] || [];
 
                     return row.talents.map((talentKey, colIdx) => {
                         const talent =
                             talents.find((t) => t.key === talentKey);
-                        if (!talent) return null;
+                        // Keep the grid slot when a dataset omits a talent definition.
+                        if (!talent) return <div key={`${rowIdx}-${colIdx}`} className="cell" />;
 
                         const purchased = hasPurchased(rowIdx, colIdx);
                         const available = isAvailable(rowIdx, colIdx);
+                        const unaffordable = !purchased && !canAfford;
+                        const disabled = !available || unaffordable;
+                        const ranks = talent.ranked ? purchaseCounts.get(talent.key) ?? 0 : 0;
+                        const rankSummary = ranks > 0 ? `${ranks} ${ranks === 1 ? 'rank' : 'ranks'} purchased across all specializations` : undefined;
+                        const accessibleDescription = [rankSummary, unaffordable ? 'Not enough XP' : undefined].filter(Boolean).join('. ') || undefined;
 
                         return (
                             <div
                                 key={`${rowIdx}-${colIdx}`}
                                 className="cell"
-                                ref={(el: HTMLDivElement | null) => {
-                                    cellRefs.current[rowIdx][colIdx] = el;
-                                }}
                             >
                                 <div
-                                    className={`talent-box ${!available ? 'unavailable' : ''
-                                        }`}
+                                    ref={(el: HTMLDivElement | null) => {
+                                        boxRefs.current[rowIdx][colIdx] = el;
+                                    }}
+                                    className={`talent-box ${!available ? 'unavailable' : ''} ${unaffordable ? 'unaffordable' : ''} ${purchased ? 'purchased' : ''}`}
                                 >
-                                    <div className="talent-name">
+                                    {/* Cover the card with a native toggle; formatted paragraphs stay outside the button. */}
+                                    <button
+                                        type="button"
+                                        className="talent-toggle"
+                                        aria-label={`${talent.name} (${cost} XP, row ${rowIdx + 1}, column ${colIdx + 1})`}
+                                        aria-pressed={purchased}
+                                        aria-description={accessibleDescription}
+                                        disabled={disabled}
+                                        title={purchased ? `Sell ${talent.name}` : unaffordable ? undefined : !available ? `${talent.name} is not unlocked` : `Purchase ${talent.name} for ${cost} XP`}
+                                        onClick={() => purchased ? sellTalent(rowIdx, colIdx) : buyTalent(rowIdx, colIdx)}
+                                    >
+                                        {ranks > 0 && <span className="talent-rank" title={rankSummary} aria-hidden="true">
+                                            {formatRomanRank(ranks)}
+                                        </span>}
+                                    </button>
+                                    <div className={`talent-name ${talent.ranked ? 'ranked' : ''}`}>
                                         {talent.name}
                                     </div>
                                     <div className="talent-desc">
@@ -310,19 +363,7 @@ export default function TalentSheet({ specialization, talents }: TalentSheetProp
                                     </div>
                                     <br />
                                     <div className="talent-footer">
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                checked={purchased}
-                                                disabled={!available}
-                                                onChange={(e) =>
-                                                    e.target.checked
-                                                        ? buyTalent(rowIdx, colIdx)
-                                                        : sellTalent(rowIdx, colIdx)
-                                                }
-                                            />{' '}
-                                            Cost: {cost}
-                                        </label>
+                                        Cost: {cost}
                                     </div>
                                 </div>
                             </div>
