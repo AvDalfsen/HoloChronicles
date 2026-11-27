@@ -103,7 +103,7 @@ namespace HoloChronicles.Server.Services.XMLParsers
                                      wieldingMelee: r.GetBool("WieldingMelee"),
                                      wieldingBrawl: r.GetBool("WieldingBrawl"),
                                      wieldingLightsaber: r.GetBool("WieldingLightsaber"),
-                                     minForceRating: r.GetBool("MinForceRating")
+                                     minForceRating: r.GetInt("MinForceRating")
                                    )
                                  : null
                 );

@@ -40,12 +40,12 @@
         public bool? WieldingMelee { get; set; }
         public bool? WieldingBrawl { get; set; }
         public bool? WieldingLightsaber { get; set; }
-        public bool? MinForceRating { get; set; }
+        public int? MinForceRating { get; set; }
 
         public Requirement(
             bool? wearingArmor = null, bool? career = null, bool? specialization = null,
             bool? nonCareer = null, int? soakAtLeast = null, bool? wieldingMelee = null,
-            bool? wieldingBrawl = null, bool? wieldingLightsaber = null, bool? minForceRating = null)
+            bool? wieldingBrawl = null, bool? wieldingLightsaber = null, int? minForceRating = null)
         {
             WearingArmor = wearingArmor;
             Career = career;
